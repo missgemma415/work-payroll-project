@@ -10,13 +10,13 @@ const userLikes = new Map<string, Set<string>>();
 
 export async function POST(
   _request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
   try {
     await simulateDelay();
     simulateError();
 
-    const { id } = params;
+    const { id } = await context.params;
     const userId = mockUser.id;
 
     const kudosIndex = kudosList.findIndex((k) => k.id === id);

@@ -10,13 +10,13 @@ import type { NextResponse, NextRequest } from 'next/server';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
   try {
     await simulateDelay();
     simulateError();
 
-    const { id } = params;
+    const { id } = await context.params;
     const body = (await request.json()) as UpdatePriorityRequest;
 
     const priorityIndex = priorities.findIndex((p) => p.id === id);
@@ -48,13 +48,13 @@ export async function PATCH(
 
 export async function DELETE(
   _request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ): Promise<NextResponse> {
   try {
     await simulateDelay();
     simulateError();
 
-    const { id } = params;
+    const { id } = await context.params;
 
     const priorityIndex = priorities.findIndex((p) => p.id === id);
     if (priorityIndex === -1) {
