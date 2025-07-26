@@ -134,7 +134,6 @@ const config = {
   },
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   plugins: [
-    // @ts-expect-error - tailwindcss-animate doesn't have proper types
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     require('tailwindcss-animate'),
   ],
