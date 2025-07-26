@@ -1,0 +1,26 @@
+name = "scientia-hr-platform"
+main = "src/index.ts"
+compatibility_date = "2024-01-15"
+node_compat = true
+
+[env.production]
+name = "scientia-hr-platform"
+
+[env.preview]
+name = "scientia-hr-platform-preview"
+
+[env.development]
+name = "scientia-hr-platform-dev"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "scientia-hr-db"
+database_id = "placeholder-will-be-generated"
+
+[[d1_databases]]
+binding = "DB_PREVIEW"
+database_name = "scientia-hr-db-preview"
+database_id = "placeholder-will-be-generated"
+
+[build]
+command = "npm run build"

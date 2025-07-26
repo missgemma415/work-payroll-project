@@ -1,0 +1,194 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Warm, human-centered color palette */
+    --background: 30 43% 97%;          /* Soft cream background */
+    --foreground: 30 20% 15%;          /* Warm dark text */
+    
+    --card: 30 35% 95%;                /* Light warm card */
+    --card-foreground: 30 20% 15%;
+    
+    --popover: 30 35% 95%;
+    --popover-foreground: 30 20% 15%;
+    
+    --primary: 28 50% 60%;             /* Warm community orange */
+    --primary-foreground: 30 43% 97%;
+    
+    --secondary: 87 25% 55%;           /* Calming sage green */
+    --secondary-foreground: 30 43% 97%;
+    
+    --muted: 30 20% 90%;               /* Soft muted background */
+    --muted-foreground: 30 15% 40%;
+    
+    --accent: 206 40% 60%;             /* Trust blue */
+    --accent-foreground: 30 43% 97%;
+    
+    --destructive: 0 60% 60%;          /* Gentle red */
+    --destructive-foreground: 30 43% 97%;
+    
+    --border: 30 20% 85%;              /* Soft borders */
+    --input: 30 20% 85%;
+    --ring: 28 50% 60%;
+    
+    --radius: 1rem;                    /* Rounded corners everywhere */
+  }
+  
+  .dark {
+    /* Even in dark mode, keep it warm */
+    --background: 30 10% 10%;
+    --foreground: 30 20% 90%;
+    
+    --card: 30 10% 15%;
+    --card-foreground: 30 20% 90%;
+    
+    --popover: 30 10% 15%;
+    --popover-foreground: 30 20% 90%;
+    
+    --primary: 28 45% 50%;
+    --primary-foreground: 30 10% 10%;
+    
+    --secondary: 87 20% 40%;
+    --secondary-foreground: 30 20% 90%;
+    
+    --muted: 30 10% 20%;
+    --muted-foreground: 30 15% 60%;
+    
+    --accent: 206 35% 50%;
+    --accent-foreground: 30 10% 10%;
+    
+    --destructive: 0 50% 50%;
+    --destructive-foreground: 30 20% 90%;
+    
+    --border: 30 10% 25%;
+    --input: 30 10% 25%;
+    --ring: 28 45% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  ::selection {
+    @apply bg-primary/20 text-primary-foreground;
+  }
+}
+
+@layer components {
+  .btn-warm {
+    @apply relative overflow-hidden transition-all duration-300;
+    @apply before:absolute before:inset-0 before:bg-gradient-to-r before:from-primary/20 before:to-primary/10;
+    @apply before:translate-x-[-100%] hover:before:translate-x-0 before:transition-transform before:duration-300;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:translate-y-[-2px];
+    @apply hover:shadow-[0_10px_40px_-4px_rgba(209,156,107,0.15)];
+  }
+  
+  .glass {
+    @apply backdrop-blur-md bg-background/80 border border-border/50;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-community-600 bg-clip-text text-transparent;
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-warm {
+    0%, 100% { 
+      box-shadow: 0 0 0 0 rgba(209, 156, 107, 0.4);
+    }
+    50% { 
+      box-shadow: 0 0 0 10px rgba(209, 156, 107, 0);
+    }
+  }
+  
+  .pulse-warm {
+    animation: pulse-warm 2s ease-in-out infinite;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .transition-smooth {
+    @apply transition-all duration-300 ease-in-out;
+  }
+  
+  .shadow-warm-sm {
+    box-shadow: 0 2px 10px -1px rgba(209, 156, 107, 0.1);
+  }
+  
+  .shadow-warm-md {
+    box-shadow: 0 4px 20px -2px rgba(209, 156, 107, 0.1);
+  }
+  
+  .shadow-warm-lg {
+    box-shadow: 0 10px 40px -4px rgba(209, 156, 107, 0.15);
+  }
+  
+  .bg-warmth-gradient {
+    background: linear-gradient(135deg, #fef6f0 0%, #fde8d8 100%);
+  }
+  
+  .emoji {
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary/30 rounded-full;
+  @apply hover:bg-primary/50 transition-colors;
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  @apply outline-none ring-2 ring-primary/50 ring-offset-2 ring-offset-background rounded-md;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
