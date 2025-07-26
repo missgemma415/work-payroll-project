@@ -1,12 +1,15 @@
 'use client';
 
-import { User } from '@clerk/nextjs/server';
 import { Card, CardContent } from '@/components/ui/card';
 import { formatDate, getGreeting } from '@/lib/utils';
 import { Calendar, MapPin, Thermometer } from 'lucide-react';
 
 interface WelcomeSectionProps {
-  user: User | null;
+  user: {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+  } | null;
 }
 
 export default function WelcomeSection({ user }: WelcomeSectionProps) {

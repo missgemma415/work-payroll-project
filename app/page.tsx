@@ -1,23 +1,21 @@
-import { auth, currentUser } from '@clerk/nextjs/server';
-import { redirect } from 'next/navigation';
 import WelcomeSection from '@/components/dashboard/WelcomeSection';
 import MoodCheckIn from '@/components/dashboard/MoodCheckIn';
 import TeamPulse from '@/components/dashboard/TeamPulse';
 import TodaysPriorities from '@/components/dashboard/TodaysPriorities';
 import KudosWall from '@/components/dashboard/KudosWall';
 
-export default async function DashboardPage() {
-  const { userId } = await auth();
-  const user = await currentUser();
-
-  if (!userId) {
-    redirect('/sign-in');
-  }
+export default function DashboardPage() {
+  // Mock user for now
+  const mockUser = {
+    firstName: 'Demo',
+    lastName: 'User',
+    email: 'demo@scientiacapital.com'
+  };
 
   return (
     <div className="space-y-8">
       {/* Welcome Section */}
-      <WelcomeSection user={user} />
+      <WelcomeSection user={mockUser} />
       
       {/* Main Dashboard Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

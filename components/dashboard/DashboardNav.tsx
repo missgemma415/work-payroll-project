@@ -1,7 +1,6 @@
 'use client';
 
-import { UserButton, useUser } from '@clerk/nextjs';
-import { Bell, Heart, Home, Users, Calendar, Settings } from 'lucide-react';
+import { Bell, Heart, Home, Users, Calendar, Settings, User } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -15,7 +14,6 @@ const navigation = [
 ];
 
 export default function DashboardNav() {
-  const { user } = useUser();
   const pathname = usePathname();
 
   return (
@@ -65,20 +63,15 @@ export default function DashboardNav() {
             <div className="flex items-center gap-3">
               <div className="text-right hidden sm:block">
                 <p className="text-sm font-medium">
-                  {user?.firstName} {user?.lastName}
+                  Demo User
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  {user?.organizationMemberships?.[0]?.organization?.name || 'Personal'}
+                  Scientia Capital
                 </p>
               </div>
-              <UserButton 
-                appearance={{
-                  elements: {
-                    avatarBox: "w-10 h-10 rounded-full ring-2 ring-primary/20",
-                  }
-                }}
-                afterSignOutUrl="/sign-in"
-              />
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-community-500 flex items-center justify-center text-white">
+                <User className="w-5 h-5" />
+              </div>
             </div>
           </div>
         </div>
