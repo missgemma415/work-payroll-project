@@ -1,0 +1,21 @@
+# Git aliases for Scientia Capital workflow
+# Add these to your ~/.gitconfig with: git config --global include.path ~/path/to/.gitaliases
+
+[alias]
+    # Quick sync - pull, validate, push
+    sync = !npm run git:sync
+    
+    # Quick sync with message
+    syncm = !npm run git:sync
+    
+    # Review current changes
+    review = !npm run git:review
+    
+    # Quick commit with all files
+    ca = !git add -A && git commit
+    
+    # Show recent commits nicely formatted
+    recent = log --oneline --graph --decorate -10
+    
+    # Check what would be pushed
+    pending = log origin/main..HEAD --oneline
