@@ -1,124 +1,100 @@
-# Scientia Capital - HR Platform & Analytics Suite
+# Scientia Capital HR Platform
 
 [![Deploy to Cloudflare Pages](https://img.shields.io/badge/Deploy-Cloudflare%20Pages-orange)](https://pages.cloudflare.com/)
 
-Enterprise-grade Human Resources platform with financial forecasting capabilities.
+A modern, warm, and human-centered HR platform built with Next.js 15, Clerk authentication, and Cloudflare D1 database.
 
-## 🏆 Project Overview
+## ✨ Features
 
-This repository contains the complete Scientia Capital technology stack:
-
-- **HR Platform** - Modern employee wellness and productivity platform
-- **Landing Page** - Public marketing website 
-- **Analytics Engine** - Financial forecasting with Prophet algorithm
-
-## 📁 Repository Structure
-
-```
-prophet-growth-analysis/
-├── scientia-app/           # 🎯 Main HR Platform (Next.js 15)
-│   ├── app/               # App Router pages & layouts
-│   ├── components/        # React components (shadcn/ui)
-│   ├── database/          # Cloudflare D1 schema & seed data
-│   └── lib/               # Utilities & TypeScript types
-├── index.html             # 🌐 Static Landing Page
-└── README.md              # This file
-```
+- **Employee Wellness Dashboard** - Daily mood check-ins and wellbeing tracking
+- **Smart Priorities** - Task management with urgency levels and time estimates  
+- **Team Pulse** - Real-time team mood and activity insights
+- **Kudos Wall** - Appreciation and recognition system with categories
+- **Multi-tenant** - Organization-based access with Clerk authentication
+- **Warm Design** - Human-centered UI with custom color palette
 
 ## 🚀 Quick Start
 
-### HR Platform Development
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-```bash
-cd scientia-app
-npm install
-npm run dev
-```
+2. **Set up environment variables:**
+   ```bash
+   cp .env.local.example .env.local
+   # Edit .env.local with your Clerk keys
+   ```
 
-Visit: `http://localhost:3000`
+3. **Start development server:**
+   ```bash
+   npm run dev
+   ```
 
-### Landing Page
+4. **Open your browser:**
+   ```
+   http://localhost:3000
+   ```
 
-The `index.html` file is a standalone landing page deployed at:
-- **Production**: [scientiacapital.com](https://scientiacapital.com)
+## 🔧 Tech Stack
 
-## 🏗️ Tech Stack
-
-### HR Platform (scientia-app/)
-- **Frontend**: Next.js 15, React 19, TypeScript
-- **UI Library**: shadcn/ui with warm design system
-- **Authentication**: Clerk (multi-tenant organizations)
-- **Database**: Cloudflare D1 (SQLite edge database)
-- **Deployment**: Cloudflare Pages
-
-### Features
-- **Employee Dashboard** - Personalized wellness tracking
-- **Mood Check-ins** - 5-emoji daily wellness system
-- **Task Management** - Priority-based productivity tools
-- **Team Pulse** - Real-time team mood & activity insights
-- **Kudos System** - Recognition & appreciation platform
+- **Frontend:** Next.js 15 (App Router), React 19, TypeScript
+- **UI Library:** shadcn/ui components, Tailwind CSS
+- **Authentication:** Clerk (supports organizations)
+- **Database:** Cloudflare D1 (SQLite edge database)
+- **Deployment:** Cloudflare Pages
+- **Icons:** Lucide React
+- **Animations:** Framer Motion
 
 ## 🎨 Design System
 
-**Warm & Human-Centered Design:**
-- **Primary**: Community Orange (`#d17344`)
-- **Secondary**: Sage Green (`#87a96b`)
-- **Accent**: Trust Blue (`#6b9bd1`)
-- **Typography**: Rounded, approachable fonts
-- **Language**: Emotional, human-focused copy
+The platform uses a warm, human-centered design with:
 
-## 🔐 Security & Architecture
-
-- **Multi-tenant** with organization-based isolation
-- **Row-Level Security** via Cloudflare D1
-- **JWT Authentication** with Clerk
-- **Edge Computing** for global performance
-- **Privacy-First** mood tracking (anonymous options)
+- **Warmth Colors** (`#d17344`) - Primary actions and highlights
+- **Sage Green** (`#87a96b`) - Secondary actions and nature elements  
+- **Trust Blue** (`#6b9bd1`) - Information and reliability
+- **Community Orange** (`#d19c6b`) - Social interactions and community
+- **Rounded corners** and **soft shadows** for approachable feel
+- **Emotional language** focusing on human connection
 
 ## 📊 Database Schema
 
-Complete multi-tenant schema with:
-- Organizations & Users (Clerk integration)
-- Mood check-ins & Daily priorities
-- Kudos & Team pulse analytics
-- Activity logs & Audit trails
+The platform uses Cloudflare D1 with the following core tables:
 
-## 🚀 Deployment
+- `organizations` - Multi-tenant organization data
+- `users` - User profiles with Clerk integration
+- `mood_checkins` - Daily wellness tracking
+- `daily_priorities` - Task management
+- `kudos` - Recognition and appreciation
+- `team_pulse_snapshots` - Analytics aggregation
 
-### HR Platform
-1. Deploy to Cloudflare Pages
-2. Connect Clerk authentication
-3. Set up Cloudflare D1 database
-4. Configure custom domain
+## 🚧 Development
 
-### Landing Page
-- Static HTML deployed via Cloudflare Pages
-- Custom domain: scientiacapital.com
+### Available Scripts
 
-## 🤝 Development Workflow
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production  
+npm run start        # Start production server
+npm run lint         # Run ESLint
+```
 
-1. **Feature Development**: Work in `scientia-app/` directory
-2. **Quality Gates**: TypeScript strict mode, ESLint, tests
-3. **Git Workflow**: Conventional commits with detailed messages
-4. **Deployment**: Automatic via Cloudflare Pages
+## 🚀 Deployment to Cloudflare Pages
 
-## 📝 Contributing
+### Build Settings
+- **Framework preset:** Next.js (Static HTML Export)
+- **Build command:** `npm run build`
+- **Build output directory:** `out`
 
-1. Fork the repository
-2. Create feature branch: `git checkout -b feature/amazing-feature`
-3. Make changes in `scientia-app/` directory
-4. Follow TypeScript strict mode & code quality standards
-5. Commit with conventional format
-6. Open Pull Request
+### Environment Variables
+Add these in Cloudflare Pages dashboard:
+- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+- `CLERK_SECRET_KEY`
 
-## 📞 Support
+## 📜 License
 
-For questions or support:
-- **Website**: [scientiacapital.com](https://scientiacapital.com)
-- **Platform**: [app.scientiacapital.com](https://app.scientiacapital.com)
+This project is proprietary software owned by Scientia Capital.
 
 ---
 
-**Built with ❤️ for human-centered workplace wellness**
-
-*Enterprise-grade technology, startup heart.*
+Built with ❤️ for human-centered workplace wellness.
