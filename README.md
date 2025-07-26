@@ -1,5 +1,7 @@
 # Scientia Capital Landing Page
 
+[![Deploy to Cloudflare Pages](https://img.shields.io/badge/Deploy-Cloudflare%20Pages-orange)](https://pages.cloudflare.com/)
+
 A warm, human-centered landing page for Scientia Capital - the HR software that actually cares.
 
 ## 🚀 Quick Start
