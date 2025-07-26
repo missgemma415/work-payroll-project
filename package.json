@@ -15,7 +15,9 @@
     "prepare": "husky",
     "git:sync": "./scripts/git-sync.sh",
     "git:review": "git diff --cached --name-only | xargs npm run lint:fix --",
-    "git:quick-sync": "git pull --rebase && npm run validate && git push"
+    "git:quick-sync": "git pull --rebase && npm run validate && git push",
+    "deploy": "./scripts/deploy.sh",
+    "deploy:preview": "npm run build && npx wrangler pages deploy out --project-name=scientia-capital"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -49,6 +51,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.13",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^22",
     "@types/react": "^19",
