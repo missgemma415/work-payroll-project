@@ -1,12 +1,23 @@
 // Database types for Scientia Capital HR Platform
 // Cloudflare D1 (SQLite) Database Types
 
+import type {
+  OrganizationSettings,
+  UserPreferences,
+  MoodCheckinMetadata,
+  PriorityMetadata,
+  KudoMetadata,
+  TeamPulseMetadata,
+  ActivityDetails,
+  D1BindParams,
+} from './metadata';
+
 export interface Organization {
   id: string;
   name: string;
   slug: string;
   subscription_tier: 'starter' | 'professional' | 'enterprise';
-  settings: Record<string, any>;
+  settings: OrganizationSettings;
   created_at: string;
   updated_at: string;
 }
@@ -25,7 +36,7 @@ export interface User {
   hire_date: string | null;
   status: 'active' | 'inactive' | 'pending';
   timezone: string;
-  preferences: Record<string, any>;
+  preferences: UserPreferences;
   created_at: string;
   updated_at: string;
 }
@@ -38,7 +49,7 @@ export interface MoodCheckin {
   mood_score: number; // 1-5
   notes: string | null;
   is_anonymous: boolean;
-  metadata: Record<string, any>;
+  metadata: MoodCheckinMetadata;
   created_at: string;
 }
 
@@ -53,7 +64,7 @@ export interface DailyPriority {
   completed_at: string | null;
   due_date: string | null;
   category: string | null;
-  metadata: Record<string, any>;
+  metadata: PriorityMetadata;
   created_at: string;
   updated_at: string;
 }
@@ -67,7 +78,7 @@ export interface Kudo {
   category: 'teamwork' | 'innovation' | 'leadership' | 'helpfulness' | 'excellence';
   is_public: boolean;
   likes_count: number;
-  metadata: Record<string, any>;
+  metadata: KudoMetadata;
   created_at: string;
 }
 
@@ -88,7 +99,7 @@ export interface TeamPulseSnapshot {
   total_priorities_completed: number;
   total_kudos_given: number;
   engagement_score: number;
-  metadata: Record<string, any>;
+  metadata: TeamPulseMetadata;
   created_at: string;
 }
 
@@ -99,7 +110,7 @@ export interface ActivityLog {
   action_type: string; // 'mood_checkin', 'priority_added', 'kudos_given', etc.
   resource_type: string; // 'mood', 'priority', 'kudos', etc.
   resource_id: string | null;
-  details: Record<string, any>;
+  details: ActivityDetails;
   ip_address: string | null;
   user_agent: string | null;
   created_at: string;
@@ -182,7 +193,7 @@ export interface D1Database {
 }
 
 export interface D1PreparedStatement {
-  bind(...values: any[]): D1PreparedStatement;
+  bind(...values: D1BindParams): D1PreparedStatement;
   first<T = unknown>(colName?: string): Promise<T | null>;
   run(): Promise<D1Result>;
   all<T = unknown>(): Promise<D1Result<T>>;

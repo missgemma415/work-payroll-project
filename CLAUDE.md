@@ -1,0 +1,1 @@
+- zero-tolerance policy for TypeScript and ESLint errors going forward!

@@ -7,7 +7,7 @@ A modern, warm, and human-centered HR platform built with Next.js 15, Clerk auth
 ## ✨ Features
 
 - **Employee Wellness Dashboard** - Daily mood check-ins and wellbeing tracking
-- **Smart Priorities** - Task management with urgency levels and time estimates  
+- **Smart Priorities** - Task management with urgency levels and time estimates
 - **Team Pulse** - Real-time team mood and activity insights
 - **Kudos Wall** - Appreciation and recognition system with categories
 - **Multi-tenant** - Organization-based access with Clerk authentication
@@ -16,17 +16,20 @@ A modern, warm, and human-centered HR platform built with Next.js 15, Clerk auth
 ## 🚀 Quick Start
 
 1. **Install dependencies:**
+
    ```bash
    npm install
    ```
 
 2. **Set up environment variables:**
+
    ```bash
    cp .env.local.example .env.local
    # Edit .env.local with your Clerk keys
    ```
 
 3. **Start development server:**
+
    ```bash
    npm run dev
    ```
@@ -51,7 +54,7 @@ A modern, warm, and human-centered HR platform built with Next.js 15, Clerk auth
 The platform uses a warm, human-centered design with:
 
 - **Warmth Colors** (`#d17344`) - Primary actions and highlights
-- **Sage Green** (`#87a96b`) - Secondary actions and nature elements  
+- **Sage Green** (`#87a96b`) - Secondary actions and nature elements
 - **Trust Blue** (`#6b9bd1`) - Information and reliability
 - **Community Orange** (`#d19c6b`) - Social interactions and community
 - **Rounded corners** and **soft shadows** for approachable feel
@@ -74,7 +77,7 @@ The platform uses Cloudflare D1 with the following core tables:
 
 ```bash
 npm run dev          # Start development server
-npm run build        # Build for production  
+npm run build        # Build for production
 npm run start        # Start production server
 npm run lint         # Run ESLint
 ```
@@ -82,12 +85,15 @@ npm run lint         # Run ESLint
 ## 🚀 Deployment to Cloudflare Pages
 
 ### Build Settings
+
 - **Framework preset:** Next.js (Static HTML Export)
 - **Build command:** `npm run build`
 - **Build output directory:** `out`
 
 ### Environment Variables
+
 Add these in Cloudflare Pages dashboard:
+
 - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
 - `CLERK_SECRET_KEY`
 

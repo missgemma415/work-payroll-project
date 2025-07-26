@@ -1,0 +1,29 @@
+# Dependencies
+node_modules
+.next
+out
+build
+dist
+
+# Environment files
+.env*
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea
+.vscode
+
+# Generated files
+*.generated.*
+.vercel
+
+# Lock files
+package-lock.json
+pnpm-lock.yaml
+yarn.lock

@@ -1,160 +1,166 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Scientia Capital - HR Platform Coming Soon</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #fef6f0 0%, #fde8d8 50%, #fce4d6 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+          sans-serif;
+        background: linear-gradient(135deg, #fef6f0 0%, #fde8d8 50%, #fce4d6 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
 
+      .container {
+        max-width: 600px;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 60px 40px;
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(209, 115, 68, 0.1);
+      }
+
+      .logo {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #d17344 0%, #d19c6b 100%);
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 40px;
+        font-weight: bold;
+        margin: 0 auto 30px;
+      }
+
+      h1 {
+        color: #2d1810;
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 16px;
+      }
+
+      .tagline {
+        color: #5a3e36;
+        font-size: 20px;
+        font-weight: 400;
+        margin-bottom: 40px;
+        line-height: 1.6;
+      }
+
+      .status {
+        background: #87a96b;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 30px;
+        font-weight: 500;
+        display: inline-block;
+        margin-bottom: 40px;
+      }
+
+      .features {
+        text-align: left;
+        margin: 40px 0;
+      }
+
+      .feature {
+        display: flex;
+        align-items: start;
+        margin-bottom: 20px;
+      }
+
+      .feature-icon {
+        width: 24px;
+        height: 24px;
+        background: #d17344;
+        border-radius: 6px;
+        margin-right: 16px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .feature-text {
+        color: #5a3e36;
+        line-height: 1.6;
+      }
+
+      .contact {
+        margin-top: 40px;
+        color: #5a3e36;
+      }
+
+      .contact a {
+        color: #d17344;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .contact a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 600px) {
         .container {
-            max-width: 600px;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 60px 40px;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(209, 115, 68, 0.1);
-        }
-
-        .logo {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #d17344 0%, #d19c6b 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 40px;
-            font-weight: bold;
-            margin: 0 auto 30px;
+          padding: 40px 24px;
         }
 
         h1 {
-            color: #2d1810;
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 16px;
+          font-size: 28px;
         }
 
         .tagline {
-            color: #5a3e36;
-            font-size: 20px;
-            font-weight: 400;
-            margin-bottom: 40px;
-            line-height: 1.6;
+          font-size: 18px;
         }
-
-        .status {
-            background: #87a96b;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-weight: 500;
-            display: inline-block;
-            margin-bottom: 40px;
-        }
-
-        .features {
-            text-align: left;
-            margin: 40px 0;
-        }
-
-        .feature {
-            display: flex;
-            align-items: start;
-            margin-bottom: 20px;
-        }
-
-        .feature-icon {
-            width: 24px;
-            height: 24px;
-            background: #d17344;
-            border-radius: 6px;
-            margin-right: 16px;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .feature-text {
-            color: #5a3e36;
-            line-height: 1.6;
-        }
-
-        .contact {
-            margin-top: 40px;
-            color: #5a3e36;
-        }
-
-        .contact a {
-            color: #d17344;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .contact a:hover {
-            text-decoration: underline;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 40px 24px;
-            }
-            
-            h1 {
-                font-size: 28px;
-            }
-            
-            .tagline {
-                font-size: 18px;
-            }
-        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container">
-        <div class="logo">S</div>
-        <h1>Scientia Capital</h1>
-        <p class="tagline">The HR platform that actually cares about your team's wellbeing and growth</p>
-        
-        <div class="status">🚀 Platform Launching Soon</div>
-        
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon"></div>
-                <div class="feature-text">Daily mood check-ins to track team wellness</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon"></div>
-                <div class="feature-text">Smart task management with priority tracking</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon"></div>
-                <div class="feature-text">Real-time team pulse and activity insights</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon"></div>
-                <div class="feature-text">Recognition system to celebrate achievements</div>
-            </div>
+      <div class="logo">S</div>
+      <h1>Scientia Capital</h1>
+      <p class="tagline">
+        The HR platform that actually cares about your team's wellbeing and growth
+      </p>
+
+      <div class="status">🚀 Platform Launching Soon</div>
+
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon"></div>
+          <div class="feature-text">Daily mood check-ins to track team wellness</div>
         </div>
-        
-        <div class="contact">
-            <p>Get early access: <a href="mailto:hello@scientiacapital.com">hello@scientiacapital.com</a></p>
+        <div class="feature">
+          <div class="feature-icon"></div>
+          <div class="feature-text">Smart task management with priority tracking</div>
         </div>
+        <div class="feature">
+          <div class="feature-icon"></div>
+          <div class="feature-text">Real-time team pulse and activity insights</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon"></div>
+          <div class="feature-text">Recognition system to celebrate achievements</div>
+        </div>
+      </div>
+
+      <div class="contact">
+        <p>
+          Get early access: <a href="mailto:hello@scientiacapital.com">hello@scientiacapital.com</a>
+        </p>
+      </div>
     </div>
-</body>
+  </body>
 </html>
