@@ -1,12 +1,10 @@
 import { errorResponse, successResponse } from '@/lib/api-response';
-import { generateMockKudos, mockUser, simulateDelay, simulateError } from '@/lib/mock-data';
+import { mockUser, simulateDelay, simulateError } from '@/lib/mock-data';
+import { kudosList } from '@/lib/mock-data/kudos';
 import type { CreateKudosRequest } from '@/lib/types/api';
 import type { Kudo } from '@/lib/types/database';
 
 import type { NextResponse, NextRequest } from 'next/server';
-
-// In-memory storage for development
-export const kudosList = generateMockKudos();
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {

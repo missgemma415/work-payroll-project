@@ -1,12 +1,10 @@
 import { successResponse, errorResponse } from '@/lib/api-response';
-import { generateMockPriorities, simulateDelay, simulateError, mockUser } from '@/lib/mock-data';
+import { simulateDelay, simulateError, mockUser } from '@/lib/mock-data';
+import { priorities } from '@/lib/mock-data/priorities';
 import type { CreatePriorityRequest } from '@/lib/types/api';
 import type { DailyPriority } from '@/lib/types/database';
 
 import type { NextResponse, NextRequest } from 'next/server';
-
-// In-memory storage for development
-export const priorities = generateMockPriorities();
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {

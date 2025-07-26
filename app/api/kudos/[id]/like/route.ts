@@ -1,7 +1,6 @@
 import { errorResponse, successResponse } from '@/lib/api-response';
 import { mockUser, simulateDelay, simulateError } from '@/lib/mock-data';
-
-import { kudosList } from '../../route';
+import { kudosList } from '@/lib/mock-data/kudos';
 
 import type { NextRequest, NextResponse } from 'next/server';
 

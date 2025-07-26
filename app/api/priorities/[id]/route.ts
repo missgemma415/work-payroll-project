@@ -1,10 +1,7 @@
 import { errorResponse, successResponse } from '@/lib/api-response';
 import { simulateDelay, simulateError } from '@/lib/mock-data';
+import { priorities } from '@/lib/mock-data/priorities';
 import type { UpdatePriorityRequest } from '@/lib/types/api';
-
-// Import the priorities array from the parent route
-// In a real app, this would be from a database
-import { priorities } from '../route';
 
 import type { NextResponse, NextRequest } from 'next/server';
 
@@ -68,6 +65,3 @@ export async function DELETE(
     return errorResponse('DELETE_ERROR', 'Failed to delete priority', 500);
   }
 }
-
-// Export priorities for this route
-export { priorities };
