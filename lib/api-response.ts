@@ -24,7 +24,7 @@ export function successResponse<T>(
   return NextResponse.json({
     success: true,
     data,
-    ...(meta ? { meta } : {})
+    ...(meta ? { meta } : {}),
   });
 }
 
@@ -38,8 +38,8 @@ export function errorResponse(
       success: false,
       error: {
         code,
-        message
-      }
+        message,
+      },
     },
     { status }
   );
@@ -56,7 +56,7 @@ export function paginatedResponse<T>(
       page,
       pageSize,
       total,
-      totalPages: Math.ceil(total / pageSize)
-    }
+      totalPages: Math.ceil(total / pageSize),
+    },
   });
 }

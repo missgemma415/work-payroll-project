@@ -48,39 +48,21 @@ if (env.ENABLE_MOCK_DATA) {
 
   // Create demo user with hashed password
   const hashedPassword = bcrypt.hashSync('demo123456', env.BCRYPT_ROUNDS);
-  store.users.set(demoUserId, {
+  const demoUser: AuthUser = {
     id: demoUserId,
-    clerk_id: 'demo-clerk-id',
     email: 'demo@example.com',
     password_hash: hashedPassword,
-    first_name: 'Demo',
-    last_name: 'User',
-    avatar_url: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Demo',
+    name: 'Demo User', // Combined name for auth
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Demo',
     organization_id: demoOrgId,
     role: 'admin',
     department: 'Engineering',
     position: 'Software Engineer',
-    hire_date: '2024-01-01',
     status: 'active',
-    timezone: 'UTC',
-    preferences: {
-      notifications: {
-        email: true,
-        push: true,
-        inApp: true,
-      },
-      privacy: {
-        anonymousMoodCheckins: false,
-        showProfileToTeam: true,
-      },
-      display: {
-        theme: 'light',
-        compactMode: false,
-      },
-    },
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-  });
+  };
+  store.users.set(demoUserId, demoUser);
 }
 
 // Auth store methods

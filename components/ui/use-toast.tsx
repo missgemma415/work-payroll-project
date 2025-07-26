@@ -36,6 +36,18 @@ export function ToastProvider({ children }: { children: React.ReactNode }): Reac
     }
   }, []);
 
+  // Set global toast function
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      (window as unknown as { __toastFunction?: typeof toast }).__toastFunction = toast;
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        delete (window as unknown as { __toastFunction?: typeof toast }).__toastFunction;
+      }
+    };
+  }, [toast]);
+
   const dismiss = React.useCallback((toastId?: string) => {
     setToasts((prev) => {
       if (toastId) {
@@ -57,3 +69,17 @@ export function useToast(): ToastContextValue {
   }
   return context;
 }
+
+// Export the toast function for convenience
+export const toast = (props: Omit<Toast, 'id'> & { variant?: 'default' | 'destructive' }): void => {
+  // Get toast function from nearest ToastProvider
+  // This is a singleton pattern to access the toast function globally
+  if (typeof window !== 'undefined') {
+    const globalToast = (window as unknown as { __toastFunction?: typeof toast }).__toastFunction;
+    if (globalToast) {
+      globalToast(props);
+    } else {
+      console.warn('Toast called before ToastProvider is mounted');
+    }
+  }
+};

@@ -1,4 +1,14 @@
-import type { MoodCheckin, DailyPriority, Kudo, User, Organization, UserPreferences, OrganizationSettings, MoodCheckinMetadata, PriorityMetadata } from './types/database';
+import type {
+  MoodCheckin,
+  DailyPriority,
+  Kudo,
+  User,
+  Organization,
+  UserPreferences,
+  OrganizationSettings,
+  MoodCheckinMetadata,
+  PriorityMetadata,
+} from './types/database';
 
 // Mock user data
 export const mockUser: User = {
@@ -19,19 +29,19 @@ export const mockUser: User = {
     notifications: {
       email: true,
       push: true,
-      inApp: true
+      inApp: true,
     },
     privacy: {
       anonymousMoodCheckins: false,
-      showProfileToTeam: true
+      showProfileToTeam: true,
     },
     display: {
       theme: 'light',
-      compactMode: false
-    }
+      compactMode: false,
+    },
   } as UserPreferences,
   created_at: '2022-01-15T10:00:00Z',
-  updated_at: '2024-01-15T10:00:00Z'
+  updated_at: '2024-01-15T10:00:00Z',
 };
 
 export const mockOrganization: Organization = {
@@ -44,16 +54,16 @@ export const mockOrganization: Organization = {
       moodCheckins: true,
       kudos: true,
       priorities: true,
-      teamPulse: true
+      teamPulse: true,
     },
     notifications: {
       dailyReminders: true,
       weeklyReports: true,
-      kudosAlerts: true
-    }
+      kudosAlerts: true,
+    },
   } as OrganizationSettings,
   created_at: '2022-01-01T00:00:00Z',
-  updated_at: '2024-01-01T00:00:00Z'
+  updated_at: '2024-01-01T00:00:00Z',
 };
 
 // Generate mock mood check-ins
@@ -63,7 +73,7 @@ export function generateMockMoodCheckIns(count: number = 30): MoodCheckin[] {
     { value: 'great', score: 4 },
     { value: 'good', score: 3 },
     { value: 'okay', score: 2 },
-    { value: 'tough', score: 1 }
+    { value: 'tough', score: 1 },
   ];
 
   const checkIns: MoodCheckin[] = [];
@@ -83,7 +93,7 @@ export function generateMockMoodCheckIns(count: number = 30): MoodCheckin[] {
       notes: i % 3 === 0 ? 'Feeling productive today!' : null,
       is_anonymous: false,
       metadata: {} as MoodCheckinMetadata,
-      created_at: date.toISOString()
+      created_at: date.toISOString(),
     });
   }
 
@@ -98,7 +108,7 @@ export function generateMockPriorities(): DailyPriority[] {
       urgency: 'high' as const,
       estimated_time: 45,
       category: 'Code Review',
-      completed: false
+      completed: false,
     },
     {
       text: 'Update project documentation',
@@ -106,7 +116,7 @@ export function generateMockPriorities(): DailyPriority[] {
       estimated_time: 30,
       category: 'Documentation',
       completed: true,
-      completed_at: new Date().toISOString()
+      completed_at: new Date().toISOString(),
     },
     {
       text: 'Team standup meeting',
@@ -114,22 +124,22 @@ export function generateMockPriorities(): DailyPriority[] {
       estimated_time: 15,
       category: 'Meetings',
       completed: true,
-      completed_at: new Date().toISOString()
+      completed_at: new Date().toISOString(),
     },
     {
       text: 'Implement user feedback on dashboard',
       urgency: 'medium' as const,
       estimated_time: 120,
       category: 'Development',
-      completed: false
+      completed: false,
     },
     {
       text: 'Debug production issue #342',
       urgency: 'high' as const,
       estimated_time: 60,
       category: 'Bug Fix',
-      completed: false
-    }
+      completed: false,
+    },
   ];
 
   return priorities.map((priority, index) => ({
@@ -145,40 +155,57 @@ export function generateMockPriorities(): DailyPriority[] {
     category: priority.category,
     metadata: {} as PriorityMetadata,
     created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString()
+    updated_at: new Date().toISOString(),
   }));
 }
 
 // Generate mock kudos
 export function generateMockKudos(): Kudo[] {
   const teamMembers = [
-    { id: 'user-2', name: 'Sarah Chen', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah' },
-    { id: 'user-3', name: 'Mike Johnson', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mike' },
-    { id: 'user-4', name: 'Emily Davis', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Emily' },
-    { id: 'user-5', name: 'Alex Kim', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alex' }
+    {
+      id: 'user-2',
+      name: 'Sarah Chen',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah',
+    },
+    {
+      id: 'user-3',
+      name: 'Mike Johnson',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Mike',
+    },
+    {
+      id: 'user-4',
+      name: 'Emily Davis',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Emily',
+    },
+    {
+      id: 'user-5',
+      name: 'Alex Kim',
+      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alex',
+    },
   ];
 
   const kudosMessages = [
     {
-      message: 'Amazing work on the new feature launch! Your attention to detail made all the difference.',
-      category: 'excellence' as const
+      message:
+        'Amazing work on the new feature launch! Your attention to detail made all the difference.',
+      category: 'excellence' as const,
     },
     {
       message: 'Thanks for staying late to help debug that critical issue. True team player!',
-      category: 'teamwork' as const
+      category: 'teamwork' as const,
     },
     {
       message: 'Your presentation today was inspiring. Great job communicating our vision!',
-      category: 'leadership' as const
+      category: 'leadership' as const,
     },
     {
       message: 'Innovative solution to the performance problem. Thinking outside the box!',
-      category: 'innovation' as const
+      category: 'innovation' as const,
     },
     {
       message: 'Always willing to help others. Your patience and guidance are invaluable.',
-      category: 'helpfulness' as const
-    }
+      category: 'helpfulness' as const,
+    },
   ];
 
   const kudos: Kudo[] = [];
@@ -200,7 +227,7 @@ export function generateMockKudos(): Kudo[] {
       is_public: true,
       likes_count: Math.floor(Math.random() * 15) + 1,
       metadata: {},
-      created_at: date.toISOString()
+      created_at: date.toISOString(),
     });
   });
 
@@ -224,13 +251,13 @@ export function generateTeamPulseData(): TeamPulseData[] {
   for (let i = 0; i < days; i++) {
     const date = new Date(now);
     date.setDate(date.getDate() - i);
-    
+
     data.push({
       date: date.toISOString().split('T')[0]!,
       averageMood: 3.5 + Math.random() * 1.5,
       activeUsers: Math.floor(Math.random() * 10) + 15,
       completedTasks: Math.floor(Math.random() * 30) + 20,
-      kudosGiven: Math.floor(Math.random() * 15) + 5
+      kudosGiven: Math.floor(Math.random() * 15) + 5,
     });
   }
 
@@ -239,7 +266,7 @@ export function generateTeamPulseData(): TeamPulseData[] {
 
 // Simulate API delay
 export function simulateDelay(ms: number = 300): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 // Simulate random errors (10% chance)

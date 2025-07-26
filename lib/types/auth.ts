@@ -3,8 +3,20 @@ import { z } from 'zod';
 import type { User } from './database';
 
 // Auth-specific user type with password
-export interface AuthUser extends User {
+export interface AuthUser
+  extends Omit<
+    User,
+    | 'clerk_id'
+    | 'first_name'
+    | 'last_name'
+    | 'avatar_url'
+    | 'hire_date'
+    | 'preferences'
+    | 'timezone'
+  > {
   password_hash: string;
+  name: string; // Combined first_name + last_name
+  avatar?: string; // Simplified avatar property
 }
 
 // JWT Token payload

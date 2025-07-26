@@ -80,34 +80,15 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // Create user
     const newUser: AuthUser = {
       id: userId,
-      clerk_id: `clerk-${userId}`, // Placeholder for Clerk integration
       email: email.toLowerCase(),
       password_hash: passwordHash,
-      first_name: firstName,
-      last_name: lastName,
-      avatar_url: `https://api.dicebear.com/7.x/avataaars/svg?seed=${firstName}${lastName}`,
+      name: `${firstName} ${lastName}`, // Combined name for auth
+      avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${firstName}${lastName}`,
       organization_id: orgId,
       role: 'owner', // First user is the owner
       department: department ?? null,
       position: position ?? null,
-      hire_date: new Date().toISOString().split('T')[0] ?? null,
       status: 'active',
-      timezone: 'UTC',
-      preferences: {
-        notifications: {
-          email: true,
-          push: true,
-          inApp: true,
-        },
-        privacy: {
-          anonymousMoodCheckins: false,
-          showProfileToTeam: true,
-        },
-        display: {
-          theme: 'light',
-          compactMode: false,
-        },
-      },
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };

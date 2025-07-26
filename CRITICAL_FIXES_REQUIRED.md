@@ -5,6 +5,7 @@ This codebase is **NOT PRODUCTION READY**. It's currently a prototype with serio
 ## Immediate Security Fixes (DO THESE FIRST)
 
 ### 1. Authentication & Authorization
+
 ```typescript
 // CURRENT: No auth at all
 export async function GET(request: NextRequest) {
@@ -17,7 +18,7 @@ import { verifyToken } from '@/lib/auth';
 export async function GET(request: NextRequest) {
   const user = await verifyToken(request);
   if (!user) return new Response('Unauthorized', { status: 401 });
-  
+
   // Check organization access
   if (user.organizationId !== request.query.orgId) {
     return new Response('Forbidden', { status: 403 });
@@ -26,6 +27,7 @@ export async function GET(request: NextRequest) {
 ```
 
 ### 2. Remove In-Memory Storage
+
 ```typescript
 // CURRENT: This will crash with multiple users!
 export const kudosList = generateMockKudos();
@@ -35,15 +37,16 @@ import { db } from '@/lib/db';
 
 export async function GET() {
   const kudos = await db.kudos.findMany({
-    where: { organizationId: user.organizationId }
+    where: { organizationId: user.organizationId },
   });
 }
 ```
 
 ### 3. Add Input Validation
+
 ```typescript
 // CURRENT: Vulnerable to injection
-const body = await request.json() as CreateKudosRequest;
+const body = (await request.json()) as CreateKudosRequest;
 
 // REQUIRED: Validate everything
 import { z } from 'zod';
@@ -51,13 +54,14 @@ import { z } from 'zod';
 const CreateKudosSchema = z.object({
   message: z.string().min(1).max(500),
   category: z.enum(['teamwork', 'innovation', 'leadership']),
-  to_user_id: z.string().uuid().optional()
+  to_user_id: z.string().uuid().optional(),
 });
 
 const body = CreateKudosSchema.parse(await request.json());
 ```
 
 ### 4. Fix Static Export
+
 ```typescript
 // next.config.ts
 // REMOVE THIS LINE:
@@ -69,6 +73,7 @@ output: 'export',
 ## Architecture Fixes
 
 ### 1. Service Layer Pattern
+
 ```typescript
 // /lib/services/kudos.service.ts
 export class KudosService {
@@ -81,26 +86,27 @@ export class KudosService {
   async createKudos(userId: string, data: CreateKudosDto) {
     // Validate permissions
     await this.validateUserCanGiveKudos(userId);
-    
+
     // Create with transaction
     const kudos = await this.db.transaction(async (tx) => {
       const created = await tx.kudos.create({ ...data, fromUserId: userId });
       await tx.activityLogs.create({ action: 'kudos_created', userId });
       return created;
     });
-    
+
     // Invalidate cache
     await this.cache.invalidate(`kudos:${kudos.organizationId}`);
-    
+
     // Log for monitoring
     this.logger.info('Kudos created', { kudosId: kudos.id, userId });
-    
+
     return kudos;
   }
 }
 ```
 
 ### 2. Repository Pattern
+
 ```typescript
 // /lib/repositories/kudos.repository.ts
 export class KudosRepository {
@@ -110,7 +116,7 @@ export class KudosRepository {
       include: { fromUser: true, toUser: true },
       skip: options.offset,
       take: options.limit,
-      orderBy: { createdAt: 'desc' }
+      orderBy: { createdAt: 'desc' },
     });
   }
 }
@@ -119,6 +125,7 @@ export class KudosRepository {
 ## Testing Requirements
 
 ### 1. Unit Tests (Jest)
+
 ```typescript
 // /lib/services/__tests__/kudos.service.test.ts
 describe('KudosService', () => {
@@ -127,22 +134,20 @@ describe('KudosService', () => {
     for (let i = 0; i < 10; i++) {
       await service.createKudos(userId, mockData);
     }
-    
-    await expect(service.createKudos(userId, mockData))
-      .rejects.toThrow('Rate limit exceeded');
+
+    await expect(service.createKudos(userId, mockData)).rejects.toThrow('Rate limit exceeded');
   });
 });
 ```
 
 ### 2. Integration Tests
+
 ```typescript
 // /tests/api/kudos.test.ts
 describe('POST /api/kudos', () => {
   it('requires authentication', async () => {
-    const res = await request(app)
-      .post('/api/kudos')
-      .send({ message: 'Great job!' });
-      
+    const res = await request(app).post('/api/kudos').send({ message: 'Great job!' });
+
     expect(res.status).toBe(401);
   });
 });
@@ -151,6 +156,7 @@ describe('POST /api/kudos', () => {
 ## DevOps Requirements
 
 ### 1. Environment Configuration
+
 ```env
 # .env.local
 DATABASE_URL=postgresql://user:pass@localhost:5432/scientia
@@ -160,6 +166,7 @@ SENTRY_DSN=your-sentry-dsn
 ```
 
 ### 2. Docker Setup
+
 ```dockerfile
 FROM node:20-alpine AS builder
 WORKDIR /app
@@ -179,6 +186,7 @@ CMD ["npm", "start"]
 ```
 
 ### 3. GitHub Actions CI/CD
+
 ```yaml
 # .github/workflows/ci.yml
 name: CI/CD
@@ -199,6 +207,7 @@ jobs:
 ## Monitoring & Observability
 
 ### 1. Structured Logging
+
 ```typescript
 import { createLogger } from '@/lib/logger';
 
@@ -209,32 +218,32 @@ logger.info('Kudos created', {
   userId: user.id,
   organizationId: org.id,
   category: kudos.category,
-  timestamp: new Date().toISOString()
+  timestamp: new Date().toISOString(),
 });
 ```
 
 ### 2. Error Tracking
+
 ```typescript
 import * as Sentry from '@sentry/nextjs';
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
   environment: process.env.NODE_ENV,
-  integrations: [
-    new Sentry.Integrations.Http({ tracing: true }),
-  ],
+  integrations: [new Sentry.Integrations.Http({ tracing: true })],
   tracesSampleRate: 1.0,
 });
 ```
 
 ### 3. Metrics
+
 ```typescript
 import { metrics } from '@/lib/metrics';
 
 // Track API latency
 const timer = metrics.histogram('api_latency_seconds', {
   help: 'API latency in seconds',
-  labelNames: ['method', 'route', 'status']
+  labelNames: ['method', 'route', 'status'],
 });
 
 const end = timer.startTimer();
@@ -245,10 +254,11 @@ end({ method: 'POST', route: '/api/kudos', status: 200 });
 ## Multi-Tenancy Requirements
 
 ### 1. Tenant Isolation Middleware
+
 ```typescript
 export async function tenantMiddleware(request: NextRequest) {
   const user = await getCurrentUser(request);
-  
+
   // Set tenant context for all queries
   AsyncLocalStorage.run({ tenantId: user.organizationId }, () => {
     // All DB queries will automatically filter by tenant
@@ -257,6 +267,7 @@ export async function tenantMiddleware(request: NextRequest) {
 ```
 
 ### 2. Row-Level Security
+
 ```sql
 -- Enable RLS on all tables
 ALTER TABLE kudos ENABLE ROW LEVEL SECURITY;
@@ -270,24 +281,26 @@ CREATE POLICY tenant_isolation ON kudos
 ## Data Privacy & Compliance
 
 ### 1. GDPR Compliance
+
 ```typescript
 // /app/api/users/[id]/export/route.ts
 export async function GET(request: NextRequest) {
   const userId = request.params.id;
-  
+
   // Export all user data
   const userData = await exportUserData(userId);
-  
+
   return new Response(JSON.stringify(userData), {
     headers: {
       'Content-Type': 'application/json',
-      'Content-Disposition': `attachment; filename="user-data-${userId}.json"`
-    }
+      'Content-Disposition': `attachment; filename="user-data-${userId}.json"`,
+    },
   });
 }
 ```
 
 ### 2. Audit Logging
+
 ```typescript
 // Every data mutation must be logged
 await auditLog.create({
@@ -297,13 +310,14 @@ await auditLog.create({
   resourceId: priorityId,
   metadata: { reason: 'User requested deletion' },
   ipAddress: request.ip,
-  userAgent: request.headers['user-agent']
+  userAgent: request.headers['user-agent'],
 });
 ```
 
 ## Performance & Scalability
 
 ### 1. Caching Strategy
+
 ```typescript
 // Use Redis for caching
 const cachedKudos = await redis.get(`kudos:${orgId}:${page}`);
@@ -314,6 +328,7 @@ await redis.setex(`kudos:${orgId}:${page}`, 300, JSON.stringify(kudos));
 ```
 
 ### 2. Database Optimization
+
 ```sql
 -- Add proper indexes
 CREATE INDEX idx_kudos_org_created ON kudos(organization_id, created_at DESC);

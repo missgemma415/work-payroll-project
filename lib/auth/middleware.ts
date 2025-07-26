@@ -1,13 +1,12 @@
 import { NextResponse, type NextRequest } from 'next/server';
 
-import type { TokenPayload } from '@/lib/types/auth';
-import type { User } from '@/lib/types/database';
+import type { TokenPayload, AuthUser } from '@/lib/types/auth';
 
 import { verifyAccessToken, extractTokenFromHeader } from './jwt';
 import { authStore } from './store';
 
 export interface AuthenticatedRequest extends NextRequest {
-  user?: User;
+  user?: Omit<AuthUser, 'password_hash'>;
   auth?: TokenPayload;
 }
 

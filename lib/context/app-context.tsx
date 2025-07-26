@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 
-import { mockUser, mockOrganization } from '@/lib/mock-data';
+import { useAuth } from '@/lib/context/auth-context';
 import type { User, Organization, MoodCheckin, DailyPriority, Kudo } from '@/lib/types/database';
 
 interface AppState {
@@ -34,10 +34,12 @@ interface AppContextValue extends AppState {
 const AppContext = createContext<AppContextValue | undefined>(undefined);
 
 export function AppProvider({ children }: { children: ReactNode }): React.JSX.Element {
-  // Initialize with mock data for development
+  const { user: authUser, organization: authOrg, accessToken } = useAuth();
+
+  // Initialize state
   const [state, setState] = useState<AppState>({
-    user: mockUser,
-    organization: mockOrganization,
+    user: null,
+    organization: null,
     moodHistory: [],
     priorities: [],
     kudos: [],
@@ -45,24 +47,57 @@ export function AppProvider({ children }: { children: ReactNode }): React.JSX.El
     error: null,
   });
 
-  // Load data from localStorage on mount
+  // Sync auth user/org with app state
   useEffect(() => {
-    const savedState = localStorage.getItem('app-state');
-    if (savedState) {
-      try {
-        const parsed = JSON.parse(savedState) as Partial<AppState>;
-        setState((prev) => ({
-          ...prev,
-          ...parsed,
-          // Always use mock user/org for now
-          user: mockUser,
-          organization: mockOrganization,
-        }));
-      } catch (_error) {
-        console.error('Failed to load saved state:', _error);
-      }
+    if (authUser && authOrg) {
+      // Convert AuthUser to User type
+      const [firstName, ...lastNameParts] = authUser.name.split(' ');
+      const user: User = {
+        id: authUser.id,
+        clerk_id: authUser.id, // Use same id for now
+        email: authUser.email,
+        first_name: firstName ?? null,
+        last_name: lastNameParts.join(' ') || null,
+        avatar_url: authUser.avatar ?? null,
+        role: authUser.role,
+        department: authUser.department ?? null,
+        position: authUser.position ?? null,
+        hire_date: null,
+        status: authUser.status,
+        timezone: 'UTC',
+        preferences: {
+          notifications: {
+            email: true,
+            push: true,
+            inApp: true,
+          },
+          privacy: {
+            anonymousMoodCheckins: false,
+            showProfileToTeam: true,
+          },
+          display: {
+            theme: 'light',
+            compactMode: false,
+          },
+        },
+        organization_id: authUser.organization_id,
+        created_at: authUser.created_at,
+        updated_at: authUser.updated_at,
+      };
+
+      setState((prev) => ({
+        ...prev,
+        user,
+        organization: authOrg,
+      }));
+    } else {
+      setState((prev) => ({
+        ...prev,
+        user: null,
+        organization: null,
+      }));
     }
-  }, []);
+  }, [authUser, authOrg]);
 
   // Save to localStorage on state change
   useEffect(() => {
@@ -72,14 +107,30 @@ export function AppProvider({ children }: { children: ReactNode }): React.JSX.El
 
   // Fetch all data
   const refreshData = async (): Promise<void> => {
+    if (!accessToken) {
+      // Not authenticated, clear data
+      setState((prev) => ({
+        ...prev,
+        moodHistory: [],
+        priorities: [],
+        kudos: [],
+        isLoading: false,
+      }));
+      return;
+    }
+
     setState((prev) => ({ ...prev, isLoading: true, error: null }));
 
     try {
-      // Fetch all data in parallel
+      // Fetch all data in parallel with auth headers
+      const headers = {
+        Authorization: `Bearer ${accessToken}`,
+      };
+
       const [moodsRes, prioritiesRes, kudosRes] = await Promise.all([
-        fetch('/api/moods'),
-        fetch('/api/priorities'),
-        fetch('/api/kudos'),
+        fetch('/api/moods', { headers }),
+        fetch('/api/priorities', { headers }),
+        fetch('/api/kudos', { headers }),
       ]);
 
       if (!moodsRes.ok || !prioritiesRes.ok || !kudosRes.ok) {
@@ -108,10 +159,13 @@ export function AppProvider({ children }: { children: ReactNode }): React.JSX.El
     }
   };
 
-  // Initial data load
+  // Initial data load when auth changes
   useEffect(() => {
-    void refreshData();
-  }, []);
+    if (accessToken) {
+      void refreshData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [accessToken]);
 
   const value: AppContextValue = {
     ...state,

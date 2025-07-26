@@ -1,7 +1,9 @@
 import { Inter, Poppins } from 'next/font/google';
 
+import Header from '@/components/layout/Header';
 import { ToastProvider } from '@/components/ui/use-toast';
 import { AppProvider } from '@/lib/context/app-context';
+import { AuthProvider } from '@/lib/context/auth-context';
 
 import type { Metadata } from 'next';
 
@@ -34,7 +36,12 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <body className="bg-warmth-gradient min-h-screen font-sans antialiased">
         <ToastProvider>
-          <AppProvider>{children}</AppProvider>
+          <AuthProvider>
+            <AppProvider>
+              <Header />
+              <main className="container mx-auto px-4 py-8">{children}</main>
+            </AppProvider>
+          </AuthProvider>
         </ToastProvider>
       </body>
     </html>
