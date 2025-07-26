@@ -39,3 +39,22 @@ next-env.d.ts
 # cloudflare
 .wrangler/
 dist/
+
+# Exclude temporary/reference directories
+prophet-analytics/
+scientia-capital-landing/
+shadcn-ui-reference/
+
+# Build artifacts and cache
+tsconfig.tsbuildinfo
+.next/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
