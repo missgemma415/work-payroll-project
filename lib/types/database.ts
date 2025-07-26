@@ -12,6 +12,15 @@ import type {
   D1BindParams,
 } from './metadata';
 
+// Re-export types for easier import
+export type {
+  OrganizationSettings,
+  UserPreferences,
+  MoodCheckinMetadata,
+  PriorityMetadata,
+  KudoMetadata,
+} from './metadata';
+
 export interface Organization {
   id: string;
   name: string;

@@ -2,6 +2,8 @@ import { Inter, Poppins } from 'next/font/google';
 
 import type { Metadata } from 'next';
 import './globals.css';
+import { AppProvider } from '@/lib/context/app-context';
+import { ToastProvider } from '@/components/ui/use-toast';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -28,7 +30,11 @@ export default function RootLayout({
 }>): React.JSX.Element {
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
-      <body className="bg-warmth-gradient min-h-screen font-sans antialiased">{children}</body>
+      <body className="bg-warmth-gradient min-h-screen font-sans antialiased">
+        <ToastProvider>
+          <AppProvider>{children}</AppProvider>
+        </ToastProvider>
+      </body>
     </html>
   );
 }

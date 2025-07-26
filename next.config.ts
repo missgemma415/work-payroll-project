@@ -1,11 +1,16 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  output: 'export',
+  // Removed 'output: export' to enable API routes
+  // This was preventing the app from working as a dynamic SaaS
   images: {
-    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'api.dicebear.com',
+      },
+    ],
   },
-  trailingSlash: true,
 };
 
 export default nextConfig;

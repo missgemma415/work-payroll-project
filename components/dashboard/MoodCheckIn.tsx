@@ -1,29 +1,64 @@
 'use client';
 
 import { Heart } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useMoodCheckIn } from '@/lib/hooks/use-api';
+import { useMoodHistory } from '@/lib/context/app-context';
+import { useToast } from '@/components/ui/use-toast';
+import type { MoodCheckin } from '@/lib/types/database';
 
 const moods = [
-  { value: 'amazing', emoji: '🤩', label: 'Amazing', color: 'text-green-500' },
-  { value: 'great', emoji: '😄', label: 'Great', color: 'text-green-400' },
-  { value: 'good', emoji: '😊', label: 'Good', color: 'text-yellow-500' },
-  { value: 'okay', emoji: '😐', label: 'Okay', color: 'text-orange-500' },
-  { value: 'tough', emoji: '😔', label: 'Tough', color: 'text-red-500' },
+  { value: 'amazing' as const, emoji: '🤩', label: 'Amazing', color: 'text-green-500', score: 5 },
+  { value: 'great' as const, emoji: '😄', label: 'Great', color: 'text-green-400', score: 4 },
+  { value: 'good' as const, emoji: '😊', label: 'Good', color: 'text-yellow-500', score: 3 },
+  { value: 'okay' as const, emoji: '😐', label: 'Okay', color: 'text-orange-500', score: 2 },
+  { value: 'tough' as const, emoji: '😔', label: 'Tough', color: 'text-red-500', score: 1 },
 ];
 
 export default function MoodCheckIn(): React.JSX.Element {
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
   const [hasCheckedIn, setHasCheckedIn] = useState(false);
+  const { checkIn, isLoading } = useMoodCheckIn();
+  const moodHistory = useMoodHistory();
+  const { toast } = useToast();
 
-  const handleMoodSelect = (moodValue: string): void => {
-    setSelectedMood(moodValue);
-    // Here we would normally save to database
-    setTimeout(() => {
+  // Check if already checked in today
+  useEffect(() => {
+    const today = new Date().toDateString();
+    const todaysMood = moodHistory.find(
+      (mood) => new Date(mood.created_at).toDateString() === today
+    );
+    if (todaysMood) {
+      setSelectedMood(todaysMood.mood_value);
       setHasCheckedIn(true);
-    }, 500);
+    }
+  }, [moodHistory]);
+
+  const handleMoodSelect = async (moodValue: MoodCheckin['mood_value']): Promise<void> => {
+    setSelectedMood(moodValue);
+    const mood = moods.find(m => m.value === moodValue);
+    if (!mood) return;
+
+    try {
+      await checkIn({
+        mood_value: moodValue,
+        mood_score: mood.score,
+      });
+      setHasCheckedIn(true);
+      toast({
+        title: 'Mood recorded!',
+        description: 'Thanks for sharing how you\'re feeling today.',
+      });
+    } catch (error) {
+      toast({
+        title: 'Something went wrong',
+        description: 'Please try again later.',
+      });
+      setSelectedMood(null);
+    }
   };
 
   if (hasCheckedIn) {
@@ -77,7 +112,8 @@ export default function MoodCheckIn(): React.JSX.Element {
             <button
               key={mood.value}
               onClick={() => handleMoodSelect(mood.value)}
-              className={`flex w-full items-center gap-3 rounded-lg border border-border/50 p-3 transition-all duration-200 hover:border-primary/50 hover:bg-primary/5 ${
+              disabled={isLoading}
+              className={`flex w-full items-center gap-3 rounded-lg border border-border/50 p-3 transition-all duration-200 hover:border-primary/50 hover:bg-primary/5 disabled:opacity-50 disabled:cursor-not-allowed ${
                 selectedMood === mood.value ? 'border-primary bg-primary/10' : ''
               }`}
             >
