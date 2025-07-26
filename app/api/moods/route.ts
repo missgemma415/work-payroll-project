@@ -1,11 +1,9 @@
-
-import { NextResponse, type NextRequest } from 'next/server';
-
-import { successResponse, errorResponse } from '@/lib/api-response';
-import { generateMockMoodCheckIns, simulateDelay, simulateError, mockUser } from '@/lib/mock-data';
+import { errorResponse, successResponse } from '@/lib/api-response';
+import { generateMockMoodCheckIns, mockUser, simulateDelay, simulateError } from '@/lib/mock-data';
 import type { CreateMoodRequest } from '@/lib/types/api';
 import type { MoodCheckin } from '@/lib/types/database';
 
+import type { NextRequest, NextResponse } from 'next/server';
 
 // In-memory storage for development
 const moodCheckIns = generateMockMoodCheckIns(30);
@@ -19,9 +17,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const userId = searchParams.get('userId') ?? mockUser.id;
     const limit = parseInt(searchParams.get('limit') ?? '30');
 
-    const userMoods = moodCheckIns
-      .filter(mood => mood.user_id === userId)
-      .slice(0, limit);
+    const userMoods = moodCheckIns.filter((mood) => mood.user_id === userId).slice(0, limit);
 
     return successResponse(userMoods);
   } catch (_error) {
@@ -34,7 +30,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     await simulateDelay();
     simulateError();
 
-    const body = await request.json() as CreateMoodRequest;
+    const body = (await request.json()) as CreateMoodRequest;
     const { mood_value, mood_score, notes } = body;
 
     // Validation
@@ -61,7 +57,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       notes: notes ?? null,
       is_anonymous: false,
       metadata: {},
-      created_at: new Date().toISOString()
+      created_at: new Date().toISOString(),
     };
 
     // Add to the beginning of the array (most recent first)

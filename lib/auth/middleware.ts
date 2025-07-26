@@ -1,8 +1,10 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { verifyAccessToken, extractTokenFromHeader } from './jwt';
-import { authStore } from './store';
+
 import type { TokenPayload } from '@/lib/types/auth';
 import type { User } from '@/lib/types/database';
+
+import { verifyAccessToken, extractTokenFromHeader } from './jwt';
+import { authStore } from './store';
 
 export interface AuthenticatedRequest extends NextRequest {
   user?: User;
@@ -10,9 +12,9 @@ export interface AuthenticatedRequest extends NextRequest {
 }
 
 // Middleware to verify JWT and attach user to request
-export async function withAuth(
+export function withAuth(
   handler: (req: AuthenticatedRequest) => Promise<NextResponse>
-) {
+): (request: NextRequest) => Promise<NextResponse> {
   return async (request: NextRequest): Promise<NextResponse> => {
     try {
       // Extract token from Authorization header
@@ -48,7 +50,7 @@ export async function withAuth(
       }
 
       // Get user from store
-      const authUser = await authStore.getUserById(payload.sub);
+      const authUser = authStore.getUserById(payload.sub);
       if (!authUser) {
         return NextResponse.json(
           {
@@ -77,7 +79,7 @@ export async function withAuth(
       }
 
       // Remove password from user object
-      const { password_hash, ...user } = authUser;
+      const { password_hash: _password_hash, ...user } = authUser;
 
       // Create authenticated request
       const authenticatedRequest = request as AuthenticatedRequest;
@@ -103,7 +105,11 @@ export async function withAuth(
 }
 
 // Middleware to check if user has specific role
-export function withRole(allowedRoles: Array<'owner' | 'admin' | 'member'>) {
+export function withRole(
+  allowedRoles: Array<'owner' | 'admin' | 'member'>
+): (
+  handler: (req: AuthenticatedRequest) => Promise<NextResponse>
+) => (request: NextRequest) => Promise<NextResponse> {
   return (handler: (req: AuthenticatedRequest) => Promise<NextResponse>) => {
     return withAuth(async (req: AuthenticatedRequest) => {
       if (!req.user || !allowedRoles.includes(req.user.role)) {
@@ -127,11 +133,10 @@ export function withRole(allowedRoles: Array<'owner' | 'admin' | 'member'>) {
 // Middleware to check if user belongs to the organization
 export function withOrganization(
   handler: (req: AuthenticatedRequest) => Promise<NextResponse>
-) {
+): (request: NextRequest) => Promise<NextResponse> {
   return withAuth(async (req: AuthenticatedRequest) => {
     // Extract organization ID from request (e.g., from query params or body)
-    const orgId = req.nextUrl.searchParams.get('organizationId') || 
-                  req.auth?.organizationId;
+    const orgId = req.nextUrl.searchParams.get('organizationId') ?? req.auth?.organizationId;
 
     if (!orgId || req.user?.organization_id !== orgId) {
       return NextResponse.json(

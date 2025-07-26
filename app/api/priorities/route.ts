@@ -1,12 +1,9 @@
-
-
 import { successResponse, errorResponse } from '@/lib/api-response';
 import { generateMockPriorities, simulateDelay, simulateError, mockUser } from '@/lib/mock-data';
 import type { CreatePriorityRequest } from '@/lib/types/api';
 import type { DailyPriority } from '@/lib/types/database';
 
-import { NextResponse, type NextRequest } from 'next/server';
-
+import type { NextResponse, NextRequest } from 'next/server';
 
 // In-memory storage for development
 export const priorities = generateMockPriorities();
@@ -20,12 +17,10 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     const userId = searchParams.get('userId') ?? mockUser.id;
     const completed = searchParams.get('completed');
 
-    let userPriorities = priorities.filter(p => p.user_id === userId);
+    let userPriorities = priorities.filter((p) => p.user_id === userId);
 
     if (completed !== null) {
-      userPriorities = userPriorities.filter(p => 
-        p.completed === (completed === 'true')
-      );
+      userPriorities = userPriorities.filter((p) => p.completed === (completed === 'true'));
     }
 
     return successResponse(userPriorities);
@@ -39,7 +34,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     await simulateDelay();
     simulateError();
 
-    const body = await request.json() as CreatePriorityRequest;
+    const body = (await request.json()) as CreatePriorityRequest;
     const { text, urgency = 'medium', estimated_time, category, due_date } = body;
 
     // Validation
@@ -66,7 +61,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       category: category ?? null,
       metadata: {},
       created_at: new Date().toISOString(),
-      updated_at: new Date().toISOString()
+      updated_at: new Date().toISOString(),
     };
 
     priorities.unshift(newPriority);

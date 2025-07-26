@@ -1,7 +1,8 @@
-import { NextResponse, type NextRequest } from 'next/server';
-import { verifyAccessToken, extractTokenFromHeader } from '@/lib/auth/jwt';
-import { authStore } from '@/lib/auth/store';
 import { successResponse } from '@/lib/api-response';
+import { extractTokenFromHeader, verifyAccessToken } from '@/lib/auth/jwt';
+import { authStore } from '@/lib/auth/store';
+
+import type { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
@@ -18,7 +19,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const payload = await verifyAccessToken(token);
     if (payload) {
       // Delete all refresh tokens for this user
-      await authStore.deleteUserRefreshTokens(payload.sub);
+      authStore.deleteUserRefreshTokens(payload.sub);
     }
 
     return successResponse({ message: 'Logged out successfully' });

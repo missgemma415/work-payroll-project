@@ -20,7 +20,7 @@ const ToastContext = React.createContext<ToastContextValue | undefined>(undefine
 
 let toastCount = 0;
 
-export function ToastProvider({ children }: { children: React.ReactNode }) {
+export function ToastProvider({ children }: { children: React.ReactNode }): React.JSX.Element {
   const [toasts, setToasts] = React.useState<Toast[]>([]);
 
   const toast = React.useCallback((props: Omit<Toast, 'id'>) => {
@@ -46,13 +46,11 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <ToastContext.Provider value={{ toasts, toast, dismiss }}>
-      {children}
-    </ToastContext.Provider>
+    <ToastContext.Provider value={{ toasts, toast, dismiss }}>{children}</ToastContext.Provider>
   );
 }
 
-export function useToast() {
+export function useToast(): ToastContextValue {
   const context = React.useContext(ToastContext);
   if (!context) {
     throw new Error('useToast must be used within a ToastProvider');

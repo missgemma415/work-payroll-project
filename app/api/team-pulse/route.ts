@@ -1,10 +1,7 @@
-
-
 import { successResponse, errorResponse } from '@/lib/api-response';
 import { generateTeamPulseData, simulateDelay, simulateError } from '@/lib/mock-data';
 
-import { NextResponse, type NextRequest } from 'next/server';
-
+import type { NextResponse, NextRequest } from 'next/server';
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
   try {
@@ -29,7 +26,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       totalKudosGiven: pulseData.reduce((sum, d) => sum + d.kudosGiven, 0),
       engagementScore: Math.round(
         (pulseData.reduce((sum, d) => sum + d.activeUsers, 0) / (pulseData.length * 25)) * 100
-      )
+      ),
     };
 
     return successResponse({
@@ -37,26 +34,29 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       summary,
       dailyData: pulseData,
       trends: {
-        mood: calculateTrend(pulseData.map(d => d.averageMood)),
-        engagement: calculateTrend(pulseData.map(d => d.activeUsers)),
-        productivity: calculateTrend(pulseData.map(d => d.completedTasks))
-      }
+        mood: calculateTrend(pulseData.map((d) => d.averageMood)),
+        engagement: calculateTrend(pulseData.map((d) => d.activeUsers)),
+        productivity: calculateTrend(pulseData.map((d) => d.completedTasks)),
+      },
     });
   } catch (_error) {
     return errorResponse('FETCH_ERROR', 'Failed to fetch team pulse data', 500);
   }
 }
 
-function calculateTrend(values: number[]): { direction: 'up' | 'down' | 'stable'; percentage: number } {
+function calculateTrend(values: number[]): {
+  direction: 'up' | 'down' | 'stable';
+  percentage: number;
+} {
   if (values.length < 2) return { direction: 'stable', percentage: 0 };
 
   const recentAvg = values.slice(-3).reduce((a, b) => a + b, 0) / 3;
   const previousAvg = values.slice(0, 3).reduce((a, b) => a + b, 0) / 3;
-  
+
   const change = ((recentAvg - previousAvg) / previousAvg) * 100;
-  
+
   return {
     direction: change > 5 ? 'up' : change < -5 ? 'down' : 'stable',
-    percentage: Math.abs(Math.round(change))
+    percentage: Math.abs(Math.round(change)),
   };
 }

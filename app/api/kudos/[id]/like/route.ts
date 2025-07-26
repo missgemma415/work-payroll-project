@@ -1,12 +1,9 @@
-
-
-import { successResponse, errorResponse } from '@/lib/api-response';
-import { simulateDelay, simulateError, mockUser } from '@/lib/mock-data';
+import { errorResponse, successResponse } from '@/lib/api-response';
+import { mockUser, simulateDelay, simulateError } from '@/lib/mock-data';
 
 import { kudosList } from '../../route';
 
-import { NextResponse, type NextRequest } from 'next/server';
-
+import type { NextRequest, NextResponse } from 'next/server';
 
 // Track likes per user
 const userLikes = new Map<string, Set<string>>();
@@ -22,7 +19,7 @@ export async function POST(
     const { id } = params;
     const userId = mockUser.id;
 
-    const kudosIndex = kudosList.findIndex(k => k.id === id);
+    const kudosIndex = kudosList.findIndex((k) => k.id === id);
     if (kudosIndex === -1) {
       return errorResponse('NOT_FOUND', 'Kudos not found', 404);
     }
@@ -48,7 +45,7 @@ export async function POST(
     return successResponse({
       kudos_id: id,
       liked: userLikeSet.has(id),
-      likes_count: kudos.likes_count
+      likes_count: kudos.likes_count,
     });
   } catch (_error) {
     return errorResponse('LIKE_ERROR', 'Failed to update kudos like', 500);

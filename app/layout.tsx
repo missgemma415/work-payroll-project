@@ -1,9 +1,11 @@
 import { Inter, Poppins } from 'next/font/google';
 
-import type { Metadata } from 'next';
-import './globals.css';
-import { AppProvider } from '@/lib/context/app-context';
 import { ToastProvider } from '@/components/ui/use-toast';
+import { AppProvider } from '@/lib/context/app-context';
+
+import type { Metadata } from 'next';
+
+import './globals.css';
 
 const inter = Inter({
   subsets: ['latin'],

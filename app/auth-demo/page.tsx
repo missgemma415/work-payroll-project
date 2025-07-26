@@ -1,18 +1,19 @@
 'use client';
 
 import { useState } from 'react';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 
-export default function AuthDemoPage() {
+export default function AuthDemoPage(): React.JSX.Element {
   const [email, setEmail] = useState('demo@example.com');
   const [password, setPassword] = useState('demo123456');
   const [token, setToken] = useState('');
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState<unknown>(null);
   const [error, setError] = useState('');
 
-  const handleLogin = async () => {
+  const handleLogin = async (): Promise<void> => {
     try {
       setError('');
       const response = await fetch('/api/auth/login', {
@@ -21,56 +22,68 @@ export default function AuthDemoPage() {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await response.json();
-      
+      const data = (await response.json()) as {
+        error?: { message?: string };
+        data?: { accessToken: string; user: unknown };
+      };
+
       if (!response.ok) {
-        throw new Error(data.error?.message || 'Login failed');
+        throw new Error(data.error?.message ?? 'Login failed');
       }
 
-      setToken(data.data.accessToken);
-      setUserData(data.data.user);
+      if (data.data) {
+        setToken(data.data.accessToken);
+        setUserData(data.data.user);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     }
   };
 
-  const handleGetMe = async () => {
+  const handleGetMe = async (): Promise<void> => {
     try {
       setError('');
       const response = await fetch('/api/auth/me', {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
-      const data = await response.json();
-      
+      const data = (await response.json()) as {
+        error?: { message?: string };
+        data?: { user: unknown };
+      };
+
       if (!response.ok) {
-        throw new Error(data.error?.message || 'Failed to get user data');
+        throw new Error(data.error?.message ?? 'Failed to get user data');
       }
 
-      setUserData(data.data.user);
+      if (data.data) {
+        setUserData(data.data.user);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     }
   };
 
-  const handleTestProtectedRoute = async () => {
+  const handleTestProtectedRoute = async (): Promise<void> => {
     try {
       setError('');
       const response = await fetch('/api/moods', {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
-      const data = await response.json();
-      
+      const data = (await response.json()) as { error?: { message?: string } };
+
       if (!response.ok) {
-        throw new Error(data.error?.message || 'Failed to access protected route');
+        throw new Error(data.error?.message ?? 'Failed to access protected route');
       }
 
+      // eslint-disable-next-line no-alert
       alert('Success! Protected route accessed. Check console for data.');
+      // eslint-disable-next-line no-console
       console.log('Protected route data:', data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
@@ -78,16 +91,16 @@ export default function AuthDemoPage() {
   };
 
   return (
-    <div className="container mx-auto p-8 max-w-2xl">
-      <h1 className="text-3xl font-bold mb-8">Authentication Demo</h1>
-      
+    <div className="container mx-auto max-w-2xl p-8">
+      <h1 className="mb-8 text-3xl font-bold">Authentication Demo</h1>
+
       <Card className="mb-6">
         <CardHeader>
           <CardTitle>Login</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
+            <label className="mb-1 block text-sm font-medium">Email</label>
             <Input
               type="email"
               value={email}
@@ -96,7 +109,7 @@ export default function AuthDemoPage() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Password</label>
+            <label className="mb-1 block text-sm font-medium">Password</label>
             <Input
               type="password"
               value={password}
@@ -104,7 +117,7 @@ export default function AuthDemoPage() {
               placeholder="demo123456"
             />
           </div>
-          <Button onClick={handleLogin} className="w-full">
+          <Button onClick={() => void handleLogin()} className="w-full">
             Login
           </Button>
         </CardContent>
@@ -116,14 +129,12 @@ export default function AuthDemoPage() {
             <CardTitle>Authentication Token</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xs font-mono break-all bg-gray-100 p-2 rounded">
-              {token}
-            </p>
+            <p className="break-all rounded bg-gray-100 p-2 font-mono text-xs">{token}</p>
             <div className="mt-4 space-x-2">
-              <Button onClick={handleGetMe} variant="outline">
+              <Button onClick={() => void handleGetMe()} variant="outline">
                 Get Current User
               </Button>
-              <Button onClick={handleTestProtectedRoute} variant="outline">
+              <Button onClick={() => void handleTestProtectedRoute()} variant="outline">
                 Test Protected Route
               </Button>
             </div>
@@ -131,13 +142,13 @@ export default function AuthDemoPage() {
         </Card>
       )}
 
-      {userData && (
+      {userData !== null && (
         <Card className="mb-6">
           <CardHeader>
             <CardTitle>User Data</CardTitle>
           </CardHeader>
           <CardContent>
-            <pre className="text-xs bg-gray-100 p-4 rounded overflow-auto">
+            <pre className="overflow-auto rounded bg-gray-100 p-4 text-xs">
               {JSON.stringify(userData, null, 2)}
             </pre>
           </CardContent>

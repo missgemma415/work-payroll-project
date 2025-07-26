@@ -1,8 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+
 import { useAppContext } from '@/lib/context/app-context';
-import type { CreateMoodRequest, CreatePriorityRequest, UpdatePriorityRequest, CreateKudosRequest } from '@/lib/types/api';
+import type {
+  CreateMoodRequest,
+  CreatePriorityRequest,
+  UpdatePriorityRequest,
+  CreateKudosRequest,
+} from '@/lib/types/api';
 import type { MoodCheckin, DailyPriority, Kudo } from '@/lib/types/database';
 
 interface MutationState<T> {
@@ -11,7 +17,12 @@ interface MutationState<T> {
   isLoading: boolean;
 }
 
-export function useMoodCheckIn() {
+export function useMoodCheckIn(): {
+  checkIn: (data: CreateMoodRequest) => Promise<MoodCheckin>;
+  data: MoodCheckin | null;
+  error: string | null;
+  isLoading: boolean;
+} {
   const { refreshData } = useAppContext();
   const [state, setState] = useState<MutationState<MoodCheckin>>({
     data: null,
@@ -19,7 +30,7 @@ export function useMoodCheckIn() {
     isLoading: false,
   });
 
-  const checkIn = async (data: CreateMoodRequest) => {
+  const checkIn = async (data: CreateMoodRequest): Promise<MoodCheckin> => {
     setState({ data: null, error: null, isLoading: true });
 
     try {
@@ -33,12 +44,12 @@ export function useMoodCheckIn() {
         throw new Error('Failed to submit mood check-in');
       }
 
-      const result = await response.json();
+      const result = (await response.json()) as { data: MoodCheckin };
       setState({ data: result.data, error: null, isLoading: false });
-      
+
       // Refresh mood history
       await refreshData();
-      
+
       return result.data;
     } catch (error) {
       const message = error instanceof Error ? error.message : 'An error occurred';
@@ -50,7 +61,15 @@ export function useMoodCheckIn() {
   return { checkIn, ...state };
 }
 
-export function usePriorityActions() {
+export function usePriorityActions(): {
+  createPriority: (data: CreatePriorityRequest) => Promise<DailyPriority>;
+  updatePriority: (id: string, data: UpdatePriorityRequest) => Promise<DailyPriority>;
+  deletePriority: (id: string) => Promise<void>;
+  toggleComplete: (id: string, completed: boolean) => Promise<DailyPriority>;
+  data: DailyPriority | null;
+  error: string | null;
+  isLoading: boolean;
+} {
   const { refreshData } = useAppContext();
   const [state, setState] = useState<MutationState<DailyPriority>>({
     data: null,
@@ -58,7 +77,7 @@ export function usePriorityActions() {
     isLoading: false,
   });
 
-  const createPriority = async (data: CreatePriorityRequest) => {
+  const createPriority = async (data: CreatePriorityRequest): Promise<DailyPriority> => {
     setState({ data: null, error: null, isLoading: true });
 
     try {
@@ -72,9 +91,9 @@ export function usePriorityActions() {
         throw new Error('Failed to create priority');
       }
 
-      const result = await response.json();
+      const result = (await response.json()) as { data: DailyPriority };
       setState({ data: result.data, error: null, isLoading: false });
-      
+
       await refreshData();
       return result.data;
     } catch (error) {
@@ -84,7 +103,10 @@ export function usePriorityActions() {
     }
   };
 
-  const updatePriority = async (id: string, data: UpdatePriorityRequest) => {
+  const updatePriority = async (
+    id: string,
+    data: UpdatePriorityRequest
+  ): Promise<DailyPriority> => {
     setState({ data: null, error: null, isLoading: true });
 
     try {
@@ -98,9 +120,9 @@ export function usePriorityActions() {
         throw new Error('Failed to update priority');
       }
 
-      const result = await response.json();
+      const result = (await response.json()) as { data: DailyPriority };
       setState({ data: result.data, error: null, isLoading: false });
-      
+
       await refreshData();
       return result.data;
     } catch (error) {
@@ -110,7 +132,7 @@ export function usePriorityActions() {
     }
   };
 
-  const deletePriority = async (id: string) => {
+  const deletePriority = async (id: string): Promise<void> => {
     setState({ data: null, error: null, isLoading: true });
 
     try {
@@ -131,7 +153,7 @@ export function usePriorityActions() {
     }
   };
 
-  const toggleComplete = async (id: string, completed: boolean) => {
+  const toggleComplete = async (id: string, completed: boolean): Promise<DailyPriority> => {
     return updatePriority(id, { completed });
   };
 
@@ -144,7 +166,13 @@ export function usePriorityActions() {
   };
 }
 
-export function useKudosActions() {
+export function useKudosActions(): {
+  giveKudos: (data: CreateKudosRequest) => Promise<Kudo>;
+  likeKudos: (kudosId: string) => Promise<void>;
+  data: Kudo | null;
+  error: string | null;
+  isLoading: boolean;
+} {
   const { refreshData } = useAppContext();
   const [state, setState] = useState<MutationState<Kudo>>({
     data: null,
@@ -152,7 +180,7 @@ export function useKudosActions() {
     isLoading: false,
   });
 
-  const giveKudos = async (data: CreateKudosRequest) => {
+  const giveKudos = async (data: CreateKudosRequest): Promise<Kudo> => {
     setState({ data: null, error: null, isLoading: true });
 
     try {
@@ -166,9 +194,9 @@ export function useKudosActions() {
         throw new Error('Failed to give kudos');
       }
 
-      const result = await response.json();
+      const result = (await response.json()) as { data: Kudo };
       setState({ data: result.data, error: null, isLoading: false });
-      
+
       await refreshData();
       return result.data;
     } catch (error) {
@@ -178,7 +206,7 @@ export function useKudosActions() {
     }
   };
 
-  const likeKudos = async (kudosId: string) => {
+  const likeKudos = async (kudosId: string): Promise<void> => {
     try {
       const response = await fetch(`/api/kudos/${kudosId}/like`, {
         method: 'POST',

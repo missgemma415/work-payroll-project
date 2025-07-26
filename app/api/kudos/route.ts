@@ -1,12 +1,9 @@
-
-
-import { successResponse, errorResponse } from '@/lib/api-response';
-import { generateMockKudos, simulateDelay, simulateError, mockUser } from '@/lib/mock-data';
+import { errorResponse, successResponse } from '@/lib/api-response';
+import { generateMockKudos, mockUser, simulateDelay, simulateError } from '@/lib/mock-data';
 import type { CreateKudosRequest } from '@/lib/types/api';
 import type { Kudo } from '@/lib/types/database';
 
-import { NextResponse, type NextRequest } from 'next/server';
-
+import type { NextResponse, NextRequest } from 'next/server';
 
 // In-memory storage for development
 export const kudosList = generateMockKudos();
@@ -23,9 +20,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     let filteredKudos = kudosList;
 
     if (userId) {
-      filteredKudos = kudosList.filter(k => 
-        k.from_user_id === userId || k.to_user_id === userId
-      );
+      filteredKudos = kudosList.filter((k) => k.from_user_id === userId || k.to_user_id === userId);
     }
 
     const paginatedKudos = filteredKudos.slice(0, limit);
@@ -41,7 +36,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     await simulateDelay();
     simulateError();
 
-    const body = await request.json() as CreateKudosRequest;
+    const body = (await request.json()) as CreateKudosRequest;
     const { to_user_id, message, category } = body;
 
     // Validation
@@ -65,7 +60,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       is_public: true,
       likes_count: 0,
       metadata: {},
-      created_at: new Date().toISOString()
+      created_at: new Date().toISOString(),
     };
 
     kudosList.unshift(newKudos);

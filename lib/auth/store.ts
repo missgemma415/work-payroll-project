@@ -1,7 +1,8 @@
 import bcrypt from 'bcryptjs';
+
+import { env } from '@/lib/env';
 import type { AuthUser } from '@/lib/types/auth';
 import type { Organization } from '@/lib/types/database';
-import { env } from '@/lib/env';
 
 // Temporary in-memory storage for auth
 // TODO: Replace with real database
@@ -21,7 +22,7 @@ const store: AuthStore = {
 if (env.ENABLE_MOCK_DATA) {
   const demoOrgId = 'org-demo';
   const demoUserId = 'user-demo';
-  
+
   // Create demo organization
   store.organizations.set(demoOrgId, {
     id: demoOrgId,
@@ -85,15 +86,15 @@ if (env.ENABLE_MOCK_DATA) {
 // Auth store methods
 export const authStore = {
   // User methods
-  async createUser(user: AuthUser): Promise<void> {
+  createUser(user: AuthUser): void {
     store.users.set(user.id, user);
   },
 
-  async getUserById(id: string): Promise<AuthUser | null> {
-    return store.users.get(id) || null;
+  getUserById(id: string): AuthUser | null {
+    return store.users.get(id) ?? null;
   },
 
-  async getUserByEmail(email: string): Promise<AuthUser | null> {
+  getUserByEmail(email: string): AuthUser | null {
     for (const user of store.users.values()) {
       if (user.email.toLowerCase() === email.toLowerCase()) {
         return user;
@@ -102,7 +103,7 @@ export const authStore = {
     return null;
   },
 
-  async updateUser(id: string, updates: Partial<AuthUser>): Promise<void> {
+  updateUser(id: string, updates: Partial<AuthUser>): void {
     const user = store.users.get(id);
     if (user) {
       store.users.set(id, { ...user, ...updates, updated_at: new Date().toISOString() });
@@ -110,15 +111,15 @@ export const authStore = {
   },
 
   // Organization methods
-  async createOrganization(org: Organization): Promise<void> {
+  createOrganization(org: Organization): void {
     store.organizations.set(org.id, org);
   },
 
-  async getOrganizationById(id: string): Promise<Organization | null> {
-    return store.organizations.get(id) || null;
+  getOrganizationById(id: string): Organization | null {
+    return store.organizations.get(id) ?? null;
   },
 
-  async getOrganizationBySlug(slug: string): Promise<Organization | null> {
+  getOrganizationBySlug(slug: string): Organization | null {
     for (const org of store.organizations.values()) {
       if (org.slug === slug) {
         return org;
@@ -128,28 +129,28 @@ export const authStore = {
   },
 
   // Refresh token methods
-  async saveRefreshToken(token: string, userId: string, expiresAt: Date): Promise<void> {
+  saveRefreshToken(token: string, userId: string, expiresAt: Date): void {
     store.refreshTokens.set(token, { userId, expiresAt });
   },
 
-  async getRefreshToken(token: string): Promise<{ userId: string; expiresAt: Date } | null> {
+  getRefreshToken(token: string): { userId: string; expiresAt: Date } | null {
     const tokenData = store.refreshTokens.get(token);
     if (!tokenData) return null;
-    
+
     // Check if token is expired
     if (tokenData.expiresAt < new Date()) {
       store.refreshTokens.delete(token);
       return null;
     }
-    
+
     return tokenData;
   },
 
-  async deleteRefreshToken(token: string): Promise<void> {
+  deleteRefreshToken(token: string): void {
     store.refreshTokens.delete(token);
   },
 
-  async deleteUserRefreshTokens(userId: string): Promise<void> {
+  deleteUserRefreshTokens(userId: string): void {
     for (const [token, data] of store.refreshTokens.entries()) {
       if (data.userId === userId) {
         store.refreshTokens.delete(token);
@@ -158,7 +159,7 @@ export const authStore = {
   },
 
   // Utility method to clean expired tokens
-  async cleanExpiredTokens(): Promise<void> {
+  cleanExpiredTokens(): void {
     const now = new Date();
     for (const [token, data] of store.refreshTokens.entries()) {
       if (data.expiresAt < now) {
@@ -170,7 +171,10 @@ export const authStore = {
 
 // Clean expired tokens every hour
 if (typeof setInterval !== 'undefined') {
-  setInterval(() => {
-    void authStore.cleanExpiredTokens();
-  }, 60 * 60 * 1000);
+  setInterval(
+    () => {
+      void authStore.cleanExpiredTokens();
+    },
+    60 * 60 * 1000
+  );
 }

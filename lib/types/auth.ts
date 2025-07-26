@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 import type { User } from './database';
 
 // Auth-specific user type with password
@@ -35,7 +36,8 @@ export type LoginRequest = z.infer<typeof LoginRequestSchema>;
 // Register request schema
 export const RegisterRequestSchema = z.object({
   email: z.string().email('Invalid email address'),
-  password: z.string()
+  password: z
+    .string()
     .min(8, 'Password must be at least 8 characters')
     .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
     .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
@@ -81,7 +83,8 @@ export type ForgotPasswordRequest = z.infer<typeof ForgotPasswordRequestSchema>;
 
 export const ResetPasswordRequestSchema = z.object({
   token: z.string(),
-  password: z.string()
+  password: z
+    .string()
     .min(8, 'Password must be at least 8 characters')
     .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
     .regex(/[a-z]/, 'Password must contain at least one lowercase letter')

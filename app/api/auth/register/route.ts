@@ -1,12 +1,14 @@
-import { NextResponse, type NextRequest } from 'next/server';
 import bcrypt from 'bcryptjs';
-import { RegisterRequestSchema } from '@/lib/types/auth';
-import { authStore } from '@/lib/auth/store';
+
+import { errorResponse, successResponse } from '@/lib/api-response';
 import { generateTokens } from '@/lib/auth/jwt';
-import { successResponse, errorResponse } from '@/lib/api-response';
+import { authStore } from '@/lib/auth/store';
 import { env } from '@/lib/env';
 import type { AuthUser } from '@/lib/types/auth';
+import { RegisterRequestSchema } from '@/lib/types/auth';
 import type { Organization } from '@/lib/types/database';
+
+import type { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
@@ -16,21 +18,22 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     }
 
     // Parse and validate request body
-    const body = await request.json();
+    const body = (await request.json()) as unknown;
     const validationResult = RegisterRequestSchema.safeParse(body);
-    
+
     if (!validationResult.success) {
       return errorResponse(
         'VALIDATION_ERROR',
-        validationResult.error.errors[0]?.message || 'Invalid request data',
+        validationResult.error.errors[0]?.message ?? 'Invalid request data',
         400
       );
     }
 
-    const { email, password, firstName, lastName, organizationName, department, position } = validationResult.data;
+    const { email, password, firstName, lastName, organizationName, department, position } =
+      validationResult.data;
 
     // Check if user already exists
-    const existingUser = await authStore.getUserByEmail(email);
+    const existingUser = authStore.getUserByEmail(email);
     if (existingUser) {
       return errorResponse('USER_EXISTS', 'A user with this email already exists', 409);
     }
@@ -41,7 +44,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const orgSlug = organizationName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
     // Check if org slug is taken
-    const existingOrg = await authStore.getOrganizationBySlug(orgSlug);
+    const existingOrg = authStore.getOrganizationBySlug(orgSlug);
     if (existingOrg) {
       return errorResponse('ORG_EXISTS', 'An organization with this name already exists', 409);
     }
@@ -72,7 +75,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       updated_at: new Date().toISOString(),
     };
 
-    await authStore.createOrganization(organization);
+    authStore.createOrganization(organization);
 
     // Create user
     const newUser: AuthUser = {
@@ -85,9 +88,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       avatar_url: `https://api.dicebear.com/7.x/avataaars/svg?seed=${firstName}${lastName}`,
       organization_id: orgId,
       role: 'owner', // First user is the owner
-      department: department || null,
-      position: position || null,
-      hire_date: new Date().toISOString().split('T')[0] || null,
+      department: department ?? null,
+      position: position ?? null,
+      hire_date: new Date().toISOString().split('T')[0] ?? null,
       status: 'active',
       timezone: 'UTC',
       preferences: {
@@ -109,7 +112,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       updated_at: new Date().toISOString(),
     };
 
-    await authStore.createUser(newUser);
+    authStore.createUser(newUser);
 
     // Generate tokens
     const { accessToken, refreshToken, expiresIn } = await generateTokens({
@@ -120,13 +123,11 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     });
 
     // Save refresh token
-    const refreshTokenExpiry = new Date(
-      Date.now() + parseDuration(env.REFRESH_TOKEN_EXPIRES_IN)
-    );
-    await authStore.saveRefreshToken(refreshToken, newUser.id, refreshTokenExpiry);
+    const refreshTokenExpiry = new Date(Date.now() + parseDuration(env.REFRESH_TOKEN_EXPIRES_IN));
+    authStore.saveRefreshToken(refreshToken, newUser.id, refreshTokenExpiry);
 
     // Remove password from response
-    const { password_hash, ...user } = newUser;
+    const { password_hash: _password_hash, ...user } = newUser;
 
     return successResponse({
       user,
@@ -151,13 +152,18 @@ function parseDuration(duration: string): number {
   if (!match) return 30 * 24 * 60 * 60 * 1000; // Default to 30 days
 
   const [, value, unit] = match;
-  const num = parseInt(value!, 10);
+  const num = parseInt(value ?? '30', 10);
 
   switch (unit) {
-    case 'd': return num * 24 * 60 * 60 * 1000;
-    case 'h': return num * 60 * 60 * 1000;
-    case 'm': return num * 60 * 1000;
-    case 's': return num * 1000;
-    default: return 30 * 24 * 60 * 60 * 1000;
+    case 'd':
+      return num * 24 * 60 * 60 * 1000;
+    case 'h':
+      return num * 60 * 60 * 1000;
+    case 'm':
+      return num * 60 * 1000;
+    case 's':
+      return num * 1000;
+    default:
+      return 30 * 24 * 60 * 60 * 1000;
   }
 }

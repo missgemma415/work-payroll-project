@@ -1,4 +1,5 @@
 import { SignJWT, jwtVerify } from 'jose';
+
 import { env } from '@/lib/env';
 import type { TokenPayload } from '@/lib/types/auth';
 
@@ -16,18 +17,25 @@ function parseDuration(duration: string): number {
   const num = parseInt(value!, 10);
 
   switch (unit) {
-    case 'd': return num * 24 * 60 * 60 * 1000;
-    case 'h': return num * 60 * 60 * 1000;
-    case 'm': return num * 60 * 1000;
-    case 's': return num * 1000;
-    default: throw new Error(`Invalid duration unit: ${unit}`);
+    case 'd':
+      return num * 24 * 60 * 60 * 1000;
+    case 'h':
+      return num * 60 * 60 * 1000;
+    case 'm':
+      return num * 60 * 1000;
+    case 's':
+      return num * 1000;
+    default:
+      throw new Error(`Invalid duration unit: ${unit}`);
   }
 }
 
 // Generate access token
-export async function generateAccessToken(payload: Omit<TokenPayload, 'iat' | 'exp'>): Promise<string> {
+export async function generateAccessToken(
+  payload: Omit<TokenPayload, 'iat' | 'exp'>
+): Promise<string> {
   const expiresIn = parseDuration(env.JWT_EXPIRES_IN);
-  
+
   return new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
@@ -36,7 +44,7 @@ export async function generateAccessToken(payload: Omit<TokenPayload, 'iat' | 'e
 }
 
 // Generate refresh token
-export async function generateRefreshToken(): Promise<string> {
+export function generateRefreshToken(): string {
   // Refresh tokens are simple random strings stored in the database
   // This approach allows us to revoke them easily
   const array = new Uint8Array(32);
@@ -49,18 +57,22 @@ export async function verifyAccessToken(token: string): Promise<TokenPayload | n
   try {
     const { payload } = await jwtVerify(token, secret);
     return payload as unknown as TokenPayload;
-  } catch (error) {
+  } catch (_error) {
     // Token is invalid or expired
     return null;
   }
 }
 
 // Generate both tokens for a user
-export async function generateTokens(payload: Omit<TokenPayload, 'iat' | 'exp'>) {
+export async function generateTokens(payload: Omit<TokenPayload, 'iat' | 'exp'>): Promise<{
+  accessToken: string;
+  refreshToken: string;
+  expiresIn: number;
+}> {
   const accessToken = await generateAccessToken(payload);
-  const refreshToken = await generateRefreshToken();
+  const refreshToken = generateRefreshToken();
   const expiresIn = parseDuration(env.JWT_EXPIRES_IN);
-  
+
   return {
     accessToken,
     refreshToken,
@@ -71,11 +83,11 @@ export async function generateTokens(payload: Omit<TokenPayload, 'iat' | 'exp'>)
 // Extract token from Authorization header
 export function extractTokenFromHeader(authHeader: string | null): string | null {
   if (!authHeader) return null;
-  
+
   const parts = authHeader.split(' ');
   if (parts.length !== 2 || parts[0] !== 'Bearer') {
     return null;
   }
-  
-  return parts[1] || null;
+
+  return parts[1] ?? null;
 }

@@ -1,19 +1,20 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import type { User, Organization, MoodCheckin, DailyPriority, Kudo } from '@/lib/types/database';
+
 import { mockUser, mockOrganization } from '@/lib/mock-data';
+import type { User, Organization, MoodCheckin, DailyPriority, Kudo } from '@/lib/types/database';
 
 interface AppState {
   // User & Organization
   user: User | null;
   organization: Organization | null;
-  
+
   // Feature data
   moodHistory: MoodCheckin[];
   priorities: DailyPriority[];
   kudos: Kudo[];
-  
+
   // UI State
   isLoading: boolean;
   error: string | null;
@@ -32,7 +33,7 @@ interface AppContextValue extends AppState {
 
 const AppContext = createContext<AppContextValue | undefined>(undefined);
 
-export function AppProvider({ children }: { children: ReactNode }) {
+export function AppProvider({ children }: { children: ReactNode }): React.JSX.Element {
   // Initialize with mock data for development
   const [state, setState] = useState<AppState>({
     user: mockUser,
@@ -50,29 +51,29 @@ export function AppProvider({ children }: { children: ReactNode }) {
     if (savedState) {
       try {
         const parsed = JSON.parse(savedState) as Partial<AppState>;
-        setState(prev => ({
+        setState((prev) => ({
           ...prev,
           ...parsed,
           // Always use mock user/org for now
           user: mockUser,
           organization: mockOrganization,
         }));
-      } catch (error) {
-        console.error('Failed to load saved state:', error);
+      } catch (_error) {
+        console.error('Failed to load saved state:', _error);
       }
     }
   }, []);
 
   // Save to localStorage on state change
   useEffect(() => {
-    const { user, organization, ...dataToSave } = state;
+    const { user: _user, organization: _organization, ...dataToSave } = state;
     localStorage.setItem('app-state', JSON.stringify(dataToSave));
   }, [state]);
 
   // Fetch all data
-  const refreshData = async () => {
-    setState(prev => ({ ...prev, isLoading: true, error: null }));
-    
+  const refreshData = async (): Promise<void> => {
+    setState((prev) => ({ ...prev, isLoading: true, error: null }));
+
     try {
       // Fetch all data in parallel
       const [moodsRes, prioritiesRes, kudosRes] = await Promise.all([
@@ -86,20 +87,20 @@ export function AppProvider({ children }: { children: ReactNode }) {
       }
 
       const [moodsData, prioritiesData, kudosData] = await Promise.all([
-        moodsRes.json(),
-        prioritiesRes.json(),
-        kudosRes.json(),
+        moodsRes.json() as Promise<{ data: MoodCheckin[] }>,
+        prioritiesRes.json() as Promise<{ data: DailyPriority[] }>,
+        kudosRes.json() as Promise<{ data: Kudo[] }>,
       ]);
 
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
-        moodHistory: moodsData.data || [],
-        priorities: prioritiesData.data || [],
-        kudos: kudosData.data || [],
+        moodHistory: moodsData.data ?? [],
+        priorities: prioritiesData.data ?? [],
+        kudos: kudosData.data ?? [],
         isLoading: false,
       }));
     } catch (error) {
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         isLoading: false,
         error: error instanceof Error ? error.message : 'An error occurred',
@@ -114,19 +115,19 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   const value: AppContextValue = {
     ...state,
-    setUser: (user) => setState(prev => ({ ...prev, user })),
-    setOrganization: (organization) => setState(prev => ({ ...prev, organization })),
-    setMoodHistory: (moodHistory) => setState(prev => ({ ...prev, moodHistory })),
-    setPriorities: (priorities) => setState(prev => ({ ...prev, priorities })),
-    setKudos: (kudos) => setState(prev => ({ ...prev, kudos })),
-    setError: (error) => setState(prev => ({ ...prev, error })),
+    setUser: (user) => setState((prev) => ({ ...prev, user })),
+    setOrganization: (organization) => setState((prev) => ({ ...prev, organization })),
+    setMoodHistory: (moodHistory) => setState((prev) => ({ ...prev, moodHistory })),
+    setPriorities: (priorities) => setState((prev) => ({ ...prev, priorities })),
+    setKudos: (kudos) => setState((prev) => ({ ...prev, kudos })),
+    setError: (error) => setState((prev) => ({ ...prev, error })),
     refreshData,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 
-export function useAppContext() {
+export function useAppContext(): AppContextValue {
   const context = useContext(AppContext);
   if (!context) {
     throw new Error('useAppContext must be used within AppProvider');
@@ -135,27 +136,27 @@ export function useAppContext() {
 }
 
 // Convenience hooks for specific data
-export function useUser() {
+export function useUser(): User | null {
   const { user } = useAppContext();
   return user;
 }
 
-export function useOrganization() {
+export function useOrganization(): Organization | null {
   const { organization } = useAppContext();
   return organization;
 }
 
-export function useMoodHistory() {
+export function useMoodHistory(): MoodCheckin[] {
   const { moodHistory } = useAppContext();
   return moodHistory;
 }
 
-export function usePriorities() {
+export function usePriorities(): DailyPriority[] {
   const { priorities } = useAppContext();
   return priorities;
 }
 
-export function useKudos() {
+export function useKudos(): Kudo[] {
   const { kudos } = useAppContext();
   return kudos;
 }

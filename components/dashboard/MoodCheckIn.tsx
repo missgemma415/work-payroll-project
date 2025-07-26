@@ -5,9 +5,9 @@ import React, { useState, useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useMoodCheckIn } from '@/lib/hooks/use-api';
-import { useMoodHistory } from '@/lib/context/app-context';
 import { useToast } from '@/components/ui/use-toast';
+import { useMoodHistory } from '@/lib/context/app-context';
+import { useMoodCheckIn } from '@/lib/hooks/use-api';
 import type { MoodCheckin } from '@/lib/types/database';
 
 const moods = [
@@ -39,7 +39,7 @@ export default function MoodCheckIn(): React.JSX.Element {
 
   const handleMoodSelect = async (moodValue: MoodCheckin['mood_value']): Promise<void> => {
     setSelectedMood(moodValue);
-    const mood = moods.find(m => m.value === moodValue);
+    const mood = moods.find((m) => m.value === moodValue);
     if (!mood) return;
 
     try {
@@ -50,9 +50,9 @@ export default function MoodCheckIn(): React.JSX.Element {
       setHasCheckedIn(true);
       toast({
         title: 'Mood recorded!',
-        description: 'Thanks for sharing how you\'re feeling today.',
+        description: "Thanks for sharing how you're feeling today.",
       });
-    } catch (error) {
+    } catch (_error) {
       toast({
         title: 'Something went wrong',
         description: 'Please try again later.',
@@ -111,9 +111,9 @@ export default function MoodCheckIn(): React.JSX.Element {
           {moods.map((mood) => (
             <button
               key={mood.value}
-              onClick={() => handleMoodSelect(mood.value)}
+              onClick={() => void handleMoodSelect(mood.value)}
               disabled={isLoading}
-              className={`flex w-full items-center gap-3 rounded-lg border border-border/50 p-3 transition-all duration-200 hover:border-primary/50 hover:bg-primary/5 disabled:opacity-50 disabled:cursor-not-allowed ${
+              className={`flex w-full items-center gap-3 rounded-lg border border-border/50 p-3 transition-all duration-200 hover:border-primary/50 hover:bg-primary/5 disabled:cursor-not-allowed disabled:opacity-50 ${
                 selectedMood === mood.value ? 'border-primary bg-primary/10' : ''
               }`}
             >
