@@ -1,103 +1,124 @@
-# Scientia Capital Landing Page
+# Scientia Capital - HR Platform & Analytics Suite
 
 [![Deploy to Cloudflare Pages](https://img.shields.io/badge/Deploy-Cloudflare%20Pages-orange)](https://pages.cloudflare.com/)
 
-A warm, human-centered landing page for Scientia Capital - the HR software that actually cares.
+Enterprise-grade Human Resources platform with financial forecasting capabilities.
+
+## 🏆 Project Overview
+
+This repository contains the complete Scientia Capital technology stack:
+
+- **HR Platform** - Modern employee wellness and productivity platform
+- **Landing Page** - Public marketing website 
+- **Analytics Engine** - Financial forecasting with Prophet algorithm
+
+## 📁 Repository Structure
+
+```
+prophet-growth-analysis/
+├── scientia-app/           # 🎯 Main HR Platform (Next.js 15)
+│   ├── app/               # App Router pages & layouts
+│   ├── components/        # React components (shadcn/ui)
+│   ├── database/          # Cloudflare D1 schema & seed data
+│   └── lib/               # Utilities & TypeScript types
+├── index.html             # 🌐 Static Landing Page
+└── README.md              # This file
+```
 
 ## 🚀 Quick Start
 
+### HR Platform Development
+
 ```bash
-# Install dependencies
+cd scientia-app
 npm install
-
-# Run development server
 npm run dev
-
-# Build for production
-npm run build
 ```
 
-## 🌐 Deployment to Cloudflare Pages
+Visit: `http://localhost:3000`
 
-### Option 1: GitHub Integration (Recommended)
+### Landing Page
 
-1. Push this code to a GitHub repository
-2. Go to [Cloudflare Pages](https://pages.cloudflare.com/)
-3. Click "Create a project"
-4. Connect your GitHub account
-5. Select the repository
-6. Use these build settings:
-   - Framework preset: `Next.js (Static HTML Export)`
-   - Build command: `npm run build`
-   - Build output directory: `out`
+The `index.html` file is a standalone landing page deployed at:
+- **Production**: [scientiacapital.com](https://scientiacapital.com)
 
-### Option 2: Direct Upload
+## 🏗️ Tech Stack
 
-```bash
-# Build the site
-npm run build
+### HR Platform (scientia-app/)
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **UI Library**: shadcn/ui with warm design system
+- **Authentication**: Clerk (multi-tenant organizations)
+- **Database**: Cloudflare D1 (SQLite edge database)
+- **Deployment**: Cloudflare Pages
 
-# The static files will be in the 'out' directory
-# Upload this directory to Cloudflare Pages
-```
+### Features
+- **Employee Dashboard** - Personalized wellness tracking
+- **Mood Check-ins** - 5-emoji daily wellness system
+- **Task Management** - Priority-based productivity tools
+- **Team Pulse** - Real-time team mood & activity insights
+- **Kudos System** - Recognition & appreciation platform
 
-### Option 3: Wrangler CLI
+## 🎨 Design System
 
-```bash
-# Install Wrangler
-npm install -g wrangler
+**Warm & Human-Centered Design:**
+- **Primary**: Community Orange (`#d17344`)
+- **Secondary**: Sage Green (`#87a96b`)
+- **Accent**: Trust Blue (`#6b9bd1`)
+- **Typography**: Rounded, approachable fonts
+- **Language**: Emotional, human-focused copy
 
-# Login to Cloudflare
-wrangler login
+## 🔐 Security & Architecture
 
-# Build and deploy
-npm run build
-wrangler pages deploy out --project-name=scientia-capital
-```
+- **Multi-tenant** with organization-based isolation
+- **Row-Level Security** via Cloudflare D1
+- **JWT Authentication** with Clerk
+- **Edge Computing** for global performance
+- **Privacy-First** mood tracking (anonymous options)
 
-## 🎨 Design Philosophy
+## 📊 Database Schema
 
-- **Warm Colors**: Soft creams, sage greens, and trust blues
-- **Rounded Everything**: No harsh edges, everything flows
-- **Human Language**: No corporate jargon
-- **Gentle Animations**: Subtle, delightful interactions
+Complete multi-tenant schema with:
+- Organizations & Users (Clerk integration)
+- Mood check-ins & Daily priorities
+- Kudos & Team pulse analytics
+- Activity logs & Audit trails
 
-## 📁 Project Structure
+## 🚀 Deployment
 
-```
-scientia-capital-landing/
-├── app/
-│   ├── layout.tsx      # Main layout with fonts
-│   ├── page.tsx        # Homepage
-│   └── globals.css     # Warm, custom styles
-├── components/
-│   ├── ui/            # shadcn/ui components
-│   ├── Hero.tsx       # Hero section
-│   ├── Features.tsx   # Features grid
-│   ├── HowItWorks.tsx # Process explanation
-│   ├── Pricing.tsx    # Pricing cards
-│   └── ...
-└── public/            # Static assets
-```
+### HR Platform
+1. Deploy to Cloudflare Pages
+2. Connect Clerk authentication
+3. Set up Cloudflare D1 database
+4. Configure custom domain
 
-## 🔧 Environment Variables
+### Landing Page
+- Static HTML deployed via Cloudflare Pages
+- Custom domain: scientiacapital.com
 
-For local development, create `.env.local`:
+## 🤝 Development Workflow
 
-```env
-NEXT_PUBLIC_API_URL=http://localhost:8787
-```
+1. **Feature Development**: Work in `scientia-app/` directory
+2. **Quality Gates**: TypeScript strict mode, ESLint, tests
+3. **Git Workflow**: Conventional commits with detailed messages
+4. **Deployment**: Automatic via Cloudflare Pages
 
-For production, set in Cloudflare Pages dashboard:
+## 📝 Contributing
 
-```env
-NEXT_PUBLIC_API_URL=https://api.scientiacapital.com
-```
+1. Fork the repository
+2. Create feature branch: `git checkout -b feature/amazing-feature`
+3. Make changes in `scientia-app/` directory
+4. Follow TypeScript strict mode & code quality standards
+5. Commit with conventional format
+6. Open Pull Request
 
-## 🤝 Contributing
+## 📞 Support
 
-This is a startup built with sweat equity. Every contribution matters!
+For questions or support:
+- **Website**: [scientiacapital.com](https://scientiacapital.com)
+- **Platform**: [app.scientiacapital.com](https://app.scientiacapital.com)
 
 ---
 
-Built with ❤️ for HR teams everywhere
+**Built with ❤️ for human-centered workplace wellness**
+
+*Enterprise-grade technology, startup heart.*
