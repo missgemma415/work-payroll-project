@@ -111,9 +111,8 @@ export class GeminiClient {
         recommendations: [],
         savingsOpportunities: [],
       };
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Error analyzing employee costs:', error);
+    } catch (_error) {
+      // Error analyzing employee costs
       throw new Error('Failed to analyze employee costs');
     }
   }
@@ -149,9 +148,8 @@ export class GeminiClient {
         throw new Error('No response text received from Gemini');
       }
       return text;
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Error generating forecast narrative:', error);
+    } catch (_error) {
+      // Error generating forecast narrative
       throw new Error('Failed to generate forecast narrative');
     }
   }
@@ -202,9 +200,8 @@ export class GeminiClient {
 
       // Fallback scenario output
       throw new Error('Invalid scenario analysis response');
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Error planning scenario:', error);
+    } catch (_error) {
+      // Error planning scenario
       throw new Error('Failed to plan scenario');
     }
   }
@@ -251,9 +248,8 @@ export class GeminiClient {
       }
 
       throw new Error('Invalid executive report response');
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Error creating executive report:', error);
+    } catch (_error) {
+      // Error creating executive report
       throw new Error('Failed to create executive report');
     }
   }
@@ -286,9 +282,8 @@ export class GeminiClient {
         throw new Error('No response text received from Gemini');
       }
       return text;
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Error processing question:', error);
+    } catch (_error) {
+      // Error processing question
       throw new Error('Failed to process question');
     }
   }

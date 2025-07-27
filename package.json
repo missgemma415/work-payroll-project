@@ -17,11 +17,14 @@
     "git:review": "git diff --cached --name-only | xargs npm run lint:fix --",
     "git:quick-sync": "git pull --rebase && npm run validate && git push",
     "deploy": "./scripts/deploy.sh",
-    "deploy:preview": "npm run build && npx wrangler pages deploy out --project-name=scientia-capital"
+    "deploy:preview": "npm run build && npx wrangler pages deploy out --project-name=scientia-capital",
+    "mcp:server": "tsx scripts/run-mcp-server.ts",
+    "mcp:dev": "tsx --watch scripts/run-mcp-server.ts"
   },
   "dependencies": {
     "@google/genai": "^1.11.0",
     "@hookform/resolvers": "^3.10.0",
+    "@modelcontextprotocol/sdk": "^1.17.0",
     "@radix-ui/react-avatar": "^1.1.2",
     "@radix-ui/react-checkbox": "^1.1.3",
     "@radix-ui/react-dialog": "^1.1.4",
@@ -35,10 +38,14 @@
     "@radix-ui/react-toast": "^1.2.4",
     "@radix-ui/react-tooltip": "^1.1.6",
     "@tanstack/react-query": "^5.68.2",
+    "agents": "^0.0.109",
     "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cors": "^2.8.5",
     "date-fns": "^4.1.0",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
     "framer-motion": "^11.15.0",
     "jose": "^6.0.12",
     "lucide-react": "^0.464.0",
@@ -56,6 +63,9 @@
     "@cloudflare/next-on-pages": "^1.13.13",
     "@cloudflare/workers-types": "^4.20250726.0",
     "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.19",
+    "@types/dotenv": "^6.1.1",
+    "@types/express": "^5.0.3",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -73,6 +83,7 @@
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   }
 }

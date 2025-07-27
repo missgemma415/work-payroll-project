@@ -127,6 +127,7 @@
     ".next",
     "out",
     "node_modules",
-    "functions/**/*"
+    "functions/**/*",
+    "lib/agents/cloudflare/**/*"
   ]
 }

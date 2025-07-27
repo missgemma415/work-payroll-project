@@ -12,6 +12,10 @@
 
 **Prophet Growth Analysis** is an AI-powered financial intelligence platform that leverages Cloudflare Agents and Google Gemini to provide autonomous financial operations, real-time cost analysis, and predictive forecasting for employee costs and workforce planning.
 
+## Project Workflow Guidelines
+
+- Always start with claude.md file then read projectcontextengineering.md next and the next is projecttasks.md in that order every time asked to review project or opens the project for first time
+
 ## Architecture Overview
 
 ### Cloudflare Agents Architecture

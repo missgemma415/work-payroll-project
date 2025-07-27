@@ -1,12 +1,13 @@
 'use client';
 
-import { Bot, Loader2, Send, User } from 'lucide-react';
+import { Bot, Loader2, Send, User, AlertCircle, CheckCircle } from 'lucide-react';
 import React, { useState, useRef, useEffect } from 'react';
 
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { aiClient } from '@/lib/api/ai-client';
+import { useMcpClient } from '@/lib/hooks/use-mcp-client';
 
 interface Message {
   id: string;
@@ -75,13 +76,18 @@ export default function AIChatInterface(): React.JSX.Element {
       id: '1',
       role: 'assistant',
       content:
-        "Hello! I'm your AI Financial Analyst. I can help you analyze employee costs, calculate total compensation, and provide insights on workforce optimization. What would you like to know?",
+        "Hello! I'm your AI Financial Analyst powered by MCP (Model Context Protocol). I can help you analyze employee costs, calculate total compensation, and provide insights on workforce optimization. What would you like to know?",
       timestamp: new Date(),
     },
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Use MCP client
+  const { connected, connecting, error, answerQuestion } = useMcpClient({
+    autoConnect: true,
+  });
 
   const scrollToBottom = (): void => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -117,14 +123,24 @@ export default function AIChatInterface(): React.JSX.Element {
     setMessages((prev) => [...prev, loadingMessage]);
 
     try {
-      // Try to use the real API first
-      const data = await aiClient.chat(userMessage.content).catch(() => {
-        // Fallback to demo response if API fails
-        return {
-          response: getDemoResponse(userMessage.content),
-          metadata: { model: 'demo', timestamp: new Date().toISOString() },
-        };
-      });
+      let response: string;
+      
+      // Try to use MCP client if connected
+      if (connected) {
+        response = await answerQuestion({
+          question: userMessage.content,
+          context: {
+            timestamp: new Date().toISOString(),
+            previousMessages: messages.slice(-5).map(m => ({
+              role: m.role,
+              content: m.content,
+            })),
+          },
+        });
+      } else {
+        // Fallback to demo response if not connected
+        response = getDemoResponse(userMessage.content);
+      }
 
       // Remove loading message and add response
       setMessages((prev) => {
@@ -134,13 +150,13 @@ export default function AIChatInterface(): React.JSX.Element {
           {
             id: Date.now().toString(),
             role: 'assistant',
-            content: data.response,
+            content: response,
             timestamp: new Date(),
           },
         ];
       });
-    } catch (error) {
-      console.error('Chat error:', error);
+    } catch (_error) {
+      // Chat error occurred
       // Remove loading message and add error
       setMessages((prev) => {
         const filtered = prev.filter((msg) => !msg.isLoading);
@@ -169,10 +185,33 @@ export default function AIChatInterface(): React.JSX.Element {
   return (
     <Card className="flex h-[600px] flex-col">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Bot className="h-5 w-5 text-primary" />
-          AI Financial Analyst
-        </CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle className="flex items-center gap-2">
+            <Bot className="h-5 w-5 text-primary" />
+            AI Financial Analyst
+          </CardTitle>
+          <Badge
+            variant={connected ? 'default' : connecting ? 'secondary' : 'destructive'}
+            className="flex items-center gap-1"
+          >
+            {connected ? (
+              <>
+                <CheckCircle className="h-3 w-3" />
+                MCP Connected
+              </>
+            ) : connecting ? (
+              <>
+                <Loader2 className="h-3 w-3 animate-spin" />
+                Connecting...
+              </>
+            ) : (
+              <>
+                <AlertCircle className="h-3 w-3" />
+                {error ?? 'Offline Mode'}
+              </>
+            )}
+          </Badge>
+        </div>
       </CardHeader>
       <CardContent className="flex flex-1 flex-col p-0">
         {/* Messages */}

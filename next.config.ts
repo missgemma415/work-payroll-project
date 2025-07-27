@@ -1,7 +1,8 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  output: 'export', // Static export for Cloudflare Pages
+  // Removed 'output: export' to enable API routes and dynamic features
+  // This allows us to use server-side features while still deploying to Cloudflare
   images: {
     remotePatterns: [
       {
