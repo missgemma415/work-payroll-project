@@ -1,6 +1,6 @@
 'use client';
 
-import { Bell, Heart, Home, Users, Calendar, Settings, User } from 'lucide-react';
+import { Bell, Heart, Home, Users, Calendar, Settings, User, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 
 const navigation = [
   { name: 'Home', href: '/', icon: Home },
+  { name: 'Analytics', href: '/analytics', icon: TrendingUp },
   { name: 'Team', href: '/team', icon: Users },
   { name: 'Mood', href: '/mood', icon: Heart },
   { name: 'Calendar', href: '/calendar', icon: Calendar },

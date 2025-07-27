@@ -121,5 +121,12 @@
       }
     }
   ],
-  "ignorePatterns": ["postcss.config.js", "next.config.js", ".next", "out", "node_modules"]
+  "ignorePatterns": [
+    "postcss.config.js",
+    "next.config.js",
+    ".next",
+    "out",
+    "node_modules",
+    "functions/**/*"
+  ]
 }

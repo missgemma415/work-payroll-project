@@ -2,206 +2,350 @@
 
 ## Overview
 
-The Scientia Capital HR Platform is a modern, human-centered employee wellness and engagement application designed to foster better workplace culture through daily check-ins, task management, peer recognition, and team analytics.
+**Prophet Growth Analysis** is an AI-powered financial intelligence platform that revolutionizes workforce cost management through autonomous agents, predictive analytics, and real-time collaboration. Built on Cloudflare's cutting-edge Agent technology and powered by Google Gemini, it transforms reactive financial operations into proactive, intelligent systems.
+
+## Business Vision
+
+### Problem Statement
+
+Organizations struggle with:
+
+- Manual, reactive employee cost tracking
+- Lack of predictive insights for workforce planning
+- Siloed financial data across departments
+- Time-consuming scenario planning
+- Delayed decision-making on hiring/termination impacts
+
+### Solution
+
+An autonomous AI financial operations platform that:
+
+- Continuously monitors and optimizes employee costs
+- Predicts future costs with machine learning
+- Enables real-time collaborative scenario planning
+- Provides executive-ready insights instantly
+- Learns from decisions to improve recommendations
 
 ## Technical Architecture
 
-### Tech Stack
+### Core Technologies
 
-- **Frontend Framework**: Next.js 15 (App Router)
-- **UI Components**: Custom components built with shadcn/ui
-- **Styling**: Tailwind CSS with custom design system
-- **State Management**: React Context API (planned)
-- **Data Fetching**: React Query (planned)
-- **Database**: Cloudflare D1 (SQLite at the edge)
-- **Deployment**: Cloudflare Pages
+- **Frontend**: Next.js 15 with App Router (static export)
+- **Agent Platform**: Cloudflare Agents SDK with MCP
+- **AI/ML**: Google Gemini API, Prophet, Neural Prophet
+- **Real-time**: WebSocket via Durable Objects
+- **State Management**: Agent-native SQL database
+- **Deployment**: Cloudflare Pages + Workers
+- **Security**: OAuth 2.1 with MCP authorization
 - **Type Safety**: TypeScript with strict mode
-- **Code Quality**: ESLint, Prettier, Husky hooks
 
-### Architecture Decisions
-
-#### 1. Next.js App Router
-
-- Chosen for server components and improved performance
-- Better data fetching patterns with async components
-- Built-in layouts and error handling
-- Seamless integration with edge runtime
-
-#### 2. Component Architecture
+### Agent-Based Architecture
 
 ```
-components/
-├── dashboard/       # Feature-specific components
-│   ├── MoodCheckIn.tsx
-│   ├── TodaysPriorities.tsx
-│   ├── KudosWall.tsx
-│   └── TeamPulse.tsx
-└── ui/             # Reusable UI primitives
-    ├── button.tsx
-    ├── card.tsx
-    └── ...
+┌─────────────────────────────────────────────────────────────┐
+│                    Executive Dashboard                       │
+│                     (Next.js Frontend)                       │
+└─────────────────┬───────────────────────┬───────────────────┘
+                  │ WebSocket/SSE         │
+┌─────────────────▼───────────────────────▼───────────────────┐
+│              Cloudflare MCP Agent Network                    │
+├──────────────────────────────────────────────────────────────┤
+│ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ │
+│ │ Financial Brain │ │ Forecast Engine │ │ Scenario Planner│ │
+│ │   MCP Agent     │ │   MCP Agent     │ │   MCP Agent     │ │
+│ └─────────────────┘ └─────────────────┘ └─────────────────┘ │
+│                                                              │
+│ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ │
+│ │ Alert Monitor   │ │ Data Collector  │ │ Integration Hub │ │
+│ │   MCP Agent     │ │   MCP Agent     │ │   MCP Agent     │ │
+│ └─────────────────┘ └─────────────────┘ └─────────────────┘ │
+└──────────────────────────────────────────────────────────────┘
 ```
 
-#### 3. Database Design
+### Agent Specifications
 
-- Multi-tenant architecture with organization-based isolation
-- Optimized for edge performance with Cloudflare D1
-- Comprehensive indexing for common queries
-- JSON fields for flexible metadata storage
+#### 1. Financial Brain Agent
 
-#### 4. State Management Strategy
+- **Purpose**: Central AI-powered financial analyst
+- **Tools**:
+  - `analyze_costs`: Deep cost analysis with Gemini
+  - `generate_insights`: Actionable recommendations
+  - `answer_questions`: Natural language Q&A
+- **State**: Conversation history, learned patterns, insights cache
+- **Integration**: Gemini API for NLP
+
+#### 2. Forecast Engine Agent
+
+- **Purpose**: Time series prediction and trend analysis
+- **Tools**:
+  - `generate_forecast`: Prophet/Neural Prophet predictions
+  - `detect_anomalies`: Cost anomaly detection
+  - `seasonal_analysis`: Identify patterns
+- **State**: Historical data, model parameters, forecasts
+- **Integration**: Python microservice for Prophet
+
+#### 3. Scenario Planner Agent
+
+- **Purpose**: What-if analysis and collaborative planning
+- **Tools**:
+  - `simulate_scenario`: Multi-variable simulations
+  - `calculate_impact`: Real-time impact analysis
+  - `compare_scenarios`: Side-by-side comparisons
+- **State**: Active scenarios, simulation results, decisions
+- **Integration**: Multi-model ensemble
+
+#### 4. Alert Monitor Agent
+
+- **Purpose**: Proactive monitoring and notifications
+- **Tools**:
+  - `set_threshold`: Configure alert rules
+  - `check_metrics`: Continuous monitoring
+  - `send_alert`: Multi-channel notifications
+- **State**: Alert rules, trigger history, escalations
+- **Integration**: Email, Slack, Teams
+
+### Model Context Protocol (MCP)
+
+MCP provides standardized communication between agents and services:
 
 ```typescript
-// Global state for user/organization context
-interface AppState {
-  user: User | null;
-  organization: Organization | null;
-  preferences: UserPreferences;
-}
-
-// Feature-specific state managed locally
-interface DashboardState {
-  moodHistory: MoodCheckIn[];
-  priorities: DailyPriority[];
-  kudos: Kudos[];
-}
+// MCP Tool Definition
+server.tool(
+  'analyze_costs',
+  {
+    employees: z.array(EmployeeSchema),
+    timeframe: z.enum(['monthly', 'quarterly', 'annual']),
+    includeForecasts: z.boolean(),
+  },
+  async (params) => {
+    // Tool implementation
+    const analysis = await geminiAnalyze(params);
+    return { content: [{ type: 'text', text: analysis }] };
+  }
+);
 ```
 
-### Development Phases
+### Data Models
 
-#### Phase 1: Local Development (Current)
-
-- Mock API routes with static data
-- Local state management
-- Focus on UI/UX refinement
-- No external dependencies
-
-#### Phase 2: Backend Integration
-
-- Cloudflare D1 database setup
-- API routes with real database
-- Authentication system
-- Data validation and security
-
-#### Phase 3: Production Features
-
-- Real-time updates
-- Email notifications
-- Advanced analytics
-- Mobile responsiveness
-
-### API Design
-
-#### RESTful Endpoints
-
-```
-GET    /api/moods          # Get mood history
-POST   /api/moods          # Submit mood check-in
-GET    /api/priorities     # Get user priorities
-POST   /api/priorities     # Create priority
-PATCH  /api/priorities/:id # Update priority
-DELETE /api/priorities/:id # Delete priority
-GET    /api/kudos          # Get kudos feed
-POST   /api/kudos          # Give kudos
-POST   /api/kudos/:id/like # Like kudos
-GET    /api/team-pulse     # Get team analytics
-```
-
-#### Response Format
+#### Core Entities
 
 ```typescript
-interface ApiResponse<T> {
-  success: boolean;
-  data?: T;
-  error?: {
-    code: string;
-    message: string;
-  };
-  meta?: {
-    pagination?: PaginationMeta;
-  };
+interface Employee {
+  id: string;
+  name: string;
+  department: string;
+  position: string;
+  level: string;
+  location: string;
+  startDate: Date;
+  baseSalary: number;
+  currency: string;
+}
+
+interface EmployeeCost {
+  employeeId: string;
+  employee: Employee;
+  baseSalary: number;
+  benefits: BenefitsPackage;
+  overhead: OverheadCosts;
+  projectAllocations: ProjectAllocation[];
+  utilization: number;
+  totalMonthlyCost: number;
+  totalAnnualCost: number;
+  effectiveDate: Date;
+}
+
+interface Forecast {
+  id: string;
+  agentId: string;
+  type: 'prophet' | 'neural_prophet' | 'statsforecast';
+  timeframe: string;
+  predictions: TimeSeries[];
+  confidence: number;
+  metadata: Record<string, unknown>;
+  createdAt: Date;
+}
+
+interface Scenario {
+  id: string;
+  name: string;
+  description: string;
+  assumptions: ScenarioAssumptions;
+  results: ScenarioResults;
+  status: 'draft' | 'active' | 'approved' | 'rejected';
+  collaborators: string[];
+  approvals: Approval[];
 }
 ```
 
-### Security Considerations
+### Security Architecture
 
-- Input validation with Zod schemas
-- SQL injection prevention via parameterized queries
-- XSS protection through React's built-in escaping
-- CSRF protection via SameSite cookies
-- Rate limiting on API endpoints
+1. **Authentication**
+   - OAuth 2.1 via MCP authorization
+   - JWT tokens for session management
+   - Multi-factor authentication support
+
+2. **Authorization**
+   - Role-based access control (RBAC)
+   - Organization-level isolation
+   - Tool-specific permissions
+
+3. **Data Protection**
+   - End-to-end encryption
+   - At-rest encryption in Durable Objects
+   - Audit logging for compliance
 
 ### Performance Optimization
 
-- Static generation for marketing pages
-- Dynamic rendering for dashboard
-- Image optimization with Next.js Image
-- Code splitting and lazy loading
-- Edge caching with Cloudflare
+1. **Agent Optimization**
+   - WebSocket hibernation for inactive connections
+   - State caching in SQL database
+   - Lazy loading of historical data
+
+2. **AI Optimization**
+   - Prompt caching for common queries
+   - Batched API calls to Gemini
+   - Model selection based on complexity
+
+3. **Frontend Optimization**
+   - Static site generation
+   - Edge caching with Cloudflare
+   - Progressive enhancement
+
+## Development Workflow
+
+### Agent Development
+
+1. **Create Agent Class**
+
+```typescript
+export class FinancialBrainAgent extends McpAgent {
+  server = new McpServer({
+    name: 'Financial Brain',
+    version: '1.0.0',
+  });
+
+  initialState = {
+    conversations: [],
+    insights: [],
+  };
+
+  async init() {
+    // Register tools
+  }
+}
+```
+
+2. **Deploy Agent**
+
+```bash
+npx wrangler deploy --name financial-brain-agent
+```
+
+3. **Connect Frontend**
+
+```typescript
+const ws = new WebSocket('wss://financial-brain.prophet-growth.workers.dev');
+```
 
 ### Testing Strategy
 
-- Unit tests for utilities and hooks
-- Integration tests for API routes
-- Component testing with React Testing Library
-- E2E tests for critical user flows
-- Performance monitoring with Web Vitals
+1. **Agent Testing**
+   - Unit tests for individual tools
+   - Integration tests for agent coordination
+   - End-to-end tests for workflows
 
-### Deployment Pipeline
+2. **Performance Testing**
+   - Load testing with multiple concurrent users
+   - Latency testing across regions
+   - API rate limit testing
 
-1. Local development with hot reload
-2. Pre-commit hooks for code quality
-3. PR checks with TypeScript and ESLint
-4. Staging deployment on branch push
-5. Production deployment on main merge
+3. **Security Testing**
+   - Penetration testing
+   - OAuth flow validation
+   - Data isolation verification
 
-### Future Considerations
+## Deployment Pipeline
 
-- WebSocket support for real-time features
-- Progressive Web App capabilities
-- Internationalization support
-- Advanced analytics and reporting
-- AI-powered insights and recommendations
+1. **Development**
+   - Local agent development with Miniflare
+   - Hot reload for frontend changes
+   - Mock data for testing
 
-## Implementation Status (January 2025)
+2. **Staging**
+   - Deploy to Cloudflare staging environment
+   - Integration testing with real APIs
+   - Performance benchmarking
 
-### Completed Features ✅
+3. **Production**
+   - Blue-green deployment
+   - Gradual rollout
+   - Monitoring and alerting
 
-1. **Authentication System**
-   - JWT-based auth with jose library
-   - Secure refresh token rotation
-   - Role-based access control
-   - Protected API routes pattern
+## Monitoring & Analytics
 
-2. **Core Infrastructure**
-   - Environment configuration with Zod validation
-   - TypeScript strict mode configuration
-   - ESLint with enterprise rules
-   - Git hooks for code quality
+1. **Agent Metrics**
+   - Response times
+   - Tool usage
+   - Error rates
+   - State size
 
-3. **Mock API Layer**
-   - In-memory data storage for development
-   - All CRUD operations implemented
-   - Simulated delays and errors for testing
+2. **Business Metrics**
+   - User engagement
+   - Cost savings identified
+   - Forecast accuracy
+   - Decision impact
 
-### Architecture Updates
+3. **Technical Metrics**
+   - API usage and costs
+   - WebSocket connections
+   - Database performance
+   - Cache hit rates
 
-- Removed static export to enable dynamic API routes
-- Implemented proper error handling patterns
-- Added comprehensive type definitions
-- Established consistent code style
+## Future Roadmap
 
-### Security Implementations
+### Phase 1: Foundation (Current)
 
-- bcrypt for password hashing (10 rounds)
-- JWT secrets with minimum 32 characters
-- Token expiration and rotation
-- Input validation on all endpoints
+- Core agent implementation
+- Basic Gemini integration
+- Simple forecasting
 
-### Next Phase Priorities
+### Phase 2: Intelligence
 
-1. Replace in-memory storage with Cloudflare D1
-2. Add Zod validation to all API endpoints
-3. Implement frontend auth context
-4. Create comprehensive test suite
-5. Add rate limiting and DDoS protection
+- Multi-agent coordination
+- Advanced ML models
+- Learning system
+
+### Phase 3: Enterprise
+
+- Custom agent builder
+- API marketplace
+- White-label solution
+
+### Phase 4: Innovation
+
+- Autonomous decision execution
+- Cross-organization benchmarking
+- AI-driven negotiations
+
+## Success Metrics
+
+1. **Technical KPIs**
+   - 99.9% uptime
+   - <200ms agent response time
+   - <2s end-to-end latency
+   - 90% cache hit rate
+
+2. **Business KPIs**
+   - 30% reduction in manual analysis time
+   - 15% improvement in cost predictions
+   - 50% faster scenario planning
+   - 25% cost savings identified
+
+3. **User KPIs**
+   - 80% daily active users
+   - 4.5+ star satisfaction
+   - <2 minute onboarding
+   - 90% feature adoption
+
+Remember: We're building the future of financial operations - autonomous, intelligent, and human-centered.
