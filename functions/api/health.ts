@@ -1,3 +1,5 @@
+import type { PagesFunction } from '../types';
+
 export const onRequestGet: PagesFunction = async () => {
   return new Response(
     JSON.stringify({

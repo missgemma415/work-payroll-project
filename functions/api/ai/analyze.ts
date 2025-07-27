@@ -1,10 +1,7 @@
 import { z } from 'zod';
-import { generateAIResponse } from '../../lib/gemini';
 
-export interface Env {
-  GOOGLE_GEMINI_API_KEY: string;
-  GOOGLE_GEMINI_MODEL: string;
-}
+import type { PagesFunction, Env } from '../../types';
+import { generateAIResponse } from '../../lib/gemini';
 
 const AnalyzeRequestSchema = z.object({
   employees: z.array(
@@ -25,7 +22,7 @@ const AnalyzeRequestSchema = z.object({
   analysisType: z.enum(['cost-breakdown', 'optimization', 'department-analysis', 'forecast']),
 });
 
-export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+export const onRequestPost: PagesFunction<Env> = async ({ request }) => {
   try {
     const body = await request.json();
     const validation = AnalyzeRequestSchema.safeParse(body);

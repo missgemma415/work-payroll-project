@@ -4,7 +4,7 @@ let geminiClient: GoogleGenAI | null = null;
 
 export function getGeminiClient(): GoogleGenAI {
   if (!geminiClient) {
-    const apiKey = process.env.GOOGLE_GEMINI_API_KEY;
+    const apiKey = process.env['GOOGLE_GEMINI_API_KEY'];
     if (!apiKey) {
       throw new Error('GOOGLE_GEMINI_API_KEY is not configured');
     }
@@ -18,7 +18,7 @@ export function getGeminiClient(): GoogleGenAI {
 export async function generateAIResponse(prompt: string): Promise<string> {
   try {
     const ai = getGeminiClient();
-    const model = process.env.GOOGLE_GEMINI_MODEL || 'gemini-2.0-flash-exp-01-18';
+    const model = process.env['GOOGLE_GEMINI_MODEL'] || 'gemini-2.0-flash-exp-01-18';
 
     const response = await ai.models.generateContent({
       model,

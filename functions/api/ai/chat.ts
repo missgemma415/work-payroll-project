@@ -1,10 +1,7 @@
 import { z } from 'zod';
-import { analyzeEmployeeCost } from '../../lib/gemini';
 
-export interface Env {
-  GOOGLE_GEMINI_API_KEY: string;
-  GOOGLE_GEMINI_MODEL: string;
-}
+import type { PagesFunction, Env } from '../../types';
+import { analyzeEmployeeCost } from '../../lib/gemini';
 
 const ChatRequestSchema = z.object({
   query: z.string().min(1).max(1000),

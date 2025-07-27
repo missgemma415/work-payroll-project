@@ -1,6 +1,6 @@
 import { getAuthToken } from '@/lib/context/auth-context';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_APP_URL ?? '';
+const API_BASE_URL = process.env['NEXT_PUBLIC_APP_URL'] ?? '';
 
 interface ChatResponse {
   response: string;

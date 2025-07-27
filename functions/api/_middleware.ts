@@ -1,14 +1,9 @@
+import type { PagesFunction, Env } from '../types';
 import { verifyJWT, extractBearerToken } from '../lib/auth';
 import { checkRateLimit, getRateLimitHeaders } from '../lib/rateLimit';
 
-export interface Env {
-  JWT_SECRET: string;
-  GOOGLE_GEMINI_API_KEY: string;
-  GOOGLE_GEMINI_MODEL: string;
-}
-
 export const onRequest: PagesFunction<Env> = async (context) => {
-  const { request, env, next } = context;
+  const { request, next } = context;
 
   // CORS headers
   if (request.method === 'OPTIONS') {
