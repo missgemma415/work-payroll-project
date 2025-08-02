@@ -1,3 +1,6 @@
+# Agent Guardrails Post-Commit
+.claude/hooks/post-commit
+
 echo "🔍 Running post-commit code review checks..."
 
 # Colors for output

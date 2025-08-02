@@ -25,7 +25,7 @@ We use a simplified, scalable approach:
 - **Frontend**: Next.js 15 with App Router (React 19)
 - **Deployment**: Vercel (seamless Next.js integration)
 - **Database**: Neon PostgreSQL (serverless, scalable)
-- **AI Chat**: Anthropic Claude API (direct integration)
+- **AI Chat**: Google Gemini API (direct integration)
 - **Voice**: ElevenLabs API (voice synthesis)
 - **CLI Tools**: GitHub CLI, Neon CLI, Vercel CLI
 
@@ -50,53 +50,73 @@ We use a simplified, scalable approach:
    - Connection pooling
 
 4. **Direct API Integrations**
-   - Anthropic Claude for AI chat
+   - Google Gemini for AI chat and analysis
    - ElevenLabs for voice synthesis
    - No complex orchestration layers
 
 ## API Architecture
 
-### Simple API Routes Structure
+### Current API Routes Structure
 
 ```
 app/api/
-├── auth/
-│   ├── login/route.ts
-│   ├── register/route.ts
-│   └── logout/route.ts
-├── chat/route.ts          # Anthropic Claude integration
+├── chat/route.ts          # Google Gemini integration with conversation management
+│                          # POST: Send message, manage conversations
+│                          # GET: Retrieve conversation history
 ├── voice/route.ts         # ElevenLabs voice synthesis
-├── analyze/route.ts       # Financial analysis logic
-├── forecast/route.ts      # Prophet time series forecasting
-├── employees/route.ts     # Employee data management
-└── health/route.ts        # Health check endpoint
+│                          # POST: Text-to-speech conversion
+│                          # GET: List available voices
+└── health/route.ts        # Health check and environment validation
+                           # GET: System status and env var verification
 ```
 
 ### API Development Guidelines
 
 ```typescript
-// Example API route structure
+// Example API route structure (based on /api/chat)
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
+import { GeminiClient } from '@/lib/ai/clients';
 
-const requestSchema = z.object({
-  message: z.string(),
-  context: z.object({}).optional(),
+const chatRequestSchema = z.object({
+  message: z.string().min(1).max(5000),
+  user_id: z.string().uuid(),
+  conversation_id: z.string().uuid().optional(),
+  context: z.record(z.unknown()).optional(),
 });
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { message, context } = requestSchema.parse(body);
+    const { message, user_id, conversation_id, context } = chatRequestSchema.parse(body);
 
-    // Direct API call to Anthropic
-    const response = await anthropicClient.messages.create({
-      model: 'claude-3-5-sonnet-20241022',
-      messages: [{ role: 'user', content: message }],
+    // Initialize Gemini client
+    const geminiClient = new GeminiClient();
+
+    // Enhanced prompt with financial analysis context
+    const enhancedPrompt = `
+You are an AI financial analyst specializing in employee cost management and workforce planning.
+
+User Question: ${message}
+
+Please provide a clear, concise, and actionable response focusing on financial insights.
+    `;
+
+    // Get response from Gemini
+    const response = await geminiClient.askQuestion(enhancedPrompt, context);
+
+    return NextResponse.json({
+      response,
+      conversation_id: finalConversationId,
+      created_at: new Date().toISOString(),
     });
-
-    return NextResponse.json({ response: response.content });
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { error: 'Validation failed', details: error.errors },
+        { status: 400 }
+      );
+    }
     return NextResponse.json({ error: 'Request failed' }, { status: 500 });
   }
 }
@@ -106,7 +126,7 @@ export async function POST(request: NextRequest) {
 
 ```bash
 # Core APIs
-ANTHROPIC_API_KEY=your-anthropic-api-key
+GOOGLE_GEMINI_API_KEY=your-google-gemini-api-key
 ELEVENLABS_API_KEY=your-elevenlabs-api-key
 
 # Database
@@ -142,7 +162,7 @@ npm run deploy
 vercel
 
 # Environment variables
-vercel env add ANTHROPIC_API_KEY
+vercel env add GOOGLE_GEMINI_API_KEY
 vercel env add NEON_DATABASE_URL
 ```
 
@@ -247,7 +267,7 @@ curl -X POST http://localhost:3000/api/chat \
 ## Monitoring
 
 - Use Vercel Analytics for performance monitoring
-- Monitor API usage and costs (Anthropic, ElevenLabs)
+- Monitor API usage and costs (Google Gemini, ElevenLabs)
 - Set up error tracking with Vercel's built-in error reporting
 - Track database performance with Neon metrics
 
@@ -307,17 +327,17 @@ Our development process is enhanced by specialized AI agents that maintain code 
   - Cloud platforms and deployment strategies
   - Test-driven development and security best practices
 
-#### **2. MCP Tools Specialist Agent** 🔧
+#### **2. API Integration Specialist Agent** 🔌
 
 - **Role**: Integration Architecture Expert
 - **Responsibilities**:
-  - API integration patterns and optimization
-  - Tool schema design with Zod validation
-  - MCP protocol implementation (when needed)
+  - Direct API integration patterns and optimization
+  - Schema design with Zod validation
+  - API client implementation and testing
   - Integration troubleshooting and debugging
 - **When to Use**:
   - Designing new API integrations
-  - Creating tool schemas with proper validation
+  - Creating validation schemas with Zod
   - Optimizing existing integration patterns
   - Troubleshooting API connection issues
 
@@ -359,7 +379,7 @@ graph LR
     D -->|No| F[Code Review Passed]
     F --> G[Commit Ready]
 
-    H[New Integration] --> I[MCP Tools Specialist]
+    H[New Integration] --> I[API Integration Specialist]
     I --> J[Design & Implement]
     J --> C
 ```
@@ -391,82 +411,67 @@ As we add more specialized agents to our team:
 - **Architecture First**: Involve Fullstack Architect for complex decisions
 - **Documentation**: Keep agent capabilities and usage patterns updated
 
-## Agent Context Review Hook System
+## Agent Guardrails System
 
 ### **Overview**
 
-Our sophisticated hook system ensures every agent starts with complete context awareness and contributes specialized knowledge back to the collective intelligence system.
+Our comprehensive Agent Guardrails System provides accountability and reliability tracking for AI agents. It prevents phantom work claims, validates deliverables, and maintains execution integrity through automated verification.
 
-### **Hook System Architecture**
+### **Agent Guardrails System Architecture**
 
 ```
 .claude/
-├── hooks-config.json         # Main hook configuration
-├── settings.local.json       # Hook integration settings
-├── scripts/
-│   ├── pre-task-context.sh   # Universal context loading
-│   ├── post-task-update.sh   # Knowledge preservation
-│   ├── agents/               # Agent-specific scripts
-│   │   ├── neon-db-context.sh
-│   │   ├── vercel-deploy-context.sh
-│   │   ├── security-audit-context.sh
-│   │   ├── api-integration-context.sh
-│   │   ├── docs-curator-update.sh
-│   │   └── performance-metrics.sh
-│   └── validation/           # Validation scripts
-│       ├── vercel-health-check.sh
-│       ├── neon-db-validate.sh
-│       └── security-scan.sh
+├── guardrails/              # Agent accountability system
+│   ├── agent-handoff-validator.js
+│   ├── execution-tracker.js
+│   ├── file-state-monitor.js
+│   ├── reliability-metrics.js
+│   └── verify-agent.js
+├── hooks/                   # Git integration hooks
+│   ├── pre-commit
+│   ├── post-commit
+│   ├── agent-session-start
+│   └── agent-session-end
+├── hooks-config.json        # Hook configuration
+└── settings.local.json      # Local settings
 ```
 
-### **Pre-Task Context Loading**
+### **Key Features**
 
-Every agent automatically:
+- **Pre-task checkpoints** with git snapshots and file state capture
+- **Handoff validation** to verify claimed deliverables against actual changes
+- **Phantom work detection** to catch agents claiming work they didn't perform
+- **Tool call monitoring** to track all agent actions
+- **Reliability metrics** with performance scoring and trend analysis
+- **Build verification** to ensure code quality standards
 
-1. **Reads Core Documentation** - CLAUDE.md, ProjectContextEngineering.md, ProjectTasks.md
-2. **Reviews Architecture** - Current NEON + Vercel + Direct APIs stack
-3. **Checks Memory System** - Previous learnings and patterns
-4. **Loads Agent-Specific Context** - Specialized knowledge for their domain
+### **Usage Commands**
 
-### **Post-Task Knowledge Updates**
+```bash
+# Agent verification
+npm run agent:verify <sessionId> [--build]    # Comprehensive verification
+npm run agent:dashboard                        # Reliability dashboard
 
-After task completion:
+# Session management
+npm run agent:checkpoint <agentType> <task>    # Create pre-work checkpoint
+npm run agent:handoff <sessionId> <claims>     # Validate deliverables
 
-1. **Memory Updates** - New patterns and solutions recorded
-2. **Documentation Review** - Flags needed updates
-3. **Pattern Recognition** - Successful approaches archived
-4. **Agent-Specific Actions** - Domain-specific knowledge preservation
-
-### **Agent-Specific Hooks**
-
-Each specialized agent has tailored:
-
-- **Context Loading**: Domain-specific information and history
-- **Post-Task Actions**: Specialized knowledge preservation
-- **Validation Checks**: Pre/post-task health verification
-
-### **Hook Configuration**
-
-Hooks are configured in `.claude/settings.local.json`:
-
-```json
-{
-  "hooks": {
-    "PreToolUse": [
-      /* Context loading hooks */
-    ],
-    "PostToolUse": [
-      /* Knowledge update hooks */
-    ],
-    "UserPromptSubmit": [
-      /* Context reminders */
-    ],
-    "Validation": [
-      /* Health check hooks */
-    ]
-  }
-}
+# Monitoring
+npm run agent:snapshot [id]                    # Create file snapshot
+npm run agent:track <command>                  # Execution tracking
+npm run agent:metrics                          # View reliability metrics
 ```
+
+### **Reliability Tiers**
+
+- **🏆 Platinum** (95%+ success, 95%+ accuracy): Highest reliability, minimal oversight
+- **🥇 Gold** (90%+ success, 90%+ accuracy): Highly reliable, standard oversight
+- **🥈 Silver** (80%+ success, 80%+ accuracy): Reliable with minor issues
+- **🥉 Bronze** (70%+ success, 70%+ accuracy): Developing reliability
+- **🔄 Developing** (50%+ success): Learning phase
+- **⚠️ Problematic** (<50% success): Serious reliability issues
+
+For complete documentation, see `README-agent-guardrails.md`.
 
 Remember: **We're building a scalable, maintainable financial intelligence platform with modern tools, simple architecture, and AI-enhanced development workflows.**
 

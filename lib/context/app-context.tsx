@@ -54,7 +54,6 @@ export function AppProvider({ children }: { children: ReactNode }): React.JSX.El
       const [firstName, ...lastNameParts] = authUser.name.split(' ');
       const user: User = {
         id: authUser.id,
-        clerk_id: authUser.id, // Use same id for now
         email: authUser.email,
         first_name: firstName ?? null,
         last_name: lastNameParts.join(' ') || null,
@@ -80,6 +79,8 @@ export function AppProvider({ children }: { children: ReactNode }): React.JSX.El
             compactMode: false,
           },
         },
+        email_verified: false,
+        last_login: null,
         organization_id: authUser.organization_id,
         created_at: authUser.created_at,
         updated_at: authUser.updated_at,

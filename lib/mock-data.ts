@@ -13,7 +13,6 @@ import type {
 // Mock user data
 export const mockUser: User = {
   id: 'user-1',
-  clerk_id: 'clerk-user-1',
   email: 'john.doe@scientiacapital.com',
   first_name: 'John',
   last_name: 'Doe',
@@ -40,6 +39,8 @@ export const mockUser: User = {
       compactMode: false,
     },
   } as UserPreferences,
+  email_verified: true,
+  last_login: '2024-01-15T08:30:00Z',
   created_at: '2022-01-15T10:00:00Z',
   updated_at: '2024-01-15T10:00:00Z',
 };

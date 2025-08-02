@@ -112,13 +112,35 @@ CREATE TABLE IF NOT EXISTS team_pulse_snapshots (
     UNIQUE(organization_id, date)
 );
 
+-- Conversations table for AI chat history
+CREATE TABLE IF NOT EXISTS conversations (
+    id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
+    user_id TEXT NOT NULL,
+    title TEXT NOT NULL,
+    metadata JSON DEFAULT '{}',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Messages table for storing chat messages
+CREATE TABLE IF NOT EXISTS messages (
+    id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
+    conversation_id TEXT NOT NULL,
+    role TEXT NOT NULL CHECK (role IN ('user', 'assistant')),
+    content TEXT NOT NULL,
+    metadata JSON DEFAULT '{}',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (conversation_id) REFERENCES conversations(id) ON DELETE CASCADE
+);
+
 -- Activity logs for audit and analytics
 CREATE TABLE IF NOT EXISTS activity_logs (
     id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
     user_id TEXT,
     organization_id TEXT NOT NULL,
-    action_type TEXT NOT NULL, -- 'mood_checkin', 'priority_added', 'kudos_given', etc.
-    resource_type TEXT, -- 'mood', 'priority', 'kudos', etc.
+    action_type TEXT NOT NULL, -- 'mood_checkin', 'priority_added', 'kudos_given', 'chat_message', etc.
+    resource_type TEXT, -- 'mood', 'priority', 'kudos', 'conversation', etc.
     resource_id TEXT,
     details JSON DEFAULT '{}',
     ip_address TEXT,
@@ -149,6 +171,14 @@ CREATE INDEX IF NOT EXISTS idx_kudos_created_at ON kudos(created_at);
 
 CREATE INDEX IF NOT EXISTS idx_team_pulse_organization_date ON team_pulse_snapshots(organization_id, date);
 
+CREATE INDEX IF NOT EXISTS idx_conversations_user_id ON conversations(user_id);
+CREATE INDEX IF NOT EXISTS idx_conversations_created_at ON conversations(created_at);
+CREATE INDEX IF NOT EXISTS idx_conversations_updated_at ON conversations(updated_at);
+
+CREATE INDEX IF NOT EXISTS idx_messages_conversation_id ON messages(conversation_id);
+CREATE INDEX IF NOT EXISTS idx_messages_role ON messages(role);
+CREATE INDEX IF NOT EXISTS idx_messages_created_at ON messages(created_at);
+
 CREATE INDEX IF NOT EXISTS idx_activity_logs_user_id ON activity_logs(user_id);
 CREATE INDEX IF NOT EXISTS idx_activity_logs_organization_id ON activity_logs(organization_id);
 CREATE INDEX IF NOT EXISTS idx_activity_logs_action_type ON activity_logs(action_type);
@@ -171,6 +201,12 @@ CREATE TRIGGER IF NOT EXISTS update_priorities_timestamp
     AFTER UPDATE ON daily_priorities 
     BEGIN 
         UPDATE daily_priorities SET updated_at = CURRENT_TIMESTAMP WHERE id = NEW.id;
+    END;
+
+CREATE TRIGGER IF NOT EXISTS update_conversations_timestamp 
+    AFTER UPDATE ON conversations 
+    BEGIN 
+        UPDATE conversations SET updated_at = CURRENT_TIMESTAMP WHERE id = NEW.id;
     END;
 
 -- Trigger to update kudos likes count

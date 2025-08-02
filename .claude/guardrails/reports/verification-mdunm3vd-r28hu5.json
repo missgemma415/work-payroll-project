@@ -1,0 +1,160 @@
+{
+  "sessionId": "mdunm3vd-r28hu5",
+  "timestamp": "2025-08-02T20:04:53.325Z",
+  "options": {
+    "verifyBuild": true
+  },
+  "phases": {
+    "handoffValidation": {
+      "success": true,
+      "validation": {
+        "sessionId": "mdunm3vd-r28hu5",
+        "timestamp": "2025-08-02T20:04:53.347Z",
+        "validated": true,
+        "issues": [],
+        "deliverables": []
+      },
+      "issues": [],
+      "score": 100
+    },
+    "executionTracking": {
+      "success": false,
+      "error": "No verification data available",
+      "issues": ["Execution tracking incomplete"],
+      "score": 0
+    },
+    "fileStateAnalysis": {
+      "success": true,
+      "comparison": {
+        "beforeSnapshot": "session-start-mdunm3vd-r28hu5",
+        "afterSnapshot": "session-end-mdunm3vd-r28hu5",
+        "timestamp": "2025-08-02T20:04:53.351Z",
+        "changes": {
+          "filesCreated": [],
+          "filesModified": [
+            {
+              "path": "lib/types/api.ts",
+              "beforeHash": "daeb1a58fbde21444dc927e1c2ee66e55a228f7b8cbe11c00762e232b527e3fc",
+              "afterHash": "ee60a2ad729134da7f7e9bb478007d6b4394cda1c64968579c6924ea61ff4435",
+              "sizeChange": 8,
+              "modified": "2025-08-02T19:47:27.175Z"
+            },
+            {
+              "path": "lib/types/database.ts",
+              "beforeHash": "9f86add71ef06045ed0a0bdf317f517de6155c744de5cf2bf36ac1888ac6ee83",
+              "afterHash": "ba81f1fbe0009fc93134cfabfe759638d0c164801638e4bf00c10f5d8f5e52ba",
+              "sizeChange": 72,
+              "modified": "2025-08-02T19:49:44.026Z"
+            },
+            {
+              "path": "lib/types/metadata.ts",
+              "beforeHash": "6f8f30dc4363dabc5cdf983e574bfdd783a59b370732bb5a45e25f075050c77f",
+              "afterHash": "a28b303b2e0ade995a7aae853d57a84df079a07c4129ed74102f47cf949e9eb8",
+              "sizeChange": 8,
+              "modified": "2025-08-02T19:49:02.659Z"
+            }
+          ],
+          "filesDeleted": [],
+          "directoriesCreated": [],
+          "directoriesDeleted": []
+        },
+        "statistics": {
+          "totalChangeFiles": 3,
+          "totalSizeChange": 88,
+          "netFileChange": 0
+        },
+        "verification": {
+          "phantomClaims": [],
+          "verifiedChanges": [],
+          "suspiciousPatterns": []
+        }
+      },
+      "verification": {
+        "totalClaims": 0,
+        "verifiedClaims": 0,
+        "phantomClaims": 0,
+        "incorrectClaims": 0,
+        "details": [],
+        "unreportedChanges": [
+          {
+            "type": "unreported_modification",
+            "path": "lib/types/api.ts",
+            "details": {
+              "path": "lib/types/api.ts",
+              "beforeHash": "daeb1a58fbde21444dc927e1c2ee66e55a228f7b8cbe11c00762e232b527e3fc",
+              "afterHash": "ee60a2ad729134da7f7e9bb478007d6b4394cda1c64968579c6924ea61ff4435",
+              "sizeChange": 8,
+              "modified": "2025-08-02T19:47:27.175Z"
+            }
+          },
+          {
+            "type": "unreported_modification",
+            "path": "lib/types/database.ts",
+            "details": {
+              "path": "lib/types/database.ts",
+              "beforeHash": "9f86add71ef06045ed0a0bdf317f517de6155c744de5cf2bf36ac1888ac6ee83",
+              "afterHash": "ba81f1fbe0009fc93134cfabfe759638d0c164801638e4bf00c10f5d8f5e52ba",
+              "sizeChange": 72,
+              "modified": "2025-08-02T19:49:44.026Z"
+            }
+          },
+          {
+            "type": "unreported_modification",
+            "path": "lib/types/metadata.ts",
+            "details": {
+              "path": "lib/types/metadata.ts",
+              "beforeHash": "6f8f30dc4363dabc5cdf983e574bfdd783a59b370732bb5a45e25f075050c77f",
+              "afterHash": "a28b303b2e0ade995a7aae853d57a84df079a07c4129ed74102f47cf949e9eb8",
+              "sizeChange": 8,
+              "modified": "2025-08-02T19:49:02.659Z"
+            }
+          }
+        ],
+        "reliability": 100
+      },
+      "issues": [],
+      "score": 100
+    },
+    "buildVerification": {
+      "success": true,
+      "typeCheck": {
+        "success": true,
+        "command": "npm run type-check",
+        "output": "> scientia-app@0.1.0 type-check\n> tsc --noEmit --pretty",
+        "exitCode": 0
+      },
+      "lint": {
+        "success": true,
+        "command": "npm run lint",
+        "output": "> scientia-app@0.1.0 lint\n> next lint\n\n✔ No ESLint warnings or errors",
+        "exitCode": 0
+      },
+      "build": {
+        "success": true,
+        "command": "npm run build",
+        "output": "> scientia-app@0.1.0 build\n> next build\n\n   ▲ Next.js 15.4.4\n   - Environments: .env.local\n\n   Creating an optimized production build ...\n ✓ Compiled successfully in 1000ms\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/11) ...\n   Generating static pages (2/11) \r\n   Generating static pages (5/11) \r\n   Generating static pages (8/11) \r\n ✓ Generating static pages (11/11)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                                 Size  First Load JS\n┌ ○ /                                      313 B        99.9 kB\n├ ○ /_not-found                            989 B         101 kB\n├ ○ /analytics                           8.36 kB         119 kB\n├ ƒ /api/chat                              131 B        99.7 kB\n├ ƒ /api/health                            131 B        99.7 kB\n├ ƒ /api/voice                             131 B        99.7 kB\n├ ○ /auth-demo                           2.29 kB         110 kB\n├ ○ /login                               1.13 kB         138 kB\n└ ○ /register                             1.2 kB         138 kB\n+ First Load JS shared by all            99.6 kB\n  ├ chunks/4bd1b696-cf72ae8a39fa05aa.js  54.1 kB\n  ├ chunks/964-d6e2a37b7965f281.js       43.5 kB\n  └ other shared chunks (total)          1.93 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand",
+        "exitCode": 0
+      },
+      "issues": [],
+      "score": 100
+    },
+    "finalAssessment": {
+      "agentReliability": "acceptable",
+      "workQuality": "good",
+      "executionIntegrity": "poor",
+      "recommendations": ["Implement stricter tool call monitoring"],
+      "criticalIssues": ["Execution tracking issues detected"],
+      "strengths": [
+        "Handoff validation passed",
+        "File state changes verified",
+        "Build verification passed"
+      ]
+    }
+  },
+  "summary": {
+    "passed": false,
+    "score": 64,
+    "issues": ["Execution tracking incomplete"],
+    "recommendations": ["Implement stricter tool call monitoring"]
+  }
+}

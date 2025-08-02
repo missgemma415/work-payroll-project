@@ -13,6 +13,7 @@ const envSchema = z.object({
 
   // Database
   DATABASE_URL: z.string().optional(),
+  NEON_DATABASE_URL: z.string().min(1, 'NEON_DATABASE_URL is required for database connection'),
 
   // Security
   BCRYPT_ROUNDS: z.string().transform(Number).pipe(z.number().min(10)).default('10'),

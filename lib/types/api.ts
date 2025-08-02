@@ -34,6 +34,44 @@ export interface CreateKudosRequest {
   category: Kudo['category'];
 }
 
+// Chat API Types
+export interface ChatRequest {
+  message: string;
+  context?: {
+    employeeData?: unknown[];
+    analysisType?: 'cost_analysis' | 'forecast' | 'general';
+    timeRange?: {
+      start?: string;
+      end?: string;
+    };
+  };
+  conversationId?: string;
+}
+
+export interface ChatResponse {
+  response: string;
+  conversationId: string;
+  messageId: string;
+  context?: {
+    analysisType?: string;
+    confidence?: number;
+    suggestions?: string[];
+  };
+}
+
+export interface ConversationRecord {
+  id: string;
+  message: string;
+  response: string;
+  context: unknown;
+  createdAt: string;
+}
+
+export interface ConversationsResponse {
+  conversations: ConversationRecord[];
+  total: number;
+}
+
 // Generic API Response
 export interface ApiResponse<T = unknown> {
   success: boolean;

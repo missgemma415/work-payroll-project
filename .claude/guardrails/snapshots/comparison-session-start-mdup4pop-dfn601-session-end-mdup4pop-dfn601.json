@@ -1,0 +1,22 @@
+{
+  "beforeSnapshot": "session-start-mdup4pop-dfn601",
+  "afterSnapshot": "session-end-mdup4pop-dfn601",
+  "timestamp": "2025-08-02T20:23:12.298Z",
+  "changes": {
+    "filesCreated": [],
+    "filesModified": [],
+    "filesDeleted": [],
+    "directoriesCreated": [],
+    "directoriesDeleted": []
+  },
+  "statistics": {
+    "totalChangeFiles": 0,
+    "totalSizeChange": 0,
+    "netFileChange": 0
+  },
+  "verification": {
+    "phantomClaims": [],
+    "verifiedChanges": [],
+    "suspiciousPatterns": []
+  }
+}

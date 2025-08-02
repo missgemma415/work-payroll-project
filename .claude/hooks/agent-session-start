@@ -1,0 +1,47 @@
+#!/bin/sh
+# Agent Session Start Hook
+# Called when an agent begins work to establish accountability checkpoints
+
+if [ $# -lt 2 ]; then
+    echo "Usage: $0 <agent-type> <task-description>"
+    exit 1
+fi
+
+AGENT_TYPE="$1"
+TASK_DESCRIPTION="$2"
+
+echo "🎯 Starting Agent Session: $AGENT_TYPE"
+echo "📋 Task: $TASK_DESCRIPTION"
+
+# Create checkpoint and get session ID
+if [ -f ".claude/guardrails/agent-handoff-validator.js" ]; then
+    echo "🔒 Creating accountability checkpoint..."
+    SESSION_ID=$(node .claude/guardrails/agent-handoff-validator.js checkpoint "$AGENT_TYPE" "$TASK_DESCRIPTION" | grep "Session ID:" | cut -d' ' -f3)
+    
+    if [ -n "$SESSION_ID" ]; then
+        echo "✅ Session created: $SESSION_ID"
+        
+        # Store session ID for other hooks to use
+        echo "$SESSION_ID" > .claude/guardrails/.current-session
+        
+        # Start execution tracking
+        if [ -f ".claude/guardrails/execution-tracker.js" ]; then
+            echo "🔧 Starting execution tracking..."
+            node .claude/guardrails/execution-tracker.js start "$SESSION_ID" "$AGENT_TYPE" "$TASK_DESCRIPTION" > /dev/null 2>&1
+        fi
+        
+        # Create initial file snapshot
+        if [ -f ".claude/guardrails/file-state-monitor.js" ]; then
+            echo "📸 Creating initial file snapshot..."
+            node .claude/guardrails/file-state-monitor.js snapshot "session-start-$SESSION_ID" > /dev/null 2>&1
+        fi
+        
+        echo "🚀 Agent session ready: $SESSION_ID"
+        
+    else
+        echo "❌ Failed to create session checkpoint"
+        exit 1
+    fi
+else
+    echo "⚠️  Agent guardrails not available - proceeding without accountability"
+fi

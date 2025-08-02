@@ -1,0 +1,739 @@
+{
+  "id": "session-start-mduowngy-7szwtz",
+  "timestamp": "2025-08-02T20:13:20.071Z",
+  "files": {
+    ".claude/agents/fullstack-architect.md": {
+      "size": 4193,
+      "mtime": "2025-08-02T16:32:06.186Z",
+      "hash": "7148f4714ba867c071b1444f2a19c153b19abffa6648a54a6a41af9e86ae5498",
+      "mode": 33188
+    },
+    ".claude/agents/mcp-tools-specialist.md": {
+      "size": 5982,
+      "mtime": "2025-08-02T16:05:49.685Z",
+      "hash": "28407f1d339464d92505d06a587ee3240daa9a5d2b4a55b27adfc4d78e42be7f",
+      "mode": 33188
+    },
+    ".claude/context/docs-context-summary-2025-08-02.md": {
+      "size": 961,
+      "mtime": "2025-08-02T17:38:19.718Z",
+      "hash": "f622823b9e614eda8e778ef0d7b4e93524c6b07894466b285e96872503c5af58",
+      "mode": 33188
+    },
+    ".claude/context/git-history-2025-08-02.txt": {
+      "size": 11451,
+      "mtime": "2025-08-02T17:36:53.464Z",
+      "hash": "4dcbe6fd267800e4dd5590c4cd952159422c2dd6370e474c819c05b51a3efbe8",
+      "mode": 33188
+    },
+    ".claude/guardrails/agent-handoff-validator.js": {
+      "size": 13761,
+      "mtime": "2025-08-02T20:12:37.261Z",
+      "hash": "19fe479afd352bad87fabce72164d6e4a6f5c44940a8ebc590daf0e30fbe8a8f",
+      "mode": 33188
+    },
+    ".claude/guardrails/execution-tracker.js": {
+      "size": 17137,
+      "mtime": "2025-08-02T20:12:37.294Z",
+      "hash": "de8ee9db54d25e8e325b8d8b4f75e09a4af0f41b53d8c90c31ccb05182bd4c8c",
+      "mode": 33188
+    },
+    ".claude/guardrails/file-state-monitor.js": {
+      "size": 17992,
+      "mtime": "2025-08-02T20:12:37.329Z",
+      "hash": "bec27c5fc07a642b88319adb9f80c065cfd5857c4852034dbabe85cedaa3c6bd",
+      "mode": 33188
+    },
+    ".claude/guardrails/reliability-metrics.js": {
+      "size": 21596,
+      "mtime": "2025-08-02T20:12:37.354Z",
+      "hash": "f00ca69567ca048be7ce7d3460cbde2a74fd61175d1470da04e6abb8afbb26f6",
+      "mode": 33188
+    },
+    ".claude/guardrails/verify-agent.js": {
+      "size": 18942,
+      "mtime": "2025-08-02T20:12:37.474Z",
+      "hash": "31a4c67abd0dfa9ea8ba7248a206b081a3ffac1829ec68cbe9fd41925ed4f5a4",
+      "mode": 33188
+    },
+    ".claude/hooks-config.json": {
+      "size": 11975,
+      "mtime": "2025-08-02T17:33:02.611Z",
+      "hash": "cf38695306ebb9f02497b78d726d19686b7f3e1b55d1851b59469983343940c1",
+      "mode": 33188
+    },
+    ".claude/hooks/agent-session-end": {
+      "size": 3507,
+      "mtime": "2025-08-02T19:28:27.598Z",
+      "hash": "ab3a8ac3d282b4a825c2a788a68039f0a0ff10e7b860a6eec275e7bcdc66d6af",
+      "mode": 33261
+    },
+    ".claude/hooks/agent-session-start": {
+      "size": 1696,
+      "mtime": "2025-08-02T19:28:07.252Z",
+      "hash": "4357ea73d0fc9d99214119c373b3031ca4f234baf5df6bfb654bec5042d0d108",
+      "mode": 33261
+    },
+    ".claude/hooks/post-commit": {
+      "size": 2280,
+      "mtime": "2025-08-02T19:27:54.973Z",
+      "hash": "7ccb781762f05196370627c4bf080ab70bc74c8371829d16bf0cf9feb59c4c0b",
+      "mode": 33261
+    },
+    ".claude/hooks/pre-commit": {
+      "size": 2080,
+      "mtime": "2025-08-02T19:27:40.067Z",
+      "hash": "211bf9d74cb769d20d9312d3a2d42a212d576476c6ebc7ba2c743724cc7cc830",
+      "mode": 33261
+    },
+    ".claude/scripts/agents/api-integration-context.sh": {
+      "size": 4456,
+      "mtime": "2025-08-02T17:19:21.582Z",
+      "hash": "f6d8602db5ec27d09185e8a95c0b69f72cfe2a19f68501514b2a88d2de2fdc54",
+      "mode": 33261
+    },
+    ".claude/scripts/agents/docs-curator-pre-context.sh": {
+      "size": 6611,
+      "mtime": "2025-08-02T17:31:38.953Z",
+      "hash": "cdd8708eb8d425edfc0ab80ca814ea01a732386924199899f78630e14a4e104f",
+      "mode": 33261
+    },
+    ".claude/scripts/agents/docs-curator-update.sh": {
+      "size": 7018,
+      "mtime": "2025-08-02T17:32:37.335Z",
+      "hash": "39caffbaba6a5bb817e3589054063843e5a09b2de2c70654ea6ff4cf70806ef1",
+      "mode": 33261
+    },
+    ".claude/scripts/agents/neon-db-context.sh": {
+      "size": 3788,
+      "mtime": "2025-08-02T17:17:44.123Z",
+      "hash": "a097881f5ba98ddf9cf0a0aa295c6d3ab36ad9480c3279ed7dcde76b13351017",
+      "mode": 33261
+    },
+    ".claude/scripts/agents/performance-metrics.sh": {
+      "size": 6119,
+      "mtime": "2025-08-02T17:20:49.607Z",
+      "hash": "84af075f36b18410e69df55e98301259d8c44492b1d924680c51cadeff3a7995",
+      "mode": 33261
+    },
+    ".claude/scripts/agents/security-audit-context.sh": {
+      "size": 4555,
+      "mtime": "2025-08-02T17:18:46.861Z",
+      "hash": "7b65641e23211a5ec37252b9f892b5c40095ce7301b8182bd2202fb8d8670064",
+      "mode": 33261
+    },
+    ".claude/scripts/agents/vercel-deploy-context.sh": {
+      "size": 4222,
+      "mtime": "2025-08-02T17:18:14.265Z",
+      "hash": "2e1444f38df2ecd9b6eae0d23f5f9d6ced2c4be67084c49ab9725ae87fea2706",
+      "mode": 33261
+    },
+    ".claude/scripts/post-task-update.sh": {
+      "size": 4250,
+      "mtime": "2025-08-02T17:04:53.274Z",
+      "hash": "ca4b0a0c0062ad7a63c594ef3a95242de3bbf0e431b5ba0cb82edeb970edf7f2",
+      "mode": 33261
+    },
+    ".claude/scripts/pre-task-context.sh": {
+      "size": 3093,
+      "mtime": "2025-08-02T16:59:42.707Z",
+      "hash": "c3cad45fdeb2a9a6a20edc0337a0d036f7ac1291c890d3a1858da3db5c512ca8",
+      "mode": 33261
+    },
+    ".claude/scripts/validation/neon-db-validate.sh": {
+      "size": 4603,
+      "mtime": "2025-08-02T17:22:10.763Z",
+      "hash": "a20ca791c68e2eed1e15f9eee9a28b70e742f1d31c26bf5842f626578d1f8e9c",
+      "mode": 33261
+    },
+    ".claude/scripts/validation/security-scan.sh": {
+      "size": 5720,
+      "mtime": "2025-08-02T17:22:51.668Z",
+      "hash": "9505563352d39b8beef61d3e16ac573366347f2c927dd1f3a94057f2056aee38",
+      "mode": 33261
+    },
+    ".claude/scripts/validation/vercel-health-check.sh": {
+      "size": 4039,
+      "mtime": "2025-08-02T17:21:35.354Z",
+      "hash": "7076334c82745d4e593a420d2fbb1dff56fe62772b6b891f3be4324743e712d2",
+      "mode": 33261
+    },
+    ".env.local.example": {
+      "size": 1128,
+      "mtime": "2025-08-02T19:02:46.714Z",
+      "hash": "b330f95d2cd1e4337b765a5b34f4ef7ed192d4da95ce9030f17697003f8a1b2f",
+      "mode": 33188
+    },
+    ".eslintrc.json": {
+      "size": 3324,
+      "mtime": "2025-08-02T16:05:49.712Z",
+      "hash": "ef82da99fe390f2e1778a8608255351f3ac6bb498fe46b7b56721e295e0238ce",
+      "mode": 33188
+    },
+    ".gitaliases": {
+      "size": 603,
+      "mtime": "2025-07-26T21:34:30.209Z",
+      "hash": "dd2dbc8ac299aa86ac94c1b2fd206367e8406b86f514a0c3fbbe660d4fe75753",
+      "mode": 33188
+    },
+    ".gitignore": {
+      "size": 668,
+      "mtime": "2025-07-26T20:03:25.134Z",
+      "hash": "6e0b1289d0f8444f915ab20c56d5ce904e66d2c810be26901a7c1955b372ab0b",
+      "mode": 33188
+    },
+    ".husky/post-commit": {
+      "size": 2768,
+      "mtime": "2025-08-02T19:29:13.735Z",
+      "hash": "8ac0c0c8d3b386387ca9745e732f11c3a2fc9a59de0558313c4823311adebc0f",
+      "mode": 33261
+    },
+    ".husky/pre-commit": {
+      "size": 92,
+      "mtime": "2025-08-02T19:28:44.188Z",
+      "hash": "8721ca2bc4c941f7a47a361584a9a5e3e03f03bb09f65fcf9b216b7b2542bb5a",
+      "mode": 33188
+    },
+    ".husky/pre-push": {
+      "size": 34,
+      "mtime": "2025-07-26T21:33:25.229Z",
+      "hash": "cf0abc9f2b8ef7d19f2a8eab1696cce1d6e94b97e870f342c53a1097d6059e6b",
+      "mode": 33188
+    },
+    ".lintstagedrc.json": {
+      "size": 161,
+      "mtime": "2025-07-26T21:27:46.150Z",
+      "hash": "d7f913af95955d289396fb4cc1db284c847ec3dd2b9fd899543bef395f18be40",
+      "mode": 33188
+    },
+    ".prettierignore": {
+      "size": 246,
+      "mtime": "2025-07-26T21:27:46.150Z",
+      "hash": "e0bec05ac96533975556e920a603c071a5a7dd0f4612a1441c8096085a09ef70",
+      "mode": 33188
+    },
+    ".prettierrc.json": {
+      "size": 365,
+      "mtime": "2025-07-26T21:27:46.150Z",
+      "hash": "e5a616fafcb88c4dcca1f0ef63bfda86dbd703fc2cf69579764b7eb4e0ac2eb3",
+      "mode": 33188
+    },
+    "CLAUDE.md": {
+      "size": 14554,
+      "mtime": "2025-08-02T20:12:37.716Z",
+      "hash": "5dfadd467c35705b9d8510c8be5f596273746a353802e40fdcb665b7c250c414",
+      "mode": 33188
+    },
+    "CRITICAL_FIXES_REQUIRED.md": {
+      "size": 8306,
+      "mtime": "2025-07-26T23:08:02.384Z",
+      "hash": "f514a4c589b45bf7bc77ec7ab2ce04f6551c28d49886d7671f71666fc6e89cdc",
+      "mode": 33188
+    },
+    "ProjectContextEngineering.md": {
+      "size": 24391,
+      "mtime": "2025-08-02T17:27:01.816Z",
+      "hash": "a29e9a5c1987434803bc9d93748749ef0637671009707a87913b23cd88fbc7e2",
+      "mode": 33188
+    },
+    "ProjectTasks.md": {
+      "size": 18801,
+      "mtime": "2025-08-02T17:27:01.884Z",
+      "hash": "035577311fc34d40aaf2200c59fa973b0bdd5a87b85409ef6ddf8645a5df9adf",
+      "mode": 33188
+    },
+    "README-agent-guardrails.md": {
+      "size": 7802,
+      "mtime": "2025-08-02T20:12:38.345Z",
+      "hash": "73c0dab442c39a89d11f842b0135bdf377be1d7e4bdcdfaffaa9e11ac7f1d289",
+      "mode": 33188
+    },
+    "README.md": {
+      "size": 3535,
+      "mtime": "2025-08-02T20:10:09.332Z",
+      "hash": "5c43b7f7d247c13b674442d41bba99afa9e826a47c9f80b7115727871ec012a7",
+      "mode": 33188
+    },
+    "SESSION_SUMMARY_2025-01-27.md": {
+      "size": 4563,
+      "mtime": "2025-08-02T16:05:50.433Z",
+      "hash": "6b73e11a33a132ce411036bc7fd418bd38329af964f8906b7d24fda423290315",
+      "mode": 33188
+    },
+    "app/analytics/page.tsx": {
+      "size": 4419,
+      "mtime": "2025-07-30T16:03:59.314Z",
+      "hash": "346cdfdb8c1712037412040a180462cb697e1a7740885231d781cfa0b407f645",
+      "mode": 33188
+    },
+    "app/auth-demo/page.tsx": {
+      "size": 4984,
+      "mtime": "2025-07-26T23:08:38.412Z",
+      "hash": "5c76f151f5d1f92e0911a62a2d784a0c8a61c270e16d162ead469f3604df4fe6",
+      "mode": 33188
+    },
+    "app/globals.css": {
+      "size": 4410,
+      "mtime": "2025-07-26T21:27:46.150Z",
+      "hash": "f43c17c19506cf18c68c94973d4af1fed708a8cbb678ef3e4138cbdc3d82436e",
+      "mode": 33188
+    },
+    "app/layout.tsx": {
+      "size": 1411,
+      "mtime": "2025-07-26T23:29:17.872Z",
+      "hash": "4ef66358e894dea46685608f0c9ce9b873e6f800f0d66fa1f3be266d8be1a6a7",
+      "mode": 33188
+    },
+    "app/login/page.tsx": {
+      "size": 4335,
+      "mtime": "2025-08-02T16:03:25.345Z",
+      "hash": "33d203c8aa84ec52e4c6e817ab6dc4d0004e24586d77db82bd04e91e1440cfad",
+      "mode": 33188
+    },
+    "app/page.tsx": {
+      "size": 199,
+      "mtime": "2025-08-02T16:05:49.931Z",
+      "hash": "5205e1dbca3e08aa802e166730d9d8ba6c943e9b92d238e8aafb56c147c76a6f",
+      "mode": 33188
+    },
+    "app/register/page.tsx": {
+      "size": 5845,
+      "mtime": "2025-08-02T16:03:32.130Z",
+      "hash": "dbe515c854fed0e4b0d07129efa86d5a64354ec777b12738d8db9755997a829a",
+      "mode": 33188
+    },
+    "components/dashboard/DashboardNav.tsx": {
+      "size": 3821,
+      "mtime": "2025-07-27T01:50:57.601Z",
+      "hash": "1b0e062d17bddfbda6f3d8cbba349bacf05dd80fcae0ba9131fce2785c2730b7",
+      "mode": 33188
+    },
+    "components/dashboard/Forecast.test.tsx": {
+      "size": 3627,
+      "mtime": "2025-08-02T16:05:50.004Z",
+      "hash": "3012e0c99c2609200cbff85a184e75b30412499f08bcde6093d9bc62c6694a1b",
+      "mode": 33188
+    },
+    "components/dashboard/Forecast.tsx": {
+      "size": 6693,
+      "mtime": "2025-08-02T16:05:50.018Z",
+      "hash": "88d270dd7e4fe276e84e36d218220b9a4d2cf6cd4a93a906da1676c8ff4e2bf2",
+      "mode": 33188
+    },
+    "components/dashboard/KudosWall.tsx": {
+      "size": 9807,
+      "mtime": "2025-07-26T21:27:46.151Z",
+      "hash": "3e1b83a370b3641f2913400a9caa1cb21c548f4869767dfc1667202b0ebdadce",
+      "mode": 33188
+    },
+    "components/dashboard/MoodCheckIn.tsx": {
+      "size": 4635,
+      "mtime": "2025-08-02T15:54:14.494Z",
+      "hash": "4e6b4a231e2fd4bd97f8416474d1dcad948a4f4bc2dd29852f998c32c14d1888",
+      "mode": 33188
+    },
+    "components/dashboard/TeamPulse.tsx": {
+      "size": 7327,
+      "mtime": "2025-07-26T21:27:46.151Z",
+      "hash": "1498e6d01297b6578640904ebffe85e263640ddc24ec781ff5a2a560bcf0b34d",
+      "mode": 33188
+    },
+    "components/dashboard/TodaysPriorities.tsx": {
+      "size": 6272,
+      "mtime": "2025-07-26T21:27:46.151Z",
+      "hash": "da96bf9956a0dbaab2d37f90b920011c903a6f214907351c2476744f3d6e450d",
+      "mode": 33188
+    },
+    "components/dashboard/WelcomeSection.tsx": {
+      "size": 2139,
+      "mtime": "2025-07-26T21:27:46.151Z",
+      "hash": "27e89863fc48ce4a43f850a137809bd3d9e63e1b87784545b4243646499c7a56",
+      "mode": 33188
+    },
+    "components/dashboard/ai/AIChatInterface.tsx": {
+      "size": 11554,
+      "mtime": "2025-08-02T16:05:49.987Z",
+      "hash": "f1cc7a2c15b810e0bbe811493e0cde4b0b7b6889bf369079358deeac97bc0c29",
+      "mode": 33188
+    },
+    "components/layout/Header.tsx": {
+      "size": 2022,
+      "mtime": "2025-07-26T23:29:17.915Z",
+      "hash": "ca72ecb979d7141860702765dd7db3284819d9525cae73c48a758e89cf7ad74d",
+      "mode": 33188
+    },
+    "components/ui/badge.tsx": {
+      "size": 1133,
+      "mtime": "2025-07-26T21:27:46.151Z",
+      "hash": "80a1e56f0a46cb73f3cc04828c2be096d6d3561f7f3b4641361d529ad14deb3b",
+      "mode": 33188
+    },
+    "components/ui/button.tsx": {
+      "size": 2207,
+      "mtime": "2025-07-26T21:27:46.152Z",
+      "hash": "011e9c7f1dd4582b793a42401ba8b2a52055946ed2e02f43d49df01f9d0a368c",
+      "mode": 33188
+    },
+    "components/ui/card.tsx": {
+      "size": 1949,
+      "mtime": "2025-07-26T21:27:46.152Z",
+      "hash": "97dd16fa69e274baafd394e70c5e544c067f04c58fdc40deac22dc24ee390062",
+      "mode": 33188
+    },
+    "components/ui/checkbox.tsx": {
+      "size": 1067,
+      "mtime": "2025-07-26T21:27:46.152Z",
+      "hash": "0aa936328f601cd5474fe34a81ca68d96f6cc5912794015d12a389dc504358b2",
+      "mode": 33188
+    },
+    "components/ui/dropdown-menu.tsx": {
+      "size": 7285,
+      "mtime": "2025-07-26T23:29:17.933Z",
+      "hash": "59e3f301a08a503078a54d8fe14c170083885cd3c7bf030ed3db49fb343a5bad",
+      "mode": 33188
+    },
+    "components/ui/form.tsx": {
+      "size": 4464,
+      "mtime": "2025-07-26T23:29:17.945Z",
+      "hash": "43cdb97ffddc36c6ce97da4640f550f0631bf2b1a2066a5ce546a9c2e9606865",
+      "mode": 33188
+    },
+    "components/ui/input.tsx": {
+      "size": 836,
+      "mtime": "2025-07-26T21:27:46.152Z",
+      "hash": "c7b8a84f3964a38f57c3ac7de013def30186106270b94b866cd9692f201ba7a1",
+      "mode": 33188
+    },
+    "components/ui/textarea.tsx": {
+      "size": 763,
+      "mtime": "2025-07-26T21:27:46.152Z",
+      "hash": "892b48fe2489d61e366d9c695db9282899adb159d41bab7ce61f21dace9132e7",
+      "mode": 33188
+    },
+    "components/ui/use-toast.tsx": {
+      "size": 2379,
+      "mtime": "2025-07-26T23:23:18.155Z",
+      "hash": "5f97e447f471c261a1741918bcdb7b8e647c5ae93fe2538351f546a981c31bfe",
+      "mode": 33188
+    },
+    "database/schema.sql": {
+      "size": 9428,
+      "mtime": "2025-08-02T19:01:03.250Z",
+      "hash": "ab282f9d0ed36eefb2d207c9a009c3f1236eb524b387127b4cf22b2f31ce2c7b",
+      "mode": 33188
+    },
+    "database/seed.sql": {
+      "size": 8046,
+      "mtime": "2025-07-26T20:01:26.678Z",
+      "hash": "43f64135b345fb84a91fb9ac7a84ba0166a305318f0dc0e51085843ba78fad84",
+      "mode": 33188
+    },
+    "docs/GIT-WORKFLOW.md": {
+      "size": 2287,
+      "mtime": "2025-07-26T21:32:07.679Z",
+      "hash": "f89f629c6cba2cea9171e302a5d646a889dc84eb16ce4c75943c4181c5f5cb00",
+      "mode": 33188
+    },
+    "jest.config.js": {
+      "size": 746,
+      "mtime": "2025-08-02T20:12:38.052Z",
+      "hash": "f1eb62aa39f0c5104c12a6ecb6542a5bd12c9b734de50c4ea21a66933f792d8f",
+      "mode": 33188
+    },
+    "jest.setup.ts": {
+      "size": 362,
+      "mtime": "2025-08-02T16:05:50.202Z",
+      "hash": "75c48435b20e5323431de05a338e14f58a18bf4e6443b96297c83663b0b20be1",
+      "mode": 33188
+    },
+    "lib/ai/clients.ts": {
+      "size": 5257,
+      "mtime": "2025-08-02T20:12:38.068Z",
+      "hash": "3f039d7468dbf456b1e71e79a00a8cc3ceb959456523ff5915d3cd8d6e0306cc",
+      "mode": 33188
+    },
+    "lib/anthropic/client.ts": {
+      "size": 466,
+      "mtime": "2025-08-02T16:05:50.218Z",
+      "hash": "cabf0dd9ff111c6ac73cf9780984f4c297d22ef8ff8421482b49af3400e9a2c0",
+      "mode": 33188
+    },
+    "lib/api-response.ts": {
+      "size": 1075,
+      "mtime": "2025-07-26T23:08:02.396Z",
+      "hash": "405ea1920e92a2eca59568098fccc8c4549c8bff74990d5360af8c91aaea172b",
+      "mode": 33188
+    },
+    "lib/api/ai-client.ts": {
+      "size": 2146,
+      "mtime": "2025-07-27T01:58:29.526Z",
+      "hash": "62221083ef68c96c1e30c8fe7f669c100a428e035b5159e1d78fd4a6762b41ef",
+      "mode": 33188
+    },
+    "lib/auth/api-middleware.ts": {
+      "size": 2459,
+      "mtime": "2025-08-02T16:05:50.235Z",
+      "hash": "52982d3a3d82f65d845d9a547cae4cbd9e35d7db18d8abf3796cf74d1c9a25fc",
+      "mode": 33188
+    },
+    "lib/auth/jwt.ts": {
+      "size": 2596,
+      "mtime": "2025-07-26T23:08:38.413Z",
+      "hash": "2fafd7f7880fbedaa3a2c46c119d2d45ccae666cc139556b1a03b8391ee6f4ea",
+      "mode": 33188
+    },
+    "lib/context/app-context.tsx": {
+      "size": 6130,
+      "mtime": "2025-08-02T18:55:40.123Z",
+      "hash": "837f3ff15ed077bdb32dcb93ed25ed58f7e03fc8991f5cfa19c12dfa518c9aac",
+      "mode": 33188
+    },
+    "lib/context/auth-context.tsx": {
+      "size": 9265,
+      "mtime": "2025-08-02T16:02:44.132Z",
+      "hash": "dff6b434d2db3a43288f34f096d95fb20e59cce4ecd867d4acbfba1bf652a1e7",
+      "mode": 33188
+    },
+    "lib/env.ts": {
+      "size": 2132,
+      "mtime": "2025-08-02T18:56:40.993Z",
+      "hash": "cbf52b5f76f3ec64bf0bdb6bf23b5a43d1026fff414c36bff393835960e802ab",
+      "mode": 33188
+    },
+    "lib/gemini/client.ts": {
+      "size": 7685,
+      "mtime": "2025-08-02T16:05:50.290Z",
+      "hash": "b878a1050735f69e41b930261cfd386b88afcbdfd61177e5ea070fb98a5cc981",
+      "mode": 33188
+    },
+    "lib/hooks/use-api.ts": {
+      "size": 967,
+      "mtime": "2025-08-02T16:05:50.297Z",
+      "hash": "6ff81c0798833e1d1fd5560862a48faf7277ba0c48e9021300350e467b5ca121",
+      "mode": 33188
+    },
+    "lib/hooks/use-auth-guard.ts": {
+      "size": 1122,
+      "mtime": "2025-08-02T16:05:50.302Z",
+      "hash": "fb1899162e539cb91c476cdbb99f4be9e7e4f64f452a8e1a7beca5d790d7e601",
+      "mode": 33188
+    },
+    "lib/mock-data.ts": {
+      "size": 7316,
+      "mtime": "2025-08-02T18:57:31.787Z",
+      "hash": "ad4323f977fd74db6768c9dd04228b1608e99062c0ff44f52d5568f3cc35a1eb",
+      "mode": 33188
+    },
+    "lib/mock-data/kudos.ts": {
+      "size": 138,
+      "mtime": "2025-07-26T23:45:23.572Z",
+      "hash": "3f3927d4495b2be256b527c32611cfed61278454e6ae5bc13c124695e06520d2",
+      "mode": 33188
+    },
+    "lib/mock-data/priorities.ts": {
+      "size": 154,
+      "mtime": "2025-07-26T23:45:23.575Z",
+      "hash": "a81ff6e117955bf703ecd452215ee41247938ffa348a3bf22501218e70312a45",
+      "mode": 33188
+    },
+    "lib/types/agent.ts": {
+      "size": 1204,
+      "mtime": "2025-07-27T01:50:57.603Z",
+      "hash": "b151eafc0a998f90b04ebcd1aedf379dcbbd0a1876b10875c52707633eb43cd6",
+      "mode": 33188
+    },
+    "lib/types/api.ts": {
+      "size": 1739,
+      "mtime": "2025-08-02T19:47:27.175Z",
+      "hash": "ee60a2ad729134da7f7e9bb478007d6b4394cda1c64968579c6924ea61ff4435",
+      "mode": 33188
+    },
+    "lib/types/auth.ts": {
+      "size": 2910,
+      "mtime": "2025-08-02T18:40:46.460Z",
+      "hash": "76cd807cdc9052573844e22f6266f9706cb6640f24139bedd6db74ed682ea46e",
+      "mode": 33188
+    },
+    "lib/types/database.ts": {
+      "size": 12575,
+      "mtime": "2025-08-02T20:12:38.248Z",
+      "hash": "b254ad5c17c17f34949153ae80a12f212cd9e9e230b5a165fc49784107948413",
+      "mode": 33188
+    },
+    "lib/types/employee-cost.ts": {
+      "size": 3439,
+      "mtime": "2025-07-27T01:50:57.603Z",
+      "hash": "ccb87276a065efddb4866ae814cb6ea46eb9a2d34c964c36a996ce4af5df4ec0",
+      "mode": 33188
+    },
+    "lib/types/metadata.ts": {
+      "size": 3590,
+      "mtime": "2025-08-02T20:12:38.259Z",
+      "hash": "2d9e71074c9a7cf854da65eeecb5f912ac87f68f7ae7f78f3d564469348de7d2",
+      "mode": 33188
+    },
+    "lib/utils.ts": {
+      "size": 952,
+      "mtime": "2025-07-26T21:27:46.153Z",
+      "hash": "bd3e3333c5a798fb57fe866188493d7a8496d6a4671fff7e85627468d84d4f04",
+      "mode": 33188
+    },
+    "next.config.ts": {
+      "size": 389,
+      "mtime": "2025-07-27T16:36:39.494Z",
+      "hash": "0b2595637ea39a9116787b50b581b7967961e1ccd0d6d9a73e53ea051f485c06",
+      "mode": 33188
+    },
+    "package-lock.json": {
+      "size": 419642,
+      "mtime": "2025-08-02T18:51:19.122Z",
+      "hash": "cf01f8f33288c948e9c77b4bc1067d32c999bd6e16f22f8adf56edeb1054a439",
+      "mode": 33188
+    },
+    "package.json": {
+      "size": 3854,
+      "mtime": "2025-08-02T19:27:24.088Z",
+      "hash": "ea9ac3e54c14bc40d433270c9369085717eb557374b9bb04495250cc19db1687",
+      "mode": 33188
+    },
+    "postcss.config.js": {
+      "size": 83,
+      "mtime": "2025-07-26T21:27:46.153Z",
+      "hash": "fa650b380adfabb151a0b352f7135e107e6352345f899060f1c5c231228f94bf",
+      "mode": 33188
+    },
+    "scripts/git-sync.sh": {
+      "size": 3944,
+      "mtime": "2025-07-26T21:31:01.243Z",
+      "hash": "fdf6a87f4832bdf975c6e0a260dda8b574c0482c798b656be2accb647951d557",
+      "mode": 33261
+    },
+    "tailwind.config.ts": {
+      "size": 4086,
+      "mtime": "2025-07-26T21:32:25.306Z",
+      "hash": "30e96c13759842f285b6b5fd87ac94190375fe55a116971dda92625c0cda7028",
+      "mode": 33188
+    },
+    "tsconfig.eslint.json": {
+      "size": 295,
+      "mtime": "2025-08-02T16:05:50.439Z",
+      "hash": "0b09ad22ebdd9271e252e6c651badb74a82f2a888de510f67d51df978cf52c2e",
+      "mode": 33188
+    },
+    "tsconfig.json": {
+      "size": 1398,
+      "mtime": "2025-08-02T20:12:38.403Z",
+      "hash": "82cefcbda459f3d494c931bc7d9852705dd669f3c341c7e465ea0b8286ce5e97",
+      "mode": 33188
+    },
+    ".env.local": {
+      "size": 1365,
+      "mtime": "2025-08-02T18:53:51.013Z",
+      "hash": "9754bf07f0f4c63dc5275b930844be370ec5d748bec6c014f4a4061b6ac23f8f",
+      "mode": 33188
+    }
+  },
+  "directories": [
+    ".claude/agents",
+    ".claude/context",
+    ".claude/guardrails",
+    ".claude",
+    ".claude/hooks",
+    ".claude/scripts/agents",
+    ".claude/scripts",
+    ".claude/scripts/validation",
+    ".",
+    ".husky",
+    "app/analytics",
+    "app/auth-demo",
+    "app",
+    "app/login",
+    "app/register",
+    "components/dashboard",
+    "components/dashboard/ai",
+    "components/layout",
+    "components/ui",
+    "database",
+    "docs",
+    "lib/ai",
+    "lib/anthropic",
+    "lib",
+    "lib/api",
+    "lib/auth",
+    "lib/context",
+    "lib/gemini",
+    "lib/hooks",
+    "lib/mock-data",
+    "lib/types",
+    "scripts"
+  ],
+  "gitStatus": {
+    "branch": "main",
+    "commit": "266a1b3e",
+    "hasChanges": true,
+    "status": [
+      "AM .claude/guardrails/agent-handoff-validator.js",
+      "AM .claude/guardrails/execution-tracker.js",
+      "AM .claude/guardrails/file-state-monitor.js",
+      "AM .claude/guardrails/reliability-metrics.js",
+      "AM .claude/guardrails/verify-agent.js",
+      "A  .claude/hooks/agent-session-end",
+      "A  .claude/hooks/agent-session-start",
+      "A  .claude/hooks/post-commit",
+      "A  .claude/hooks/pre-commit",
+      " M .env.local.example",
+      " M .husky/post-commit",
+      " M .husky/pre-commit",
+      " M CLAUDE.md",
+      "AM README-agent-guardrails.md",
+      " M README.md",
+      " D api-routes-backup/auth/login/route.ts",
+      " D api-routes-backup/auth/logout/route.ts",
+      " D api-routes-backup/auth/me/route.ts",
+      " D api-routes-backup/auth/refresh/route.ts",
+      " D api-routes-backup/auth/register/route.ts",
+      " D api-routes-backup/kudos/[id]/like/route.ts",
+      " D api-routes-backup/kudos/route.ts",
+      " D api-routes-backup/moods/route.ts",
+      " D api-routes-backup/priorities/[id]/route.ts",
+      " D api-routes-backup/priorities/route.ts",
+      " D api-routes-backup/team-pulse/route.ts",
+      " D babel.config.js",
+      " M database/schema.sql",
+      " M jest.config.js",
+      " M lib/ai/clients.ts",
+      " D lib/auth/middleware.ts",
+      " D lib/auth/store.ts",
+      " M lib/context/app-context.tsx",
+      " M lib/env.ts",
+      " M lib/mock-data.ts",
+      " M lib/types/api.ts",
+      " M lib/types/database.ts",
+      " M lib/types/metadata.ts",
+      " M package-lock.json",
+      " M package.json",
+      " M tsconfig.json",
+      "?? .claude/guardrails/.current-session",
+      "?? .claude/guardrails/agent-metrics.json",
+      "?? .claude/guardrails/execution-tracks/",
+      "?? .claude/guardrails/reports/",
+      "?? .claude/guardrails/sessions/",
+      "?? .claude/guardrails/snapshots/",
+      "?? app/api/",
+      "?? database/auth-schema.sql",
+      "?? examples/",
+      "?? lib/database.ts",
+      "?? lib/database/",
+      "?? migrations/",
+      "?? scripts/migrate.js",
+      "?? scripts/run-migration.ts",
+      "?? scripts/run-migrations.ts",
+      "?? scripts/setup-database.js",
+      "?? scripts/setup-vercel-env.sh",
+      "?? scripts/test-chat-api.ts",
+      "?? scripts/test-new-apis.ts"
+    ]
+  },
+  "totalFiles": 105,
+  "totalSize": 920193
+}

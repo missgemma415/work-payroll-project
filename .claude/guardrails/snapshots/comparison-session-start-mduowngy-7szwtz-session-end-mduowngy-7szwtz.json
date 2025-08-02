@@ -1,0 +1,22 @@
+{
+  "beforeSnapshot": "session-start-mduowngy-7szwtz",
+  "afterSnapshot": "session-end-mduowngy-7szwtz",
+  "timestamp": "2025-08-02T20:17:23.764Z",
+  "changes": {
+    "filesCreated": [],
+    "filesModified": [],
+    "filesDeleted": [],
+    "directoriesCreated": [],
+    "directoriesDeleted": []
+  },
+  "statistics": {
+    "totalChangeFiles": 0,
+    "totalSizeChange": 0,
+    "netFileChange": 0
+  },
+  "verification": {
+    "phantomClaims": [],
+    "verifiedChanges": [],
+    "suspiciousPatterns": []
+  }
+}

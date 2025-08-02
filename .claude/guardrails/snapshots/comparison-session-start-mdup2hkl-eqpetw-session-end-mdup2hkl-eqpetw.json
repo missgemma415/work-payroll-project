@@ -1,0 +1,22 @@
+{
+  "beforeSnapshot": "session-start-mdup2hkl-eqpetw",
+  "afterSnapshot": "session-end-mdup2hkl-eqpetw",
+  "timestamp": "2025-08-02T20:19:08.910Z",
+  "changes": {
+    "filesCreated": [],
+    "filesModified": [],
+    "filesDeleted": [],
+    "directoriesCreated": [],
+    "directoriesDeleted": []
+  },
+  "statistics": {
+    "totalChangeFiles": 0,
+    "totalSizeChange": 0,
+    "netFileChange": 0
+  },
+  "verification": {
+    "phantomClaims": [],
+    "verifiedChanges": [],
+    "suspiciousPatterns": []
+  }
+}

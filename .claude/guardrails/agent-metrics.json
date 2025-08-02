@@ -1,0 +1,37 @@
+{
+  "agents": {
+    "error-fix-specialist": {
+      "totalSessions": 2,
+      "successfulSessions": 1,
+      "successRate": 50,
+      "lastSeen": "2025-08-02T19:36:14.257Z"
+    },
+    "fullstack-tdd-engineer": {
+      "totalSessions": 2,
+      "successfulSessions": 1,
+      "successRate": 50,
+      "lastSeen": "2025-08-02T20:04:53.348Z"
+    },
+    "project-docs-curator": {
+      "totalSessions": 4,
+      "successfulSessions": 2,
+      "successRate": 50,
+      "lastSeen": "2025-08-02T20:23:12.292Z"
+    },
+    "fullstack-architect": {
+      "totalSessions": 2,
+      "successfulSessions": 1,
+      "successRate": 50,
+      "lastSeen": "2025-08-02T20:17:23.760Z"
+    },
+    "neon-database-architect": {
+      "totalSessions": 2,
+      "successfulSessions": 1,
+      "successRate": 50,
+      "lastSeen": "2025-08-02T20:19:08.905Z"
+    }
+  },
+  "sessions": [],
+  "totalSessions": 12,
+  "successRate": 50
+}

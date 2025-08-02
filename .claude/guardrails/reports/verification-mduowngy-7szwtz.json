@@ -1,0 +1,103 @@
+{
+  "sessionId": "mduowngy-7szwtz",
+  "timestamp": "2025-08-02T20:17:23.733Z",
+  "options": {
+    "verifyBuild": true
+  },
+  "phases": {
+    "handoffValidation": {
+      "success": true,
+      "validation": {
+        "sessionId": "mduowngy-7szwtz",
+        "timestamp": "2025-08-02T20:17:23.759Z",
+        "validated": true,
+        "issues": [],
+        "deliverables": []
+      },
+      "issues": [],
+      "score": 100
+    },
+    "executionTracking": {
+      "success": false,
+      "error": "No verification data available",
+      "issues": ["Execution tracking incomplete"],
+      "score": 0
+    },
+    "fileStateAnalysis": {
+      "success": true,
+      "comparison": {
+        "beforeSnapshot": "session-start-mduowngy-7szwtz",
+        "afterSnapshot": "session-end-mduowngy-7szwtz",
+        "timestamp": "2025-08-02T20:17:23.764Z",
+        "changes": {
+          "filesCreated": [],
+          "filesModified": [],
+          "filesDeleted": [],
+          "directoriesCreated": [],
+          "directoriesDeleted": []
+        },
+        "statistics": {
+          "totalChangeFiles": 0,
+          "totalSizeChange": 0,
+          "netFileChange": 0
+        },
+        "verification": {
+          "phantomClaims": [],
+          "verifiedChanges": [],
+          "suspiciousPatterns": []
+        }
+      },
+      "verification": {
+        "totalClaims": 0,
+        "verifiedClaims": 0,
+        "phantomClaims": 0,
+        "incorrectClaims": 0,
+        "details": [],
+        "reliability": 100
+      },
+      "issues": [],
+      "score": 100
+    },
+    "buildVerification": {
+      "success": true,
+      "typeCheck": {
+        "success": true,
+        "command": "npm run type-check",
+        "output": "> scientia-app@0.1.0 type-check\n> tsc --noEmit --pretty",
+        "exitCode": 0
+      },
+      "lint": {
+        "success": true,
+        "command": "npm run lint",
+        "output": "> scientia-app@0.1.0 lint\n> next lint\n\n✔ No ESLint warnings or errors",
+        "exitCode": 0
+      },
+      "build": {
+        "success": true,
+        "command": "npm run build",
+        "output": "> scientia-app@0.1.0 build\n> next build\n\n   ▲ Next.js 15.4.4\n   - Environments: .env.local\n\n   Creating an optimized production build ...\n ✓ Compiled successfully in 1000ms\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/11) ...\n   Generating static pages (2/11) \r\n   Generating static pages (5/11) \r\n   Generating static pages (8/11) \r\n ✓ Generating static pages (11/11)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                                 Size  First Load JS\n┌ ○ /                                      313 B        99.9 kB\n├ ○ /_not-found                            989 B         101 kB\n├ ○ /analytics                           8.36 kB         119 kB\n├ ƒ /api/chat                              131 B        99.7 kB\n├ ƒ /api/health                            131 B        99.7 kB\n├ ƒ /api/voice                             131 B        99.7 kB\n├ ○ /auth-demo                           2.29 kB         110 kB\n├ ○ /login                               1.13 kB         138 kB\n└ ○ /register                             1.2 kB         138 kB\n+ First Load JS shared by all            99.6 kB\n  ├ chunks/4bd1b696-cf72ae8a39fa05aa.js  54.1 kB\n  ├ chunks/964-d6e2a37b7965f281.js       43.5 kB\n  └ other shared chunks (total)          1.93 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand",
+        "exitCode": 0
+      },
+      "issues": [],
+      "score": 100
+    },
+    "finalAssessment": {
+      "agentReliability": "acceptable",
+      "workQuality": "good",
+      "executionIntegrity": "poor",
+      "recommendations": ["Implement stricter tool call monitoring"],
+      "criticalIssues": ["Execution tracking issues detected"],
+      "strengths": [
+        "Handoff validation passed",
+        "File state changes verified",
+        "Build verification passed"
+      ]
+    }
+  },
+  "summary": {
+    "passed": false,
+    "score": 64,
+    "issues": ["Execution tracking incomplete"],
+    "recommendations": ["Implement stricter tool call monitoring"]
+  }
+}

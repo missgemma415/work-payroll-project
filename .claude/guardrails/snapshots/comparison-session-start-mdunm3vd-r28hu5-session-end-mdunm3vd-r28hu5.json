@@ -1,0 +1,44 @@
+{
+  "beforeSnapshot": "session-start-mdunm3vd-r28hu5",
+  "afterSnapshot": "session-end-mdunm3vd-r28hu5",
+  "timestamp": "2025-08-02T20:04:53.351Z",
+  "changes": {
+    "filesCreated": [],
+    "filesModified": [
+      {
+        "path": "lib/types/api.ts",
+        "beforeHash": "daeb1a58fbde21444dc927e1c2ee66e55a228f7b8cbe11c00762e232b527e3fc",
+        "afterHash": "ee60a2ad729134da7f7e9bb478007d6b4394cda1c64968579c6924ea61ff4435",
+        "sizeChange": 8,
+        "modified": "2025-08-02T19:47:27.175Z"
+      },
+      {
+        "path": "lib/types/database.ts",
+        "beforeHash": "9f86add71ef06045ed0a0bdf317f517de6155c744de5cf2bf36ac1888ac6ee83",
+        "afterHash": "ba81f1fbe0009fc93134cfabfe759638d0c164801638e4bf00c10f5d8f5e52ba",
+        "sizeChange": 72,
+        "modified": "2025-08-02T19:49:44.026Z"
+      },
+      {
+        "path": "lib/types/metadata.ts",
+        "beforeHash": "6f8f30dc4363dabc5cdf983e574bfdd783a59b370732bb5a45e25f075050c77f",
+        "afterHash": "a28b303b2e0ade995a7aae853d57a84df079a07c4129ed74102f47cf949e9eb8",
+        "sizeChange": 8,
+        "modified": "2025-08-02T19:49:02.659Z"
+      }
+    ],
+    "filesDeleted": [],
+    "directoriesCreated": [],
+    "directoriesDeleted": []
+  },
+  "statistics": {
+    "totalChangeFiles": 3,
+    "totalSizeChange": 88,
+    "netFileChange": 0
+  },
+  "verification": {
+    "phantomClaims": [],
+    "verifiedChanges": [],
+    "suspiciousPatterns": []
+  }
+}
