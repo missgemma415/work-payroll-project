@@ -1,0 +1,227 @@
+Git History Context - 2025-08-02 11:36:53
+=================================
+
+Recent Commits:
+95b6af3 - feat: implement enhanced agent-specific hook system v2.0 (Your Name, 10 minutes ago)
+fbde73d - refactor: remove unnecessary AGENT_TEAM_GUIDE.md documentation (Your Name, 63 minutes ago)
+4904ac6 - feat: replace TypeScript ESLint Enforcer with Fullstack Architect agent (Your Name, 65 minutes ago)
+e42d18b - feat: complete migration from Cloudflare Agents to Vercel + Neon stack (Your Name, 79 minutes ago)
+db74c8c - feat: implement MCP (Model Context Protocol) infrastructure with Financial Brain Agent (Your Name, 6 days ago)
+e82279e - fix: resolve TypeScript errors in Cloudflare Pages Functions (Your Name, 7 days ago)
+9a37169 - feat: pivot to Cloudflare Agents architecture with AI financial intelligence platform (Your Name, 7 days ago)
+ec1e3f2 - fix: resolve Next.js route export errors for static build (Your Name, 7 days ago)
+06a0e4f - fix: update dynamic route params for Next.js 15 compatibility (Your Name, 7 days ago)
+cc29357 - chore: configure Cloudflare deployment setup (Your Name, 7 days ago)
+4220954 - feat: implement complete authentication system with JWT (Your Name, 7 days ago)
+bf6afef - fix: resolve all ESLint errors and update documentation (Your Name, 7 days ago)
+784d15a - feat: implement JWT authentication system (Your Name, 7 days ago)
+2f26b23 - feat: add git aliases for streamlined workflow (Your Name, 7 days ago)
+44a5f1c - fix: update husky hooks to v10 format (Your Name, 7 days ago)
+d21fc40 - fix: remove unused ts-expect-error directive (Your Name, 7 days ago)
+4eaaedc - feat: add automated git workflow tools and code review hooks (Your Name, 7 days ago)
+0c78f41 - feat: implement strict TypeScript and ESLint configuration (Your Name, 7 days ago)
+1ddd988 - feat: add simple HTML landing page for immediate deployment (Your Name, 7 days ago)
+12edbb3 - fix: remove Clerk auth and simplify app for deployment (Your Name, 7 days ago)
+
+Detailed Changes:
+commit 95b6af3839a3a439f7dc53658fe938b1fc631149
+Author: Your Name <your.email@example.com>
+Date:   Sat Aug 2 11:27:00 2025 -0600
+
+    feat: implement enhanced agent-specific hook system v2.0
+    
+    Major enhancements to the Agent Context Review Hook System:
+    
+    ✅ Hook System Architecture:
+    - Created hooks-config.json v2.0 with agent-specific configurations
+    - Integrated hooks into .claude/settings.local.json
+    - Established comprehensive hook workflow for all agents
+    
+    ✅ Agent-Specific Context Loading:
+    - neon-db-context.sh: Database schemas, patterns, optimization history
+    - vercel-deploy-context.sh: Deployment configs, environment variables
+    - security-audit-context.sh: Security patterns, vulnerability history
+    - api-integration-context.sh: API docs, rate limits, integration patterns
+    
+    ✅ Post-Task Knowledge Preservation:
+    - docs-curator-update.sh: Auto-update documentation, changelogs
+    - performance-metrics.sh: Save performance metrics and reports
+    - Universal post-task-update.sh: Knowledge preservation system
+    
+    ✅ Validation Scripts:
+    - vercel-health-check.sh: Deployment health validation
+    - neon-db-validate.sh: Database connection verification
+    - security-scan.sh: Security vulnerability scanning
+    
+    ✅ Documentation Updates:
+    - CLAUDE.md: Added comprehensive hook system documentation
+    - ProjectContextEngineering.md: Added agent-specific workflows
+    - ProjectTasks.md: Added hook integration details
+    - README.md: Cleaned up reference to removed file
+    
+    This enhancement ensures every agent:
+    1. Starts with complete context awareness
+    2. Receives specialized domain knowledge
+    3. Contributes learnings back to collective intelligence
+    4. Validates work with domain-specific checks
+    
+    🤖 Generated with [Claude Code](https://claude.ai/code)
+    
+    Co-Authored-By: Claude <noreply@anthropic.com>
+
+ .claude/hooks-config.json                         | 328 ++++++++++++++++++++++
+ .claude/scripts/agents/api-integration-context.sh | 141 ++++++++++
+ .claude/scripts/agents/docs-curator-update.sh     | 143 ++++++++++
+ .claude/scripts/agents/neon-db-context.sh         | 101 +++++++
+ .claude/scripts/agents/performance-metrics.sh     | 210 ++++++++++++++
+ .claude/scripts/agents/security-audit-context.sh  | 132 +++++++++
+ .claude/scripts/agents/vercel-deploy-context.sh   | 123 ++++++++
+ .claude/scripts/post-task-update.sh               | 104 +++++++
+ .claude/scripts/pre-task-context.sh               |  78 +++++
+ .claude/scripts/validation/neon-db-validate.sh    | 159 +++++++++++
+ .claude/scripts/validation/security-scan.sh       | 186 ++++++++++++
+ .claude/scripts/validation/vercel-health-check.sh | 146 ++++++++++
+ CLAUDE.md                                         | 151 ++++++++--
+ ProjectContextEngineering.md                      | 200 +++++++++++--
+ ProjectTasks.md                                   | 172 +++++++++---
+ README.md                                         |   1 -
+ 16 files changed, 2281 insertions(+), 94 deletions(-)
+
+commit fbde73d68799fd10a27236f28ef1b69baab1c166
+Author: Your Name <your.email@example.com>
+Date:   Sat Aug 2 10:34:22 2025 -0600
+
+    refactor: remove unnecessary AGENT_TEAM_GUIDE.md documentation
+    
+    Keep project clean with only three core documentation files:
+    - CLAUDE.md (development guidelines)
+    - ProjectContextEngineering.md (technical architecture)
+    - ProjectTasks.md (implementation roadmap)
+    
+    All agent team information is properly documented within these core files.
+    
+    🤖 Generated with [Claude Code](https://claude.ai/code)
+    
+    Co-Authored-By: Claude <noreply@anthropic.com>
+
+ AGENT_TEAM_GUIDE.md | 409 ----------------------------------------------------
+ 1 file changed, 409 deletions(-)
+
+commit 4904ac65e56e831a54d971167fb36bbce8ead205
+Author: Your Name <your.email@example.com>
+Date:   Sat Aug 2 10:32:19 2025 -0600
+
+    feat: replace TypeScript ESLint Enforcer with Fullstack Architect agent
+    
+    Update AI development team:
+    - Remove TypeScript ESLint Enforcer agent (specialized focus)
+    - Add Fullstack Architect agent (broader fullstack expertise)
+    - Maintains comprehensive development support
+    - Supports entire technology stack review and architecture
+    
+    🤖 Generated with [Claude Code](https://claude.ai/code)
+    
+    Co-Authored-By: Claude <noreply@anthropic.com>
+
+ .claude/agents/fullstack-architect.md        | 59 ++++++++++++++++++++
+ .claude/agents/typescript-eslint-enforcer.md | 82 ----------------------------
+ 2 files changed, 59 insertions(+), 82 deletions(-)
+
+commit e42d18baf44b2f801debc75d758d6a7241666e28
+Author: Your Name <your.email@example.com>
+Date:   Sat Aug 2 10:17:24 2025 -0600
+
+    feat: complete migration from Cloudflare Agents to Vercel + Neon stack
+    
+    Major architectural cleanup and modernization:
+    
+    REMOVED:
+    - 40+ Cloudflare/MCP files (agents, functions, wrangler config)
+    - Complex agent orchestration infrastructure
+    - @cloudflare/next-on-pages and MCP dependencies
+    - Docker references and configurations
+    
+    ADDED:
+    - Clean Vercel + Neon + Direct APIs architecture
+    - Updated components for direct API integration
+    - TypeScript ESLint enforcer agent integration
+    - Comprehensive AI development team documentation
+    - AGENT_TEAM_GUIDE.md for future team expansion
+    
+    UPDATED:
+    - All core documentation (CLAUDE.md, ProjectContextEngineering.md, ProjectTasks.md)
+    - Simple stealth-mode README.md
+    - Environment configuration for new stack
+    - Package.json with essential dependencies only
+    
+    ACHIEVED:
+    ✅ Zero TypeScript errors
+    ✅ Zero ESLint violations
+    ✅ All tests passing (5/5)
+    ✅ Clean, scalable foundation ready for Vercel deployment
+    
+    🤖 Generated with [Claude Code](https://claude.ai/code)
+    
+    Co-Authored-By: Claude <noreply@anthropic.com>
+
+ .claude/agents/mcp-tools-specialist.md         |    36 +-
+ .claude/agents/typescript-eslint-enforcer.md   |     1 +
+ .env.local.example                             |    42 +-
+ .eslintrc.json                                 |     9 +-
+ AGENT_TEAM_GUIDE.md                            |   409 +
+ CLAUDE.md                                      |   446 +-
+ ProjectContextEngineering.md                   |   794 +-
+ ProjectTasks.md                                |   755 +-
+ README.md                                      |   112 +-
+ SESSION_SUMMARY_2025-01-27.md                  |    18 +-
+ app/analytics/page.tsx                         |    19 +-
+ app/login/page.tsx                             |     1 +
+ app/page.tsx                                   |     2 +-
+ app/register/page.tsx                          |     1 +
+ babel.config.js                                |     7 +
+ components/dashboard/Forecast.test.tsx         |   119 +
+ components/dashboard/Forecast.tsx              |   224 +
+ components/dashboard/MoodCheckIn.tsx           |     4 +-
+ components/dashboard/ai/AIChatInterface.tsx    |   142 +-
+ functions/api/_middleware.ts                   |    87 -
+ functions/api/ai/analyze.ts                    |   172 -
+ functions/api/ai/chat.ts                       |    74 -
+ functions/api/auth/login.js                    |    19 -
+ functions/api/health.ts                        |    19 -
+ functions/lib/auth.ts                          |    41 -
+ functions/lib/gemini.ts                        |    61 -
+ functions/lib/rateLimit.ts                     |    61 -
+ functions/types.d.ts                           |    20 -
+ jest.config.js                                 |    11 +
+ jest.setup.ts                                  |    11 +
+ lib/agents/base/agent.ts                       |    78 -
+ lib/agents/base/mcp-agent.ts                   |   280 -
+ lib/agents/cloudflare/financial-brain-agent.ts |   266 -
+ lib/agents/financial-analyst-agent.ts          |   226 -
+ lib/agents/mcp/base-mcp-server.ts              |   100 -
+ lib/agents/mcp/client.ts                       |   146 -
+ lib/agents/mcp/financial-brain-server.ts       |   262 -
+ lib/agents/mcp/server.ts                       |    93 -
+ lib/agents/mcp/transport-handler.ts            |   142 -
+ lib/agents/tools/employee-cost-calculator.ts   |   155 -
+ lib/ai/clients.ts                              |   110 +
+ lib/anthropic/client.ts                        |    17 +
+ lib/auth/api-middleware.ts                     |    19 +-
+ lib/context/auth-context.tsx                   |     4 +-
+ lib/gemini/client.ts                           |   104 +-
+ lib/hooks/use-api.ts                           |   229 +-
+ lib/hooks/use-auth-guard.ts                    |    51 +-
+ lib/hooks/use-mcp-client.ts                    |   139 -
+ package-lock.json                              | 15358 ++++++++++++-----------
+ package.json                                   |    26 +-
+ scripts/deploy.sh                              |    12 -
+ scripts/run-mcp-server.ts                      |    33 -
+ scripts/test-mcp-connection.ts                 |    49 -
+ tsconfig.eslint.json                           |    13 +
+ tsconfig.json                                  |     7 +-
+ wrangler.toml                                  |    20 -
+ 56 files changed, 10637 insertions(+), 11019 deletions(-)
+
+Branch Information:
+* main   95b6af3 feat: implement enhanced agent-specific hook system v2.0
+  master 408fcac fix: Update pre-push hook for initial repository push

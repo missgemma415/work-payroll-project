@@ -187,11 +187,23 @@
       },
       {
         "matcher": "*project-docs-curator*",
-        "description": "Project Docs Curator auto-update documentation",
+        "description": "Project Docs Curator auto-update documentation with comprehensive context",
         "hooks": [
           {
             "type": "command",
-            "command": "echo '📝 PROJECT DOCS CURATOR - Auto-updating documentation files...'"
+            "command": "echo '📝 PROJECT DOCS CURATOR - Initiating intelligent documentation update...'"
+          },
+          {
+            "type": "command",
+            "command": "echo '   → Phase 1: Gathering comprehensive context (git, memory, Context7)'"
+          },
+          {
+            "type": "command",
+            "command": "echo '   → Phase 2: Analyzing documentation gaps and priorities'"
+          },
+          {
+            "type": "command",
+            "command": "echo '   → Phase 3: Generating intelligent update recommendations'"
           },
           {
             "type": "command",
