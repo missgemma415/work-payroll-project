@@ -1,37 +1,42 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 
-import { useAuth } from '@/lib/context/auth-context';
+import { AuthContext } from '@/lib/context/auth-context';
 
-interface UseAuthGuardOptions {
-  redirectTo?: string;
-  requireAuth?: boolean;
-}
-
-export function useAuthGuard(options: UseAuthGuardOptions = {}): void {
-  const { redirectTo = '/login', requireAuth = true } = options;
-  const { isAuthenticated, isLoading } = useAuth();
+/**
+ * Hook to redirect authenticated users away from guest-only pages
+ */
+export function useGuestGuard(): void {
   const router = useRouter();
+  const authContext = useContext(AuthContext);
+
+  // If no auth context, treat as unauthenticated (safe for guest pages)
+  const user = authContext?.user ?? null;
+  const isLoading = authContext?.isLoading ?? false;
 
   useEffect(() => {
-    if (isLoading) return;
-
-    if (requireAuth && !isAuthenticated) {
-      router.push(redirectTo);
+    if (!isLoading && user) {
+      router.push('/dashboard');
     }
-  }, [isAuthenticated, isLoading, requireAuth, redirectTo, router]);
+  }, [user, isLoading, router]);
 }
 
-// Hook for pages that should redirect if user IS authenticated (like login/register)
-export function useGuestGuard(redirectTo = '/dashboard'): void {
-  const { isAuthenticated, isLoading } = useAuth();
+/**
+ * Hook to redirect unauthenticated users to login page
+ */
+export function useAuthGuard(): void {
   const router = useRouter();
+  const authContext = useContext(AuthContext);
+
+  // If no auth context, redirect to login (safe for protected pages)
+  const user = authContext?.user ?? null;
+  const isLoading = authContext?.isLoading ?? false;
 
   useEffect(() => {
-    if (isLoading) return;
-
-    if (isAuthenticated) {
-      router.push(redirectTo);
+    if (!isLoading && !user) {
+      router.push('/login');
     }
-  }, [isAuthenticated, isLoading, redirectTo, router]);
+  }, [user, isLoading, router]);
 }

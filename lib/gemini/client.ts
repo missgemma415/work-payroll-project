@@ -1,5 +1,4 @@
-import { GoogleGenAI } from '@google/genai';
-
+import { GeminiClient as BaseGeminiClient } from '@/lib/ai/clients';
 import type {
   EmployeeCost,
   ProjectCostForecast,
@@ -45,18 +44,11 @@ export interface ExecutiveReport {
   nextSteps: string[];
 }
 
-export class GeminiClient {
-  private ai: GoogleGenAI;
-  private modelName: string;
+export class FinancialAnalysisClient {
+  private geminiClient: BaseGeminiClient;
 
   constructor() {
-    const apiKey = process.env['GOOGLE_GEMINI_API_KEY'];
-    if (!apiKey) {
-      throw new Error('GOOGLE_GEMINI_API_KEY is not configured');
-    }
-
-    this.ai = new GoogleGenAI({ apiKey });
-    this.modelName = process.env['GOOGLE_GEMINI_MODEL'] ?? 'gemini-2.0-flash-exp-01-18';
+    this.geminiClient = new BaseGeminiClient();
   }
 
   async analyzeEmployeeCosts(costs: EmployeeCost[]): Promise<CostAnalysis> {
@@ -64,7 +56,7 @@ export class GeminiClient {
       Analyze the following employee cost data and provide insights:
       
       Total Employees: ${costs.length}
-      Total Monthly Cost: $${costs.reduce((sum, emp) => sum + emp.totalMonthlyCost, 0).toLocaleString()}
+      Total Monthly Cost: ${costs.reduce((sum, emp) => sum + emp.totalMonthlyCost, 0).toLocaleString()}
       
       Department Breakdown:
       ${this.getDepartmentBreakdown(costs)}
@@ -87,32 +79,19 @@ export class GeminiClient {
     `;
 
     try {
-      const response = await this.ai.models.generateContent({
-        model: this.modelName,
-        contents: prompt,
-      });
-
-      const text = response.text;
-      if (!text) {
-        throw new Error('No response text received from Gemini');
-      }
-
-      // Parse JSON from response
-      const jsonMatch = text.match(/\{[\s\S]*\}/);
+      const responseText = await this.geminiClient.askQuestion(prompt);
+      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
         return JSON.parse(jsonMatch[0]) as CostAnalysis;
       }
-
-      // Fallback if JSON parsing fails
       return {
-        summary: text,
+        summary: responseText,
         keyFindings: [],
         costDrivers: [],
         recommendations: [],
         savingsOpportunities: [],
       };
     } catch (_error) {
-      // Error analyzing employee costs
       throw new Error('Failed to analyze employee costs');
     }
   }
@@ -122,13 +101,13 @@ export class GeminiClient {
       Generate an executive-friendly narrative for this cost forecast:
       
       Project: ${forecast.projectName}
-      Current Monthly Cost: $${forecast.currentMonthlyCost.toLocaleString()}
+      Current Monthly Cost: ${forecast.currentMonthlyCost.toLocaleString()}
       Current Headcount: ${forecast.currentHeadcount}
       
       Forecast Summary:
-      - 3-month projection: $${forecast.forecastedCosts[2]?.value.toLocaleString() ?? 'N/A'}
-      - 6-month projection: $${forecast.forecastedCosts[5]?.value.toLocaleString() ?? 'N/A'}
-      - 12-month projection: $${forecast.forecastedCosts[11]?.value.toLocaleString() ?? 'N/A'}
+      - 3-month projection: ${forecast.forecastedCosts[2]?.value.toLocaleString() ?? 'N/A'}
+      - 6-month projection: ${forecast.forecastedCosts[5]?.value.toLocaleString() ?? 'N/A'}
+      - 12-month projection: ${forecast.forecastedCosts[11]?.value.toLocaleString() ?? 'N/A'}
       
       Write a clear, concise narrative (2-3 paragraphs) that:
       1. Summarizes the current state
@@ -138,18 +117,8 @@ export class GeminiClient {
     `;
 
     try {
-      const response = await this.ai.models.generateContent({
-        model: this.modelName,
-        contents: prompt,
-      });
-
-      const text = response.text;
-      if (!text) {
-        throw new Error('No response text received from Gemini');
-      }
-      return text;
+      return await this.geminiClient.askQuestion(prompt);
     } catch (_error) {
-      // Error generating forecast narrative
       throw new Error('Failed to generate forecast narrative');
     }
   }
@@ -183,25 +152,13 @@ export class GeminiClient {
     `;
 
     try {
-      const response = await this.ai.models.generateContent({
-        model: this.modelName,
-        contents: prompt,
-      });
-
-      const text = response.text;
-      if (!text) {
-        throw new Error('No response text received from Gemini');
-      }
-
-      const jsonMatch = text.match(/\{[\s\S]*\}/);
+      const responseText = await this.geminiClient.askQuestion(prompt);
+      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
         return JSON.parse(jsonMatch[0]) as ScenarioOutput;
       }
-
-      // Fallback scenario output
       throw new Error('Invalid scenario analysis response');
     } catch (_error) {
-      // Error planning scenario
       throw new Error('Failed to plan scenario');
     }
   }
@@ -216,7 +173,7 @@ export class GeminiClient {
       
       Current State:
       - Total Employees: ${data.costs.length}
-      - Total Monthly Cost: $${data.costs.reduce((sum, emp) => sum + emp.totalMonthlyCost, 0).toLocaleString()}
+      - Total Monthly Cost: ${data.costs.reduce((sum, emp) => sum + emp.totalMonthlyCost, 0).toLocaleString()}
       - Projects: ${data.forecasts.length}
       
       Generate a professional report with:
@@ -232,24 +189,13 @@ export class GeminiClient {
     `;
 
     try {
-      const response = await this.ai.models.generateContent({
-        model: this.modelName,
-        contents: prompt,
-      });
-
-      const text = response.text;
-      if (!text) {
-        throw new Error('No response text received from Gemini');
-      }
-
-      const jsonMatch = text.match(/\{[\s\S]*\}/);
+      const responseText = await this.geminiClient.askQuestion(prompt);
+      const jsonMatch = responseText.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
         return JSON.parse(jsonMatch[0]) as ExecutiveReport;
       }
-
       throw new Error('Invalid executive report response');
     } catch (_error) {
-      // Error creating executive report
       throw new Error('Failed to create executive report');
     }
   }
@@ -272,18 +218,8 @@ export class GeminiClient {
     `;
 
     try {
-      const response = await this.ai.models.generateContent({
-        model: this.modelName,
-        contents: prompt,
-      });
-
-      const text = response.text;
-      if (!text) {
-        throw new Error('No response text received from Gemini');
-      }
-      return text;
+      return await this.geminiClient.askQuestion(prompt, context);
     } catch (_error) {
-      // Error processing question
       throw new Error('Failed to process question');
     }
   }
@@ -302,7 +238,7 @@ export class GeminiClient {
 
     return Object.entries(deptCosts)
       .map(
-        ([dept, data]) => `- ${dept}: ${data.count} employees, $${data.cost.toLocaleString()}/month`
+        ([dept, data]) => `- ${dept}: ${data.count} employees, ${data.cost.toLocaleString()}/month`
       )
       .join('\n      ');
   }

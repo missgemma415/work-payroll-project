@@ -52,10 +52,10 @@ export default function MoodCheckIn(): React.JSX.Element {
         title: 'Mood recorded!',
         description: "Thanks for sharing how you're feeling today.",
       });
-    } catch (_error) {
+    } catch (error: unknown) {
       toast({
         title: 'Something went wrong',
-        description: 'Please try again later.',
+        description: error instanceof Error ? error.message : 'Please try again later.',
       });
       setSelectedMood(null);
     }

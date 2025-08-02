@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", ".next/types/**/*.ts"],
+  "exclude": [
+    "node_modules",
+    "lib/agents/cloudflare/**",
+    "workers/**",
+    "functions/agents/**",
+    "babel.config.js",
+    "jest.config.js",
+    "jest.setup.js"
+  ]
+}

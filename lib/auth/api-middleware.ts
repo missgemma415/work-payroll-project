@@ -1,7 +1,8 @@
-import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
 import { verifyAccessToken } from './jwt';
+
+import type { NextRequest } from 'next/server';
 interface User {
   id: string;
   email: string;
@@ -27,14 +28,11 @@ export function withAuth(
       }
 
       const token = authHeader.substring(7);
-      
+
       // Verify the JWT token
       const payload = await verifyAccessToken(token);
       if (!payload?.sub) {
-        return NextResponse.json(
-          { error: 'Invalid token' },
-          { status: 401 }
-        );
+        return NextResponse.json({ error: 'Invalid token' }, { status: 401 });
       }
 
       // Create authenticated request with user info
@@ -49,10 +47,7 @@ export function withAuth(
       return await handler(authenticatedReq);
     } catch (error) {
       console.error('Auth middleware error:', error);
-      return NextResponse.json(
-        { error: 'Authentication failed' },
-        { status: 401 }
-      );
+      return NextResponse.json({ error: 'Authentication failed' }, { status: 401 });
     }
   };
 }
@@ -67,7 +62,7 @@ export function withOptionalAuth(
       if (authHeader?.startsWith('Bearer ')) {
         const token = authHeader.substring(7);
         const payload = await verifyAccessToken(token);
-        
+
         if (payload?.sub) {
           const authenticatedReq = req as AuthenticatedRequest;
           authenticatedReq.user = {

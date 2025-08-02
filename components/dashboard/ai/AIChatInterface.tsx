@@ -1,13 +1,12 @@
 'use client';
 
-import { Bot, Loader2, Send, User, AlertCircle, CheckCircle } from 'lucide-react';
+import { Bot, Loader2, Send, User, AlertCircle, Wifi, WifiOff } from 'lucide-react';
 import React, { useState, useRef, useEffect } from 'react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { useMcpClient } from '@/lib/hooks/use-mcp-client';
 
 interface Message {
   id: string;
@@ -17,7 +16,12 @@ interface Message {
   isLoading?: boolean;
 }
 
-// Demo responses for static export
+interface ChatResponse {
+  response: string;
+  error?: string;
+}
+
+// Demo responses for offline/fallback mode
 function getDemoResponse(query: string): string {
   const lowerQuery = query.toLowerCase();
 
@@ -76,18 +80,32 @@ export default function AIChatInterface(): React.JSX.Element {
       id: '1',
       role: 'assistant',
       content:
-        "Hello! I'm your AI Financial Analyst powered by MCP (Model Context Protocol). I can help you analyze employee costs, calculate total compensation, and provide insights on workforce optimization. What would you like to know?",
+        "Hello! I'm your AI Financial Analyst powered by Anthropic Claude. I can help you analyze employee costs, calculate total compensation, and provide insights on workforce optimization. What would you like to know?",
       timestamp: new Date(),
     },
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isOnline, setIsOnline] = useState(true);
+  const [apiError, setApiError] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Use MCP client
-  const { connected, connecting, error, answerQuestion } = useMcpClient({
-    autoConnect: true,
-  });
+  // Check online status
+  useEffect(() => {
+    const handleOnline = (): void => {
+      setIsOnline(true);
+      setApiError(null);
+    };
+    const handleOffline = (): void => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   const scrollToBottom = (): void => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -96,6 +114,32 @@ export default function AIChatInterface(): React.JSX.Element {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  const callChatAPI = async (message: string, context: unknown): Promise<string> => {
+    const response = await fetch('/api/chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message,
+        context,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = (await response.json()) as { error?: string };
+      throw new Error(errorData.error ?? 'Failed to get response');
+    }
+
+    const data = (await response.json()) as ChatResponse;
+
+    if (data.error) {
+      throw new Error(data.error);
+    }
+
+    return data.response;
+  };
 
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
@@ -111,6 +155,7 @@ export default function AIChatInterface(): React.JSX.Element {
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setIsLoading(true);
+    setApiError(null);
 
     // Add loading message
     const loadingMessage: Message = {
@@ -124,21 +169,25 @@ export default function AIChatInterface(): React.JSX.Element {
 
     try {
       let response: string;
-      
-      // Try to use MCP client if connected
-      if (connected) {
-        response = await answerQuestion({
-          question: userMessage.content,
-          context: {
+
+      // Try to use API if online
+      if (isOnline) {
+        try {
+          response = await callChatAPI(userMessage.content, {
             timestamp: new Date().toISOString(),
-            previousMessages: messages.slice(-5).map(m => ({
+            previousMessages: messages.slice(-5).map((m) => ({
               role: m.role,
               content: m.content,
             })),
-          },
-        });
+          });
+        } catch (error) {
+          // API failed, fall back to demo response
+          console.warn('API call failed, using demo response:', error);
+          setApiError(error instanceof Error ? error.message : 'API Error');
+          response = getDemoResponse(userMessage.content);
+        }
       } else {
-        // Fallback to demo response if not connected
+        // Offline mode - use demo response
         response = getDemoResponse(userMessage.content);
       }
 
@@ -155,8 +204,7 @@ export default function AIChatInterface(): React.JSX.Element {
           },
         ];
       });
-    } catch (_error) {
-      // Chat error occurred
+    } catch (error) {
       // Remove loading message and add error
       setMessages((prev) => {
         const filtered = prev.filter((msg) => !msg.isLoading);
@@ -171,6 +219,7 @@ export default function AIChatInterface(): React.JSX.Element {
           },
         ];
       });
+      setApiError(error instanceof Error ? error.message : 'Unknown error');
     } finally {
       setIsLoading(false);
     }
@@ -182,6 +231,36 @@ export default function AIChatInterface(): React.JSX.Element {
     'How can we optimize our employee costs?',
   ];
 
+  const getConnectionStatus = (): {
+    variant: 'destructive' | 'secondary' | 'default';
+    icon: React.JSX.Element;
+    text: string;
+  } => {
+    if (!isOnline) {
+      return {
+        variant: 'destructive' as const,
+        icon: <WifiOff className="h-3 w-3" />,
+        text: 'Offline Mode',
+      };
+    }
+
+    if (apiError) {
+      return {
+        variant: 'destructive' as const,
+        icon: <AlertCircle className="h-3 w-3" />,
+        text: 'API Error',
+      };
+    }
+
+    return {
+      variant: 'default' as const,
+      icon: <Wifi className="h-3 w-3" />,
+      text: 'Online',
+    };
+  };
+
+  const connectionStatus = getConnectionStatus();
+
   return (
     <Card className="flex h-[600px] flex-col">
       <CardHeader>
@@ -190,26 +269,9 @@ export default function AIChatInterface(): React.JSX.Element {
             <Bot className="h-5 w-5 text-primary" />
             AI Financial Analyst
           </CardTitle>
-          <Badge
-            variant={connected ? 'default' : connecting ? 'secondary' : 'destructive'}
-            className="flex items-center gap-1"
-          >
-            {connected ? (
-              <>
-                <CheckCircle className="h-3 w-3" />
-                MCP Connected
-              </>
-            ) : connecting ? (
-              <>
-                <Loader2 className="h-3 w-3 animate-spin" />
-                Connecting...
-              </>
-            ) : (
-              <>
-                <AlertCircle className="h-3 w-3" />
-                {error ?? 'Offline Mode'}
-              </>
-            )}
+          <Badge variant={connectionStatus.variant} className="flex items-center gap-1">
+            {connectionStatus.icon}
+            {connectionStatus.text}
           </Badge>
         </div>
       </CardHeader>

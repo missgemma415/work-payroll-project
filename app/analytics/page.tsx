@@ -5,6 +5,7 @@ import React from 'react';
 
 import AIChatInterface from '@/components/dashboard/ai/AIChatInterface';
 import DashboardNav from '@/components/dashboard/DashboardNav';
+import Forecast from '@/components/dashboard/Forecast';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 // Mock data for demonstration
@@ -86,22 +87,8 @@ export default function AnalyticsPage(): React.JSX.Element {
             <AIChatInterface />
           </div>
 
-          {/* Coming Soon: Forecast Chart */}
-          <Card className="h-[600px]">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-primary" />
-                Cost Forecast
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="flex h-full items-center justify-center">
-              <div className="text-center text-muted-foreground">
-                <TrendingUp className="mx-auto mb-4 h-12 w-12 opacity-20" />
-                <p className="mb-2 text-lg font-medium">Coming Soon</p>
-                <p className="text-sm">Advanced forecasting with Prophet and Neural Prophet</p>
-              </div>
-            </CardContent>
-          </Card>
+          {/* Forecast Chart */}
+          <Forecast />
         </div>
 
         {/* Feature Preview */}

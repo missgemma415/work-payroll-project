@@ -33,6 +33,7 @@ import type { z } from 'zod';
 type FormData = z.infer<typeof RegisterRequestSchema>;
 
 export default function RegisterPage(): React.JSX.Element {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   useGuestGuard(); // Redirect if already authenticated
 
   const { register } = useAuth();
