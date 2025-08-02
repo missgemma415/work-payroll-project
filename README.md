@@ -23,7 +23,6 @@ npm run dev
 - `CLAUDE.md` - Development guidelines
 - `ProjectContextEngineering.md` - Technical architecture
 - `ProjectTasks.md` - Implementation roadmap
-- `AGENT_TEAM_GUIDE.md` - AI development team
 
 ## 🤖 AI-Enhanced Development
 

@@ -286,38 +286,66 @@ The system maintains context through:
 
 Our development process is enhanced by specialized AI agents that maintain code quality and accelerate development:
 
-#### **1. TypeScript ESLint Enforcer Agent** 🛡️
+#### **1. Fullstack Architect Agent** 🏗️
 
-- **Role**: Code Quality Guardian
+- **Role**: Elite Fullstack Development Expert
 - **Responsibilities**:
-  - Enforces zero-tolerance policy for TypeScript and ESLint errors
-  - Automatically fixes type safety violations
-  - Maintains enterprise-grade code standards
-  - Reviews all code changes before commits
+  - Architecture decisions and technology recommendations
+  - Code reviews across frontend and backend
+  - Complex web application development
+  - Scalability and performance optimization
+  - Database design and API development
 - **When to Use**:
-  - After writing or modifying any TypeScript code
-  - Before committing changes to repository
-  - During code reviews and pull request validation
-  - When onboarding new team members
-- **Key Features**:
-  - Proactive error detection and fixing
-  - Comprehensive type safety enforcement
-  - Import organization and cleanup
-  - React hooks compliance validation
+  - Complex feature development requiring full-stack expertise
+  - Architecture decisions and technology stack choices
+  - Performance optimization and scalability planning
+  - Full-stack code reviews and quality assurance
+- **Key Expertise**:
+  - Modern JavaScript/TypeScript frameworks (React, Vue, Angular)
+  - Backend technologies (Node.js, Python, Go, Rust)
+  - Database design and optimization (SQL, NoSQL)
+  - Cloud platforms and deployment strategies
+  - Test-driven development and security best practices
 
 #### **2. MCP Tools Specialist Agent** 🔧
 
 - **Role**: Integration Architecture Expert
 - **Responsibilities**:
-  - Designs and implements MCP tools (when needed)
-  - Handles API integration patterns
-  - Optimizes tool schemas with Zod
-  - Ensures proper integration architecture
+  - API integration patterns and optimization
+  - Tool schema design with Zod validation
+  - MCP protocol implementation (when needed)
+  - Integration troubleshooting and debugging
 - **When to Use**:
   - Designing new API integrations
-  - Creating custom tools or utilities
-  - Optimizing existing tool schemas
-  - Troubleshooting integration issues
+  - Creating tool schemas with proper validation
+  - Optimizing existing integration patterns
+  - Troubleshooting API connection issues
+
+### **Specialized Agents**
+
+#### **3. Neon Database Architect** 🗄️
+
+- Specializes in database schema design, query optimization, and Neon-specific features
+
+#### **4. Vercel Deployment Specialist** 🚀
+
+- Handles deployment configurations, environment management, and performance monitoring
+
+#### **5. Security Auditor Expert** 🔐
+
+- Focuses on security patterns, vulnerability assessment, and compliance
+
+#### **6. API Integration Specialist** 🔌
+
+- Expert in API documentation, rate limits, and integration patterns
+
+#### **7. Project Docs Curator** 📝
+
+- Maintains documentation consistency and automated updates
+
+#### **8. Performance Optimizer** ⚡
+
+- Tracks performance metrics and optimization strategies
 
 ### **Agent Collaboration Workflow**
 
@@ -360,8 +388,85 @@ As we add more specialized agents to our team:
 
 - **Proactive Usage**: Use agents before they're needed (preventive vs. reactive)
 - **Clear Instructions**: Provide specific, actionable tasks for each agent
-- **Quality First**: Always run TypeScript ESLint enforcer after significant changes
+- **Architecture First**: Involve Fullstack Architect for complex decisions
 - **Documentation**: Keep agent capabilities and usage patterns updated
+
+## Agent Context Review Hook System
+
+### **Overview**
+
+Our sophisticated hook system ensures every agent starts with complete context awareness and contributes specialized knowledge back to the collective intelligence system.
+
+### **Hook System Architecture**
+
+```
+.claude/
+├── hooks-config.json         # Main hook configuration
+├── settings.local.json       # Hook integration settings
+├── scripts/
+│   ├── pre-task-context.sh   # Universal context loading
+│   ├── post-task-update.sh   # Knowledge preservation
+│   ├── agents/               # Agent-specific scripts
+│   │   ├── neon-db-context.sh
+│   │   ├── vercel-deploy-context.sh
+│   │   ├── security-audit-context.sh
+│   │   ├── api-integration-context.sh
+│   │   ├── docs-curator-update.sh
+│   │   └── performance-metrics.sh
+│   └── validation/           # Validation scripts
+│       ├── vercel-health-check.sh
+│       ├── neon-db-validate.sh
+│       └── security-scan.sh
+```
+
+### **Pre-Task Context Loading**
+
+Every agent automatically:
+
+1. **Reads Core Documentation** - CLAUDE.md, ProjectContextEngineering.md, ProjectTasks.md
+2. **Reviews Architecture** - Current NEON + Vercel + Direct APIs stack
+3. **Checks Memory System** - Previous learnings and patterns
+4. **Loads Agent-Specific Context** - Specialized knowledge for their domain
+
+### **Post-Task Knowledge Updates**
+
+After task completion:
+
+1. **Memory Updates** - New patterns and solutions recorded
+2. **Documentation Review** - Flags needed updates
+3. **Pattern Recognition** - Successful approaches archived
+4. **Agent-Specific Actions** - Domain-specific knowledge preservation
+
+### **Agent-Specific Hooks**
+
+Each specialized agent has tailored:
+
+- **Context Loading**: Domain-specific information and history
+- **Post-Task Actions**: Specialized knowledge preservation
+- **Validation Checks**: Pre/post-task health verification
+
+### **Hook Configuration**
+
+Hooks are configured in `.claude/settings.local.json`:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      /* Context loading hooks */
+    ],
+    "PostToolUse": [
+      /* Knowledge update hooks */
+    ],
+    "UserPromptSubmit": [
+      /* Context reminders */
+    ],
+    "Validation": [
+      /* Health check hooks */
+    ]
+  }
+}
+```
 
 Remember: **We're building a scalable, maintainable financial intelligence platform with modern tools, simple architecture, and AI-enhanced development workflows.**
 

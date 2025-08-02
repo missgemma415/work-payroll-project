@@ -499,30 +499,46 @@ vercel logs          # Monitor deployment
 
 ### **AI-Enhanced Development Team**
 
-Our development process leverages specialized AI agents to maintain enterprise-grade standards and accelerate feature development:
+Our development process leverages specialized AI agents to maintain enterprise-grade standards and accelerate feature development. Each agent has specific expertise and integration points within our workflow:
 
 #### **Core Agent Team**
 
-**1. TypeScript ESLint Enforcer Agent** 🛡️
+**1. Fullstack Architect Agent** 🏗️
 
 ```typescript
 interface AgentCapabilities {
-  role: 'Code Quality Guardian';
+  role: 'Elite Fullstack Development Expert';
   responsibilities: [
-    'Zero-tolerance TypeScript error enforcement',
-    'Automatic code quality fixes',
-    'Enterprise standards compliance',
-    'Pre-commit validation',
+    'Architecture decisions and technology recommendations',
+    'Code reviews across frontend and backend',
+    'Complex web application development',
+    'Scalability and performance optimization',
+    'Database design and API development',
   ];
   expertise: [
-    'TypeScript strict mode',
-    'ESLint rule enforcement',
-    'React hooks compliance',
-    'Import organization',
-    'Type safety validation',
+    'Modern JavaScript/TypeScript frameworks',
+    'Backend technologies (Node.js, Python, Go, Rust)',
+    'Database design and optimization',
+    'Cloud platforms and deployment',
+    'Test-driven development',
+    'Security best practices',
+  ];
+  whenToUse: [
+    'Complex feature development',
+    'Architecture decisions',
+    'Performance optimization',
+    'Full-stack code reviews',
+    'Scalability planning',
   ];
 }
 ```
+
+**Key Specializations**:
+
+- **Frontend Excellence**: React, Vue, Angular, Svelte, state management
+- **Backend Mastery**: Node.js, Python, APIs (REST, GraphQL), databases
+- **DevOps & Infrastructure**: Cloud platforms, containerization, CI/CD
+- **Quality Assurance**: Testing frameworks, TDD, code coverage
 
 **2. MCP Tools Specialist Agent** 🔧
 
@@ -530,19 +546,34 @@ interface AgentCapabilities {
 interface AgentCapabilities {
   role: 'Integration Architecture Expert';
   responsibilities: [
-    'API integration patterns',
-    'Tool schema optimization',
-    'Zod validation design',
-    'Integration troubleshooting',
+    'API integration patterns and optimization',
+    'Tool schema design with Zod validation',
+    'MCP protocol implementation',
+    'Integration troubleshooting and debugging',
   ];
   expertise: [
-    'MCP protocol design',
+    'MCP protocol design and standards',
     'API architecture patterns',
-    'Schema validation',
-    'Tool registration',
+    'Schema validation and type safety',
+    'Tool registration and discovery',
+    'Integration pattern optimization',
+  ];
+  whenToUse: [
+    'Designing new API integrations',
+    'Creating tool schemas',
+    'MCP tool implementation',
+    'Integration debugging',
+    'API pattern optimization',
   ];
 }
 ```
+
+**Key Specializations**:
+
+- **Schema Design**: Zod validation, type safety, input/output schemas
+- **API Patterns**: RESTful design, error handling, status codes
+- **Tool Architecture**: Registration systems, discovery patterns
+- **Integration Optimization**: Performance, reliability, maintainability
 
 ### **Agent Integration Workflow**
 
@@ -653,15 +684,16 @@ As we add specialized agents:
 ```typescript
 interface AgentCoordination {
   hierarchy: {
-    gatekeeper: 'TypeScript ESLint Enforcer'; // Always final step
-    specialists: 'Domain-specific experts';
-    support: 'General task assistance';
+    architect: 'Fullstack Architect'; // Architecture decisions
+    specialists: 'Domain-specific experts'; // Specialized tasks
+    validators: 'Security, Database, Deployment'; // Validation
   };
 
   handoffProtocol: {
-    specialist_to_gatekeeper: 'Quality validation required';
-    gatekeeper_approval: 'Code ready for commit';
-    error_feedback: 'Return to specialist for fixes';
+    planning_phase: 'Architect designs, specialists implement';
+    implementation_phase: 'Specialists execute, architect reviews';
+    validation_phase: 'Validators check health and security';
+    completion_phase: 'Docs curator updates, metrics saved';
   };
 
   communication: {
@@ -672,14 +704,126 @@ interface AgentCoordination {
 }
 ```
 
+### **Agent-Specific Hook Workflows**
+
+#### **Pre-Task Context Loading**
+
+Each agent receives specialized context:
+
+```mermaid
+graph LR
+    A[Task Start] --> B[Universal Context]
+    B --> C{Agent Type?}
+    C -->|Database| D[Load Schema & Patterns]
+    C -->|Deployment| E[Load Configs & Env]
+    C -->|Security| F[Load Vulnerabilities]
+    C -->|API| G[Load Docs & Limits]
+    D --> H[Execute Task]
+    E --> H
+    F --> H
+    G --> H
+```
+
+#### **Post-Task Knowledge Updates**
+
+Specialized knowledge preservation:
+
+```mermaid
+graph LR
+    A[Task Complete] --> B[Universal Updates]
+    B --> C{Agent Type?}
+    C -->|Docs Curator| D[Update Documentation]
+    C -->|DB Architect| E[Save Query Patterns]
+    C -->|Security| F[Generate Audit Report]
+    C -->|Performance| G[Record Metrics]
+    D --> H[Knowledge Preserved]
+    E --> H
+    F --> H
+    G --> H
+```
+
+### **Hook System Integration**
+
+The hook system is integrated via `.claude/settings.local.json`:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Task*",
+        "hooks": [
+          {
+            "command": "/path/to/pre-task-context.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "*neon-database-architect*",
+        "hooks": [
+          {
+            "command": "/path/to/agents/neon-db-context.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      // Post-task hooks configuration
+    ],
+    "Validation": [
+      // Validation hooks configuration
+    ]
+  }
+}
+```
+
+### **Knowledge Organization Structure**
+
+```
+.claude/
+├── hooks-config.json
+├── scripts/
+│   ├── agents/
+│   └── validation/
+├── knowledge/
+│   ├── agents/
+│   │   ├── neon-database-architect/
+│   │   │   ├── schemas/
+│   │   │   ├── optimizations/
+│   │   │   └── patterns/
+│   │   ├── vercel-deployment-specialist/
+│   │   │   ├── configs/
+│   │   │   └── deployments/
+│   │   └── [other agents]/
+│   └── shared/
+│       ├── architecture/
+│       └── patterns/
+├── metrics/
+│   ├── daily/
+│   └── reports/
+└── logs/
+    ├── changelogs/
+    └── knowledge-updates.log
+```
+
 ### **Development Quality Metrics**
 
 Our AI-enhanced team maintains:
 
-- **Zero TypeScript errors** (enforced automatically)
-- **Zero ESLint violations** (fixed proactively)
+- **Zero TypeScript errors** (Fullstack Architect enforcement)
+- **Zero ESLint violations** (automated fixing)
 - **100% type safety** (validated at compile time)
-- **Consistent code style** (auto-formatted)
+- **Consistent API patterns** (MCP Tools Specialist)
+- **Security compliance** (Security Auditor validation)
+- **Performance targets** (Performance Optimizer tracking)
 - **Clean commit history** (quality-gated)
+
+### **Agent Specialization Benefits**
+
+1. **Focused Expertise**: Each agent masters their domain
+2. **Parallel Processing**: Multiple agents can work simultaneously
+3. **Knowledge Preservation**: Domain-specific learnings are captured
+4. **Quality Assurance**: Specialized validation for each area
+5. **Continuous Improvement**: Metrics and patterns drive optimization
 
 Remember: We're building a **simple, scalable, and intelligent financial platform** with **AI-enhanced development workflows** that leverage modern tools and direct API integrations for maximum reliability and performance.

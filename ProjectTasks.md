@@ -364,15 +364,16 @@ Our implementation leverages specialized AI agents to maintain enterprise-grade 
 
 #### **Core Development Agents**
 
-**🛡️ TypeScript ESLint Enforcer Agent**
+**🏗️ Fullstack Architect Agent**
 
-- **Integration Points**: After every significant code change
+- **Integration Points**: Complex feature development, architecture decisions, full-stack reviews
 - **Automated Tasks**:
-  - Type safety validation
-  - ESLint error fixing
-  - Import organization
-  - Code style enforcement
-- **Workflow**: Proactive code review before commits
+  - Architecture guidance and recommendations
+  - Full-stack code reviews
+  - Performance optimization analysis
+  - Database design validation
+  - Security best practices enforcement
+- **Workflow**: Comprehensive development expertise for complex implementations
 
 **🔧 MCP Tools Specialist Agent**
 
@@ -392,9 +393,9 @@ Each development phase now includes agent collaboration:
 
 ```mermaid
 graph TD
-    A[Database Setup] --> B[TypeScript ESLint Agent Review]
+    A[Database Setup] --> B[Fullstack Architect Review]
     B --> C[Authentication APIs] --> D[MCP Tools Specialist Schema Design]
-    D --> E[TypeScript ESLint Agent Validation]
+    D --> E[Fullstack Architect Final Validation]
     E --> F[Clean Deployment]
 ```
 
@@ -404,7 +405,7 @@ graph TD
 graph TD
     A[Write API Route] --> B[MCP Tools Specialist Schema]
     B --> C[Integration Pattern Design]
-    C --> D[TypeScript ESLint Agent Review]
+    C --> D[Fullstack Architect Review]
     D --> E[Error Handling Validation]
     E --> F[Production Ready]
 ```
@@ -415,47 +416,49 @@ Every task now includes automated quality gates:
 
 1. **Code Writing Phase**
    - Developer implements feature
-   - Immediate TypeScript ESLint agent review
-   - Auto-fix common issues
-   - Style consistency enforcement
+   - Fullstack Architect reviews architecture and patterns
+   - Code quality and best practices validation
+   - Performance and security analysis
 
 2. **Integration Phase**
    - MCP Tools Specialist validates schemas
    - API pattern compliance check
    - Error handling verification
-   - Performance optimization review
+   - Integration optimization review
 
 3. **Commit Phase**
-   - Final TypeScript ESLint agent validation
-   - Zero-error policy enforcement
-   - Clean commit preparation
-   - Documentation updates
+   - Final Fullstack Architect validation
+   - Enterprise standards enforcement
+   - Clean, maintainable code verification
+   - Documentation and testing completeness
 
 ### **Agent Task Assignments**
 
 #### **Phase 1 Tasks with Agent Integration**
 
 - [ ] **Set up Neon PostgreSQL database**
-  - Implementation: Developer
-  - **Agent Review**: TypeScript ESLint enforcer validates connection code
-  - **Schema Design**: MCP Tools Specialist optimizes database queries
+  - **Implementation**: Developer
+  - **Agent Review**: Fullstack Architect validates database architecture and connection patterns
+  - **Schema Design**: MCP Tools Specialist optimizes database queries and schemas
 
 - [ ] **Implement authentication system**
-  - Implementation: Developer
-  - **Security Review**: MCP Tools Specialist validates JWT patterns
-  - **Type Safety**: TypeScript ESLint enforcer ensures type safety
+  - **Implementation**: Developer
+  - **Security Review**: Fullstack Architect validates JWT patterns, security best practices
+  - **Schema Validation**: MCP Tools Specialist ensures proper request/response schemas
 
 #### **Phase 2 Tasks with Agent Integration**
 
 - [ ] **Chat API with Anthropic Claude**
-  - **Schema Design**: MCP Tools Specialist creates request/response types
+  - **Schema Design**: MCP Tools Specialist creates request/response types and validation
   - **Implementation**: Developer builds endpoint
-  - **Quality Gate**: TypeScript ESLint enforcer validates before commit
+  - **Architecture Review**: Fullstack Architect validates API patterns and error handling
+  - **Quality Gate**: Fullstack Architect ensures enterprise standards before commit
 
 - [ ] **Voice integration with ElevenLabs**
-  - **API Pattern**: MCP Tools Specialist designs audio streaming
+  - **API Pattern**: MCP Tools Specialist designs audio streaming and file handling
   - **Implementation**: Developer builds voice endpoints
-  - **Final Review**: TypeScript ESLint enforcer ensures clean code
+  - **Performance Review**: Fullstack Architect optimizes audio processing and delivery
+  - **Final Review**: Fullstack Architect ensures scalable, clean implementation
 
 ### **Future Agent Expansion Tasks**
 
@@ -487,22 +490,24 @@ As we add more team members:
 interface TaskExecution {
   workflow: {
     step1: 'Developer implements feature';
-    step2: 'Specialist agent optimizes (if applicable)';
-    step3: 'TypeScript ESLint agent validates';
-    step4: 'Clean commit ready';
+    step2: 'MCP Tools Specialist handles schemas (if applicable)';
+    step3: 'Fullstack Architect validates architecture and quality';
+    step4: 'Clean, enterprise-ready commit';
   };
 
   qualityGates: {
-    codeReview: 'TypeScript ESLint enforcer (mandatory)';
-    integration: 'MCP Tools Specialist (when applicable)';
-    security: 'Future Security Specialist';
-    performance: 'Future Frontend Specialist';
+    codeReview: 'Fullstack Architect (mandatory for all complex tasks)';
+    integration: 'MCP Tools Specialist (API and schema design)';
+    architecture: 'Fullstack Architect (scalability and patterns)';
+    security: 'Fullstack Architect (current), Future Security Specialist';
+    performance: 'Fullstack Architect (current), Future Performance Specialist';
   };
 
   escalation: {
     blockingIssues: 'Return to developer with detailed feedback';
-    qualityFailure: 'Agent fixes automatically when possible';
-    complexIssues: 'Multi-agent collaboration';
+    qualityFailure: 'Agent provides fixes and recommendations';
+    complexIssues: 'Multi-agent collaboration with clear handoffs';
+    architectureDecisions: 'Always involve Fullstack Architect';
   };
 }
 ```
@@ -511,19 +516,102 @@ interface TaskExecution {
 
 Our AI-enhanced development maintains:
 
-- **Zero TypeScript errors** (TypeScript ESLint enforcer)
+- **Zero TypeScript errors** (Fullstack Architect enforcement)
 - **Zero ESLint violations** (Automated fixing)
 - **100% type safety** (Compile-time validation)
 - **Consistent API patterns** (MCP Tools Specialist)
+- **Enterprise architecture** (Fullstack Architect guidance)
 - **Clean commit history** (Quality-gated)
-- **Enterprise standards** (Automated enforcement)
+- **Scalable solutions** (Architecture-first approach)
 
 ### **Agent Usage Guidelines**
 
 1. **Proactive Integration**: Use agents before issues arise
 2. **Clear Task Definition**: Provide specific, actionable instructions
-3. **Quality First**: Always run TypeScript ESLint enforcer after changes
-4. **Documentation**: Keep agent capabilities updated as team grows
-5. **Collaboration**: Leverage multi-agent workflows for complex tasks
+3. **Architecture First**: Always involve Fullstack Architect for complex features
+4. **Schema Validation**: Use MCP Tools Specialist for API design
+5. **Quality Gates**: Ensure all changes pass agent review before commits
+6. **Documentation**: Keep agent capabilities updated as team grows
+7. **Collaboration**: Leverage multi-agent workflows for complex tasks
+
+## Enhanced Agent Hook System
+
+### **Overview**
+
+Our sophisticated hook system provides specialized context loading, post-task actions, and validation for each agent type, ensuring maximum efficiency and knowledge preservation.
+
+### **Hook System Features**
+
+#### **1. Agent-Specific Context Loading**
+
+Each agent receives tailored context:
+
+- **Neon Database Architect**: Database schemas, connection patterns, optimization history
+- **Vercel Deployment Specialist**: Deployment configs, environment variables, build logs
+- **Security Auditor Expert**: Security patterns, vulnerability history, compliance checks
+- **API Integration Specialist**: API docs, rate limits, integration patterns
+
+#### **2. Agent-Specific Post-Task Actions**
+
+Specialized knowledge preservation:
+
+- **Project Docs Curator**: Auto-update documentation, generate changelogs
+- **Neon Database Architect**: Save query patterns, schema improvements
+- **Security Auditor Expert**: Generate security audit reports
+- **Performance Optimizer**: Record performance metrics
+
+#### **3. Agent-Specific Validation**
+
+Domain-specific health checks:
+
+- **Vercel Deployment Specialist**: Verify deployment health
+- **Neon Database Architect**: Test database connections
+- **Security Auditor Expert**: Scan for exposed secrets
+
+### **Hook Configuration Structure**
+
+```
+.claude/
+├── hooks-config.json         # Main configuration (v2.0.0)
+├── settings.local.json       # Hook integration
+├── scripts/
+│   ├── pre-task-context.sh   # Universal context
+│   ├── post-task-update.sh   # Universal updates
+│   ├── agents/               # Agent-specific
+│   │   ├── neon-db-context.sh
+│   │   ├── vercel-deploy-context.sh
+│   │   ├── security-audit-context.sh
+│   │   ├── api-integration-context.sh
+│   │   ├── docs-curator-update.sh
+│   │   └── performance-metrics.sh
+│   └── validation/           # Health checks
+│       ├── vercel-health-check.sh
+│       ├── neon-db-validate.sh
+│       └── security-scan.sh
+```
+
+### **Implementation Status**
+
+✅ **Completed**:
+
+- Hook configuration v2.0.0 with agent-specific matchers
+- All agent context loading scripts
+- Post-task action scripts
+- Validation scripts
+- Core documentation updates
+
+### **Using the Hook System**
+
+1. **Automatic Activation**: Hooks trigger automatically based on agent type
+2. **Context Awareness**: Every agent starts fully informed
+3. **Knowledge Preservation**: Learnings are captured automatically
+4. **Validation**: Health checks ensure system integrity
+
+### **Benefits**
+
+- **Specialized Context**: Each agent gets exactly what they need
+- **Automated Workflows**: No manual context loading required
+- **Knowledge Growth**: System becomes smarter over time
+- **Quality Assurance**: Built-in validation at every step
 
 Remember: **We're building a clean, scalable financial intelligence platform with modern tools, direct API integrations, and AI-enhanced development workflows for maximum reliability and performance.**
