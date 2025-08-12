@@ -1,6 +1,9 @@
-import { parse } from 'csv-parse';
 import { promises as fs } from 'fs';
-import path from 'path';
+
+import { parse } from 'csv-parse';
+
+// Type for CSV row data (flexible to handle different column names)
+type CsvRow = Record<string, string | undefined>;
 
 export interface SpringAheadRecord {
   employee_name: string;
@@ -65,7 +68,7 @@ export class CSVParser {
         columns: true,
         skip_empty_lines: true,
         trim: true
-      }, (err, data) => {
+      }, (err, data: CsvRow[]) => {
         if (err) {
           resolve({ errors: [`CSV parsing error: ${err.message}`] });
           return;
@@ -74,11 +77,11 @@ export class CSVParser {
         for (const [index, row] of data.entries()) {
           try {
             // Try different column name variations
-            const employee_name = row.Employee || row.employee_name || row['Employee Name'] || row.Name;
-            const date = row.Date || row.date || row['Work Date'];
-            const project = row.Project || row.project_identifier || row['Project ID'] || row.ProjectID;
-            const hours = parseFloat(row.Hours || row.hours || row['Hours Worked'] || '0');
-            const rate = parseFloat(row.Rate || row.hourly_rate || row['Hourly Rate'] || '0');
+            const employee_name = row['Employee'] || row['employee_name'] || row['Employee Name'] || row['Name'];
+            const date = row['Date'] || row['date'] || row['Work Date'];
+            const project = row['Project'] || row['project_identifier'] || row['Project ID'] || row['ProjectID'];
+            const hours = parseFloat(row['Hours'] || row['hours'] || row['Hours Worked'] || '0');
+            const rate = parseFloat(row['Rate'] || row['hourly_rate'] || row['Hourly Rate'] || '0');
 
             if (!employee_name) {
               errors.push(`Row ${index + 1}: Missing employee name`);
@@ -100,14 +103,17 @@ export class CSVParser {
               continue;
             }
 
+            const empId = row['EmployeeID'] || row['employee_id'] || row['Employee ID'];
+            const taskDesc = row['Task'] || row['Description'] || row['task_description'];
+            
             records.push({
               employee_name: employee_name.trim(),
-              employee_id: row.EmployeeID || row.employee_id || row['Employee ID'],
+              ...(empId && { employee_id: empId }),
               date: date.trim(),
               project_identifier: project.trim(),
               hours: hours,
-              hourly_rate: rate > 0 ? rate : undefined,
-              task_description: row.Task || row.Description || row.task_description
+              ...(rate > 0 && { hourly_rate: rate }),
+              ...(taskDesc && { task_description: taskDesc })
             });
 
           } catch (error) {
@@ -117,7 +123,7 @@ export class CSVParser {
 
         resolve({
           springahead: records,
-          errors: errors.length > 0 ? errors : undefined
+          ...(errors.length > 0 && { errors })
         });
       });
     });
@@ -132,7 +138,7 @@ export class CSVParser {
         columns: true,
         skip_empty_lines: true,
         trim: true
-      }, (err, data) => {
+      }, (err, data: CsvRow[]) => {
         if (err) {
           resolve({ errors: [`CSV parsing error: ${err.message}`] });
           return;
@@ -140,28 +146,30 @@ export class CSVParser {
 
         for (const [index, row] of data.entries()) {
           try {
-            const employee_name = row.Employee || row.employee_name || row['Employee Name'] || row.Name;
-            const period_start = row['Period Start'] || row.period_start || row['Pay Period Start'];
-            const period_end = row['Period End'] || row.period_end || row['Pay Period End'];
+            const employee_name = row['Employee'] || row['employee_name'] || row['Employee Name'] || row['Name'];
+            const period_start = row['Period Start'] || row['period_start'] || row['Pay Period Start'];
+            const period_end = row['Period End'] || row['period_end'] || row['Pay Period End'];
             
             if (!employee_name) {
               errors.push(`Row ${index + 1}: Missing employee name`);
               continue;
             }
 
-            const gross_pay = this.parseNumber(row['Gross Pay'] || row.gross_pay || row.Gross || '0');
-            const federal_tax = this.parseNumber(row['Federal Tax'] || row.federal_tax || row['Fed Tax'] || '0');
-            const state_tax = this.parseNumber(row['State Tax'] || row.state_tax || row['ST Tax'] || '0');
-            const fica_tax = this.parseNumber(row['FICA Tax'] || row.fica_tax || row.FICA || '0');
-            const medicare_tax = this.parseNumber(row['Medicare Tax'] || row.medicare_tax || row.Medicare || '0');
-            const other_deductions = this.parseNumber(row['Other Deductions'] || row.other_deductions || row.Deductions || '0');
-            const benefits_cost = this.parseNumber(row['Benefits'] || row.benefits_cost || row['Health Insurance'] || '0');
-            const bonuses = this.parseNumber(row['Bonus'] || row.bonuses || row.Bonuses || '0');
-            const net_pay = this.parseNumber(row['Net Pay'] || row.net_pay || row.Net || '0');
+            const gross_pay = this.parseNumber(row['Gross Pay'] || row['gross_pay'] || row['Gross'] || '0');
+            const federal_tax = this.parseNumber(row['Federal Tax'] || row['federal_tax'] || row['Fed Tax'] || '0');
+            const state_tax = this.parseNumber(row['State Tax'] || row['state_tax'] || row['ST Tax'] || '0');
+            const fica_tax = this.parseNumber(row['FICA Tax'] || row['fica_tax'] || row['FICA'] || '0');
+            const medicare_tax = this.parseNumber(row['Medicare Tax'] || row['medicare_tax'] || row['Medicare'] || '0');
+            const other_deductions = this.parseNumber(row['Other Deductions'] || row['other_deductions'] || row['Deductions'] || '0');
+            const benefits_cost = this.parseNumber(row['Benefits'] || row['benefits_cost'] || row['Health Insurance'] || '0');
+            const bonuses = this.parseNumber(row['Bonus'] || row['bonuses'] || row['Bonuses'] || '0');
+            const net_pay = this.parseNumber(row['Net Pay'] || row['net_pay'] || row['Net'] || '0');
 
+            const empId = row['EmployeeID'] || row['employee_id'] || row['Employee ID'];
+            
             records.push({
               employee_name: employee_name.trim(),
-              employee_id: row.EmployeeID || row.employee_id || row['Employee ID'],
+              ...(empId && { employee_id: empId }),
               pay_period_start: period_start || '',
               pay_period_end: period_end || '',
               gross_pay,
@@ -182,7 +190,7 @@ export class CSVParser {
 
         resolve({
           paychex: records,
-          errors: errors.length > 0 ? errors : undefined
+          ...(errors.length > 0 && { errors })
         });
       });
     });

@@ -1,9 +1,15 @@
-import { NextRequest, NextResponse } from 'next/server';
+
 import { promises as fs } from 'fs';
 import path from 'path';
-import { query } from '@/lib/database/connection';
-import { CSVParser, SpringAheadRecord, PaychexRecord } from '@/lib/parsers/csv-parser';
+
+import { NextResponse } from 'next/server';
 import { z } from 'zod';
+
+import { query } from '@/lib/database/connection';
+import type { SpringAheadRecord, PaychexRecord } from '@/lib/parsers/csv-parser';
+import { CSVParser } from '@/lib/parsers/csv-parser';
+
+import type { NextRequest} from 'next/server';
 
 const processRequestSchema = z.object({
   filename: z.string().optional(),
@@ -108,7 +114,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function processFile(folderPath: string, filename: string, force: boolean = false): Promise<ProcessingResult> {
+async function processFile(folderPath: string, filename: string, _force: boolean = false): Promise<ProcessingResult> {
   const startTime = Date.now();
   
   try {

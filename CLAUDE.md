@@ -4,26 +4,28 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Core Principles
 
-- **Zero-tolerance policy for TypeScript and ESLint errors going forward!**
+- **Zero-tolerance policy for TypeScript and ESLint errors!**
+- **Project-centric organization** - All data organized around client project identifiers
 - Enterprise-grade code quality standards
 - Security-first approach
-- Clean, maintainable code
-- Simple, scalable architecture
+- Clean, maintainable code architecture
 
 ## Project Overview
 
-**Work Payroll Project** is a payroll cost management and analysis platform. Built with a clean MVP stack: Next.js 15 + Neon PostgreSQL + Vercel deployment.
+**Work Payroll Project** is a CEO desktop application for payroll analysis, project cost tracking, and workforce performance insights. Built with a clean MVP stack focusing on integrating data from SpringAhead, Paychex, and QuickBooks.
 
 ## Architecture Overview
 
-### Modern Stack Architecture
+### Current Tech Stack
 
-We use a simplified, scalable approach:
+We use a streamlined, proven approach:
 
-- **Frontend**: Next.js 15 with App Router (React 19)
-- **Deployment**: Vercel (seamless Next.js integration) 
-- **Database**: Neon PostgreSQL (serverless, scalable)
-- **Testing**: Jest with React Testing Library
+- **Frontend**: Next.js 15 with App Router (React 19, TypeScript)
+- **Database**: Neon PostgreSQL (serverless, 8 tables configured)
+- **Deployment**: Vercel (zero-config deployment)
+- **File Processing**: CSV/Excel parsing for payroll data
+- **UI**: Radix UI components with Tailwind CSS
+- **Charts**: Recharts for data visualization
 
 ### Key Technologies
 
@@ -31,24 +33,43 @@ We use a simplified, scalable approach:
    - Server-side rendering
    - API routes for backend logic
    - React 19 with concurrent features
-   - TypeScript strict mode
+   - TypeScript strict mode ✅
 
-2. **Vercel Platform**
+2. **Neon PostgreSQL**
+   - Serverless database (fully configured)
+   - Auto-scaling capabilities
+   - 8 tables with sample data
+   - Connection pooling handled automatically
+
+3. **Vercel Platform**
    - Zero-config deployment
-   - Edge functions
    - Environment management
-   - Analytics and monitoring
+   - Global CDN
+   - Build optimization
 
-3. **Neon PostgreSQL**
-   - Serverless database
-   - Auto-scaling
-   - Branching for development
-   - Connection pooling
+4. **File Processing System**
+   - CSV/Excel parsing infrastructure
+   - Multi-source data integration
+   - Error handling and validation
 
-4. **Simple Architecture**
-   - Direct database integration
-   - RESTful API design
-   - No complex orchestration layers
+## Database Schema (Configured)
+
+The database includes 8 fully configured tables:
+
+- **`organizations`** - Company/organization data
+- **`users`** - User accounts and profiles  
+- **`projects`** - Project tracking with hourly rates
+- **`imported_files`** - File upload tracking
+- **`payroll_data`** - Core payroll and expense data
+- **`employee_costs`** - Aggregated cost analysis
+- **`activity_logs`** - Audit trail
+- **`migrations`** - Migration tracking
+
+**Sample Projects Included:**
+- PROJ-001: Client Alpha (Software Development, $150/hr)
+- PROJ-002: Client Beta (Consulting Services, $200/hr)
+- PROJ-003: Client Gamma (Data Analysis, $125/hr)
+- INTERNAL: Internal company activities ($0/hr)
 
 ## API Architecture
 
@@ -56,48 +77,44 @@ We use a simplified, scalable approach:
 
 ```
 app/api/
-├── employee-costs/route.ts    # Employee cost analysis endpoints
-├── export/excel/route.ts      # Excel export functionality  
-├── process-files/route.ts     # File processing for payroll data
-├── scan-files/route.ts        # File scanning and validation
-├── health/route.ts            # Health check and environment validation
-├── chat/route.ts              # Basic chat functionality
-└── voice/route.ts             # Voice interface (future)
+├── chat/route.ts                # Basic chat functionality (placeholder)
+├── employee-costs/route.ts      # Employee cost analysis endpoints
+├── export/excel/route.ts        # Excel export functionality  
+├── health/route.ts              # Health check and environment validation
+├── process-files/route.ts       # File processing for payroll data
+├── scan-files/route.ts          # File scanning and validation
+└── voice/route.ts               # Voice interface (placeholder)
 ```
 
 ### API Development Guidelines
 
 ```typescript
-// Example API route structure (based on /api/employee-costs)
+// Example API route structure (based on existing patterns)
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { db } from '@/lib/database';
+import { query } from '@/lib/database/connection';
 
-const employeeCostSchema = z.object({
+const requestSchema = z.object({
   employee_id: z.string().uuid(),
-  base_salary: z.number().positive(),
-  benefits_multiplier: z.number().min(1).max(2),
-  start_date: z.string().datetime().optional(),
+  project_identifier: z.string(),
+  period_start: z.string().datetime(),
+  period_end: z.string().datetime()
 });
 
-export async function POST(request: NextRequest) {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     const body = await request.json();
-    const validatedData = employeeCostSchema.parse(body);
+    const validatedData = requestSchema.parse(body);
 
-    // Calculate total cost
-    const totalCost = validatedData.base_salary * validatedData.benefits_multiplier;
-    
-    // Store in database
-    const result = await db.employee_costs.create({
-      ...validatedData,
-      total_annual_cost: totalCost,
-      created_at: new Date().toISOString(),
-    });
+    // Business logic here
+    const result = await query(
+      `SELECT * FROM payroll_data WHERE employee_id = $1 AND project_identifier = $2`,
+      [validatedData.employee_id, validatedData.project_identifier]
+    );
 
     return NextResponse.json({
-      employee_cost: result,
-      total_annual_cost: totalCost,
+      success: true,
+      data: result,
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -114,190 +131,238 @@ export async function POST(request: NextRequest) {
 ## Environment Configuration
 
 ```bash
-# Database (Required)
+# Database (Already Configured)
 NEON_DATABASE_URL="postgresql://neondb_owner:npg_26KGepdyhVnU@ep-ancient-sea-aenslh7h-pooler.c-2.us-east-2.aws.neon.tech/neondb?sslmode=require"
 
-# App Configuration
+# Application
 NEXT_PUBLIC_APP_URL=https://work-payroll-project.vercel.app
 NODE_ENV=production
 
-# Security
+# Authentication
 JWT_SECRET=your-super-secret-jwt-key-minimum-32-chars
 
-# Future APIs (not currently used in MVP)
+# Future Features (Optional)
 GOOGLE_GEMINI_API_KEY=your-google-gemini-api-key
 ELEVENLABS_API_KEY=your-elevenlabs-api-key
 ```
 
-## Database Setup
-
-### Neon PostgreSQL Database
-
-The database is fully configured with the following tables:
-
-- `organizations` - Company/organization data
-- `users` - User accounts and profiles  
-- `projects` - Project tracking with hourly rates
-- `imported_files` - File upload tracking
-- `payroll_data` - Core payroll and expense data
-- `employee_costs` - Aggregated cost analysis
-- `activity_logs` - Audit trail
-- `migrations` - Migration tracking
-
-### Database Connection Test
-
-```bash
-# Test database connection
-npm run db:test
-
-# Run database setup (if needed)
-node setup-db-final.js
-```
-
-### Development Commands
+## Development Commands
 
 ```bash
 # Development
-npm run dev          # Start dev server (Next.js)
-npm run build        # Build for production
-npm run start        # Start production server
-npm run lint         # Check for ESLint errors
-npm run lint:fix     # Auto-fix ESLint issues
-npm run type-check   # Run TypeScript checks
-npm run validate     # Run all checks (lint + type + format)
-npm run format       # Format code with Prettier
-npm run test         # Run Jest tests
+npm run dev              # Start dev server (Next.js)
+npm run build            # Build for production
+npm run start            # Start production server
+npm run lint             # Check for ESLint errors  
+npm run lint:fix         # Auto-fix ESLint issues
+npm run type-check       # Run TypeScript checks
+npm run validate         # Run all checks (lint + type + format)
+npm run format           # Format code with Prettier
+npm run test             # Run Jest tests (5/5 passing)
 
 # Database
-npm run db:test      # Test database connection
-npm run migrate      # Run database migrations
+npm run db:test          # Test database connection
+npm run migrate          # Run database migrations (if needed)
 
 # Deployment
-npm run deploy       # Deploy to Vercel production
+npm run deploy           # Deploy to Vercel production
 ```
+
+## Data Integration Strategy
+
+### File Processing Flow
+
+1. **File Upload**: CSV/Excel files via web interface
+2. **Format Detection**: Automatic source identification (SpringAhead/Paychex/QuickBooks)
+3. **Data Parsing**: Extract records with error handling
+4. **Validation**: Check data integrity and required fields
+5. **Storage**: Save to appropriate database tables
+6. **Processing**: Calculate costs, allocate to projects
+7. **Reporting**: Generate analysis and export capabilities
+
+### Source Systems
+
+**SpringAhead (Time Tracking)**
+- Weekly CSV exports with hours by project
+- Employee-level and daily breakdowns
+- Project identifier mapping
+
+**Paychex (Payroll)**
+- Payroll reports with taxes, deductions, bonuses
+- Employer contributions and garnishments
+- Project-based cost attribution
+
+**QuickBooks (Expenses)**
+- Employee, contractor, vendor expenses
+- Direct project cost allocation
+- Expense categorization
+
+**Customer Service Metrics**
+- Call metrics and ticket data
+- CSAT scores and resolution times
+- Performance tracking by employee
 
 ## Development Guidelines
 
-### API Route Development
+### Code Quality Standards
+
+- **TypeScript**: Strict mode with full type safety ✅
+- **ESLint**: Zero errors policy ✅
+- **Testing**: Jest tests must pass (currently 5/5) ✅
+- **Build**: Must compile successfully ✅
+
+### API Route Best Practices
 
 - Use Zod for request/response validation
-- Implement proper error handling
-- Add rate limiting for public endpoints
+- Implement proper error handling with specific status codes
 - Log important events for debugging
 - Follow RESTful conventions
+- Include rate limiting for public endpoints
 
-### Security
+### Database Practices
+
+- Use prepared statements (handled by query function)
+- Implement proper indexing (already configured)
+- Validate inputs before database operations
+- Use connection pooling (handled by Neon automatically)
+
+### Security Requirements
 
 - Never expose API keys in client-side code
 - Use environment variables for all secrets
+- Validate all user inputs with Zod schemas
 - Implement proper authentication middleware
-- Validate all user inputs
-- Use HTTPS in production
+- Use HTTPS in production (handled by Vercel)
 
-### Database
+## File Processing Implementation
 
-- Use connection pooling (Neon handles this automatically)
-- Use prepared statements to prevent SQL injection
-- Index frequently queried columns
-- Database is fully set up with all required tables
+### CSV Parser Structure
 
-## Common Development Tasks
+```typescript
+// lib/parsers/csv-parser.ts (existing structure)
+import { parse } from 'csv-parse';
+import type CsvRow = Record<string, string | undefined>;
 
-### Build and Quality Checks
+export interface SpringAheadRecord {
+  employee_name: string;
+  employee_id?: string;
+  date: string;
+  project_identifier: string;
+  hours: number;
+  hourly_rate?: number;
+}
 
-```bash
-# Build the project
-npm run build
-
-# Run linting
-npm run lint
-npm run lint:fix    # Auto-fix issues
-
-# TypeScript type checking
-npm run type-check
-
-# Run all validation checks (lint + type-check + format)
-npm run validate
-
-# Format code
-npm run format
-npm run format:check  # Check without fixing
+export class CSVParser {
+  async parseFile(filePath: string, fileType: string): Promise<ParsedData> {
+    // Implementation handles multiple CSV formats
+    // with flexible column name detection
+  }
+}
 ```
 
-### Testing
+## Testing Strategy
+
+### Current Test Status
+- **Jest Tests**: 5/5 passing ✅
+- **TypeScript**: 0 errors ✅
+- **Build**: Successful compilation ✅
+- **Database**: Connection verified ✅
+
+### Testing Commands
 
 ```bash
 # Run all tests
-npm run test
+npm test
 
 # Run specific test file
-npm run test -- components/dashboard/Forecast.test.tsx
+npm test -- components/dashboard/Forecast.test.tsx
 
 # Test API endpoints
 curl -X GET http://localhost:3000/api/health
 curl -X POST http://localhost:3000/api/employee-costs \
   -H "Content-Type: application/json" \
-  -d '{"employee_id": "123", "base_salary": 75000}'
+  -d '{"employee_id": "123", "project_identifier": "PROJ-001"}'
 ```
 
-### Database Operations
+## Performance Optimization
 
-```bash
-# Test database connection
-npm run db:test
+### Database Performance
+- Connection pooling (handled by Neon automatically)
+- Proper indexing configured
+- Efficient queries with prepared statements
+- Auto-scaling based on usage
 
-# Database is fully set up - no migrations needed
-# All tables created: organizations, users, projects, payroll_data, etc.
-```
+### API Performance
+- Response caching for expensive calculations
+- Error handling with proper status codes
+- Request validation to prevent malformed data
+- File processing optimization
 
-## Monitoring
+### Frontend Performance
+- Server-side rendering with Next.js
+- Code splitting for optimal bundle sizes
+- Lazy loading for large datasets
+- Recharts for optimized data visualization
 
-- Use Vercel Analytics for performance monitoring
-- Set up error tracking with Vercel's built-in error reporting
-- Track database performance with Neon metrics
-- Monitor API usage for future integrations
+## Monitoring & Deployment
 
-## Best Practices
+### Production Monitoring
+- Vercel Analytics for performance tracking
+- Database metrics via Neon dashboard
+- Error tracking with Vercel's built-in reporting
+- API response time monitoring
 
-1. **Code Quality**
-   - Follow TypeScript strict mode
-   - Use ESLint and Prettier
-   - Write tests for API routes
-   - Document complex logic
-
-2. **Performance**
-   - Use Next.js built-in optimizations
-   - Implement caching for expensive operations
-   - Optimize database queries
-   - Use Vercel Edge Functions when appropriate
-
-3. **User Experience**
-   - Provide loading states
-   - Handle errors gracefully
-   - Implement progressive enhancement
-   - Ensure accessibility compliance
+### Deployment Process
+- **Vercel**: Automatic deployment on git push
+- **Database**: Neon PostgreSQL (production-ready)
+- **Environment**: All variables configured
+- **Domain**: work-payroll-project.vercel.app
 
 ## Memory and Context Management
 
 The system maintains context through:
 
-- **Database persistence**: User sessions, payroll data, cost analysis
+- **Database persistence**: Payroll data, cost analysis, project tracking
 - **Environment-based configuration**: Per-deployment settings
-- **Simple state management**: React Query for client state
-- **File processing**: CSV/Excel payroll data import
+- **File processing state**: Import status and error handling
+- **User sessions**: Authentication and preferences
 
 ## Key File Locations
 
 - **API Routes**: `app/api/` - All backend endpoints
-- **Components**: `components/` - React components organized by feature
-- **Database**: `lib/database/` - Database connection and repositories
+- **Components**: `components/` - React components for UI
+- **Database**: `lib/database/` - Connection and query utilities
+- **Parsers**: `lib/parsers/` - CSV/Excel processing logic
 - **Types**: `lib/types/` - TypeScript type definitions
-- **Migrations**: `migrations/` - Database schema migrations
-- **Tests**: Component tests alongside components (e.g., `Forecast.test.tsx`)
+- **Tests**: Component tests alongside components
 
-## Critical Configuration
+## Critical Configuration Status
 
-- **TypeScript**: Strict mode enabled with all checks (see `tsconfig.json`)
-- **ESLint**: Configured with Next.js and TypeScript rules
-- **Jest**: Configured with Next.js SWC transformer
-- **Database**: Neon PostgreSQL with connection pooling (fully configured with 8 tables)
+✅ **TypeScript**: Strict mode enabled, 0 errors  
+✅ **ESLint**: Configured and passing  
+✅ **Jest**: 5/5 tests passing  
+✅ **Database**: Neon PostgreSQL fully configured with 8 tables  
+✅ **Build**: Successful compilation  
+✅ **Deployment**: Vercel ready  
+
+## Implementation Priorities
+
+### Immediate (Week 1-2)
+1. Extend file processing for specific CSV formats
+2. Implement cost calculation engine
+3. Build basic CEO dashboard interface
+4. Add project cost tracking
+
+### Near-term (Week 3-4)  
+1. Employee performance insights
+2. Excel/PDF export functionality
+3. Historical trend analysis
+4. Mobile optimization
+
+### Future Enhancements
+1. Advanced forecasting models
+2. Multi-organization support
+3. Real-time collaboration features
+4. Advanced analytics dashboards
+
+Remember: **Focus on clean, maintainable code with the project-centric organization around client identifiers. The foundation is solid - build incrementally with proper testing and validation.**

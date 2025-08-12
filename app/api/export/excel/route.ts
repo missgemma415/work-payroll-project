@@ -1,6 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { query } from '@/lib/database/connection';
+import { NextResponse } from 'next/server';
 import * as XLSX from 'xlsx';
+
+import { query } from '@/lib/database/connection';
+
+import type { NextRequest} from 'next/server';
 
 export async function GET() {
   try {
@@ -159,14 +162,14 @@ export async function GET() {
     `);
 
     const summaryData = [
-      { 'Metric': 'Total Employees', 'Value': summaryStats[0]?.total_employees || 0 },
-      { 'Metric': 'Total Monthly Cost', 'Value': summaryStats[0]?.total_monthly_cost || 0 },
-      { 'Metric': 'Average Employee Cost', 'Value': summaryStats[0]?.avg_employee_cost || 0 },
-      { 'Metric': 'Average Burden Rate %', 'Value': summaryStats[0]?.avg_burden_rate ? parseFloat((summaryStats[0] as any).avg_burden_rate).toFixed(2) : '0.00' },
-      { 'Metric': 'Total Hours', 'Value': summaryStats[0]?.total_hours || 0 },
-      { 'Metric': 'Total Projects', 'Value': summaryStats[0]?.total_projects || 0 },
-      { 'Metric': 'Files Processed', 'Value': fileStats[0]?.completed_files || 0 },
-      { 'Metric': 'Total Records', 'Value': fileStats[0]?.total_records || 0 }
+      { 'Metric': 'Total Employees', 'Value': (summaryStats[0] as any)?.total_employees || 0 },
+      { 'Metric': 'Total Monthly Cost', 'Value': (summaryStats[0] as any)?.total_monthly_cost || 0 },
+      { 'Metric': 'Average Employee Cost', 'Value': (summaryStats[0] as any)?.avg_employee_cost || 0 },
+      { 'Metric': 'Average Burden Rate %', 'Value': (summaryStats[0] as any)?.avg_burden_rate ? parseFloat((summaryStats[0] as any).avg_burden_rate).toFixed(2) : '0.00' },
+      { 'Metric': 'Total Hours', 'Value': (summaryStats[0] as any)?.total_hours || 0 },
+      { 'Metric': 'Total Projects', 'Value': (summaryStats[0] as any)?.total_projects || 0 },
+      { 'Metric': 'Files Processed', 'Value': (fileStats[0] as any)?.completed_files || 0 },
+      { 'Metric': 'Total Records', 'Value': (fileStats[0] as any)?.total_records || 0 }
     ];
 
     const ws4 = XLSX.utils.json_to_sheet(summaryData);
@@ -201,10 +204,11 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const { format, filters } = await request.json();
+    const body = await request.json();
     
     // TODO: Implement custom export with filters
     // For now, redirect to GET
+    console.log('Custom export request:', body);
     return NextResponse.redirect(new URL('/api/export/excel', request.url));
     
   } catch (error) {

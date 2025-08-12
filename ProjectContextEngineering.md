@@ -2,29 +2,30 @@
 
 ## Overview
 
-**Work Payroll Project** is a payroll cost management and analysis platform built with a clean, modern MVP stack. The focus is on simple, scalable infrastructure for processing payroll data and generating cost insights.
+**Work Payroll Project** is a CEO desktop application for comprehensive payroll analysis, project cost tracking, and workforce performance insights. Built as a clean MVP focusing on integrating data from SpringAhead, Paychex, and QuickBooks, organized around client project identifiers.
 
 ## Business Vision
 
 ### Problem Statement
 
-Organizations struggle with:
+CEOs and executives struggle with:
 
-- Manual, reactive employee cost tracking
-- Complex payroll data analysis across multiple sources
-- Time-consuming cost calculation and reporting
-- Lack of centralized payroll cost insights
-- Inefficient expense categorization and project allocation
+- Lack of real-time visibility into true employee costs by project
+- Manual payroll analysis across SpringAhead, Paychex, and QuickBooks
+- Difficulty understanding project profitability and resource allocation
+- Time-consuming cost calculation and executive reporting
+- Disconnected data sources preventing strategic workforce decisions
 
 ### Solution
 
-A streamlined payroll analysis platform that:
+A CEO-focused desktop application that:
 
-- Imports payroll data from CSV/Excel files
-- Automatically calculates true employee costs including benefits and overhead
-- Provides project-based cost allocation
-- Generates executive-ready cost analysis reports
-- Scales effortlessly with serverless infrastructure
+- Integrates data from SpringAhead (time tracking), Paychex (payroll), and QuickBooks (expenses)
+- Organizes all data around client project identifiers
+- Calculates true employee costs including benefits, taxes, and overhead burden
+- Provides executive-level project cost tracking and profitability analysis
+- Generates comprehensive reports for strategic decision-making
+- Scales effortlessly with serverless Neon PostgreSQL and Vercel deployment
 
 ## Technical Architecture
 

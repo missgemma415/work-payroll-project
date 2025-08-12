@@ -3,7 +3,7 @@
 import { Brain, DollarSign, TrendingUp, Users } from 'lucide-react';
 import React from 'react';
 
-import AIChatInterface from '@/components/dashboard/ai/AIChatInterface';
+// Temporary placeholder - will implement CEO dashboard features
 import DashboardNav from '@/components/dashboard/DashboardNav';
 import Forecast from '@/components/dashboard/Forecast';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -82,10 +82,15 @@ export default function AnalyticsPage(): React.JSX.Element {
 
         {/* Main Content Area */}
         <div className="grid gap-8 md:grid-cols-2">
-          {/* AI Chat Interface */}
-          <div>
-            <AIChatInterface />
-          </div>
+          {/* CEO Dashboard Placeholder */}
+          <Card>
+            <CardHeader>
+              <CardTitle>CEO Dashboard</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600">Project cost tracking and employee performance insights coming soon...</p>
+            </CardContent>
+          </Card>
 
           {/* Forecast Chart */}
           <Forecast />
