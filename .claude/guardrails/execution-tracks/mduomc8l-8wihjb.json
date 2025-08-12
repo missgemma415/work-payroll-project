@@ -1,9 +1,0 @@
-{
-  "sessionId": "mduomc8l-8wihjb",
-  "agentType": "project-docs-curator",
-  "taskDescription": "Update all project documentation to reflect current NEON + Vercel + Direct APIs stack and new Agent Guardrails System",
-  "startTime": "2025-08-02T20:05:18.933Z",
-  "toolCalls": [],
-  "claims": [],
-  "status": "active"
-}

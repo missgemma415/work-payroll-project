@@ -20,7 +20,7 @@ Organizations struggle with:
 
 A streamlined AI financial operations platform that:
 
-- Provides instant cost analysis through Claude AI
+- Provides instant cost analysis through Google Gemini AI
 - Predicts future costs with Prophet forecasting
 - Enables voice-powered interactions via ElevenLabs
 - Delivers executive-ready insights immediately
@@ -33,7 +33,7 @@ A streamlined AI financial operations platform that:
 - **Frontend**: Next.js 15 with App Router, React 19, TypeScript
 - **Deployment**: Vercel (zero-config, global CDN)
 - **Database**: Neon PostgreSQL (serverless, auto-scaling)
-- **AI Chat**: Anthropic Claude API (direct integration)
+- **AI Chat**: Google Gemini API (direct integration)
 - **Voice**: ElevenLabs API (voice synthesis)
 - **CLI Tools**: GitHub CLI, Neon CLI, Vercel CLI
 - **Type Safety**: Zod validation, TypeScript strict mode
@@ -56,7 +56,7 @@ A streamlined AI financial operations platform that:
 ┌────────────────────▼────────────────────────────────────────┐
 │                  API Routes Layer                           │
 │                                                             │
-│  /api/chat ──────► Anthropic Claude API                     │
+│  /api/chat ──────► Google Gemini API                        │
 │  /api/voice ─────► ElevenLabs API                          │
 │  /api/analyze ───► Financial Analysis Logic                │
 │  /api/forecast ──► Prophet Forecasting                     │
@@ -86,7 +86,7 @@ A streamlined AI financial operations platform that:
 
 **1. Chat API (`/api/chat`)**
 
-- **Purpose**: Direct integration with Anthropic Claude
+- **Purpose**: Direct integration with Google Gemini
 - **Input**: User message, conversation context
 - **Output**: AI-generated financial insights
 - **Features**: Context preservation, conversation memory
@@ -453,7 +453,7 @@ vercel logs          # Monitor deployment
 
 ### Phase 2: AI Integration
 
-- 📋 Anthropic Claude chat interface
+- 📋 Google Gemini chat interface
 - 📋 ElevenLabs voice synthesis
 - 📋 Prophet forecasting integration
 - 📋 Real-time analysis features
@@ -540,28 +540,28 @@ interface AgentCapabilities {
 - **DevOps & Infrastructure**: Cloud platforms, containerization, CI/CD
 - **Quality Assurance**: Testing frameworks, TDD, code coverage
 
-**2. MCP Tools Specialist Agent** 🔧
+**2. API Integration Specialist Agent** 🔌
 
 ```typescript
 interface AgentCapabilities {
   role: 'Integration Architecture Expert';
   responsibilities: [
     'API integration patterns and optimization',
-    'Tool schema design with Zod validation',
-    'MCP protocol implementation',
+    'Schema design with Zod validation',
+    'Direct API integration implementation',
     'Integration troubleshooting and debugging',
   ];
   expertise: [
-    'MCP protocol design and standards',
     'API architecture patterns',
     'Schema validation and type safety',
-    'Tool registration and discovery',
+    'Google Gemini API integration',
+    'ElevenLabs API integration',
     'Integration pattern optimization',
   ];
   whenToUse: [
     'Designing new API integrations',
-    'Creating tool schemas',
-    'MCP tool implementation',
+    'Creating validation schemas',
+    'API client implementation',
     'Integration debugging',
     'API pattern optimization',
   ];
@@ -572,7 +572,7 @@ interface AgentCapabilities {
 
 - **Schema Design**: Zod validation, type safety, input/output schemas
 - **API Patterns**: RESTful design, error handling, status codes
-- **Tool Architecture**: Registration systems, discovery patterns
+- **Direct Integrations**: Google Gemini, ElevenLabs, Neon Database
 - **Integration Optimization**: Performance, reliability, maintainability
 
 ### **Agent Integration Workflow**
@@ -581,7 +581,7 @@ interface AgentCapabilities {
 sequenceDiagram
     participant Dev as Developer
     participant TSE as TypeScript ESLint Agent
-    participant MCP as MCP Tools Specialist
+    participant API as API Integration Specialist
     participant Repo as Repository
 
     Dev->>Dev: Write/Modify Code
@@ -589,9 +589,9 @@ sequenceDiagram
     TSE->>TSE: Analyze & Fix Errors
     TSE->>Dev: Return Clean Code
 
-    Dev->>MCP: Design Integration
-    MCP->>MCP: Create Tool Schema
-    MCP->>TSE: Validate Implementation
+    Dev->>API: Design Integration
+    API->>API: Create Schema & Client
+    API->>TSE: Validate Implementation
     TSE->>Repo: Commit Clean Code
 ```
 
@@ -624,7 +624,7 @@ sequenceDiagram
 const featureDevelopment = {
   step1: 'Developer writes initial code',
   step2: 'TypeScript ESLint Agent reviews and fixes',
-  step3: 'MCP Tools Specialist optimizes integrations',
+  step3: 'API Integration Specialist optimizes integrations',
   step4: 'TypeScript ESLint Agent final validation',
   step5: 'Clean commit ready',
 };
@@ -813,7 +813,7 @@ Our AI-enhanced team maintains:
 - **Zero TypeScript errors** (Fullstack Architect enforcement)
 - **Zero ESLint violations** (automated fixing)
 - **100% type safety** (validated at compile time)
-- **Consistent API patterns** (MCP Tools Specialist)
+- **Consistent API patterns** (API Integration Specialist)
 - **Security compliance** (Security Auditor validation)
 - **Performance targets** (Performance Optimizer tracking)
 - **Clean commit history** (quality-gated)

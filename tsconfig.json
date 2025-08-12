@@ -43,10 +43,6 @@
   "include": ["**/*.ts", "**/*.tsx", "next-env.d.ts", ".next/types/**/*.ts"],
   "exclude": [
     "node_modules",
-    "lib/agents/cloudflare/**",
-    "workers/**",
-    "functions/agents/**",
-    "examples/**",
     "scripts/**",
     "lib/database/repositories.ts",
     "lib/types/database.ts"

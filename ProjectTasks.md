@@ -6,7 +6,7 @@
 
 #### Infrastructure Migration
 
-- [x] Removed Cloudflare Agents/MCP complex architecture
+- [x] Removed complex architecture dependencies
 - [x] Cleaned up package.json dependencies
 - [x] Updated core documentation for Vercel + Neon stack
 - [x] Deleted 40+ obsolete files and directories
@@ -63,8 +63,8 @@
   - [ ] `POST /api/auth/register` - User registration
   - [ ] `POST /api/auth/logout` - User logout
   - [ ] `GET /api/auth/me` - Get current user
-- [ ] Chat API with Anthropic Claude
-  - [ ] `POST /api/chat` - Send message to Claude
+- [ ] Chat API with Google Gemini
+  - [ ] `POST /api/chat` - Send message to Gemini
   - [ ] Context preservation for conversations
   - [ ] Response streaming for real-time chat
   - [ ] Conversation history storage
@@ -293,7 +293,7 @@
 
 ### Business Metrics
 
-- Complete migration from Cloudflare to Vercel/Neon
+- Complete migration to Vercel/Neon stack
 - Direct API integrations working smoothly
 - Voice interface fully functional
 - Advanced forecasting capabilities
@@ -301,7 +301,7 @@
 
 ### User Metrics
 
-- Intuitive chat interface with Claude
+- Intuitive chat interface with Google Gemini
 - Seamless voice interactions
 - Fast, responsive dashboard
 - Mobile-optimized experience
@@ -375,7 +375,7 @@ Our implementation leverages specialized AI agents to maintain enterprise-grade 
   - Security best practices enforcement
 - **Workflow**: Comprehensive development expertise for complex implementations
 
-**🔧 MCP Tools Specialist Agent**
+**🔌 API Integration Specialist Agent**
 
 - **Integration Points**: API design and integration tasks
 - **Automated Tasks**:
@@ -394,7 +394,7 @@ Each development phase now includes agent collaboration:
 ```mermaid
 graph TD
     A[Database Setup] --> B[Fullstack Architect Review]
-    B --> C[Authentication APIs] --> D[MCP Tools Specialist Schema Design]
+    B --> C[Authentication APIs] --> D[API Integration Specialist Schema Design]
     D --> E[Fullstack Architect Final Validation]
     E --> F[Clean Deployment]
 ```
@@ -403,7 +403,7 @@ graph TD
 
 ```mermaid
 graph TD
-    A[Write API Route] --> B[MCP Tools Specialist Schema]
+    A[Write API Route] --> B[API Integration Specialist Schema]
     B --> C[Integration Pattern Design]
     C --> D[Fullstack Architect Review]
     D --> E[Error Handling Validation]
@@ -421,7 +421,7 @@ Every task now includes automated quality gates:
    - Performance and security analysis
 
 2. **Integration Phase**
-   - MCP Tools Specialist validates schemas
+   - API Integration Specialist validates schemas
    - API pattern compliance check
    - Error handling verification
    - Integration optimization review
@@ -439,23 +439,23 @@ Every task now includes automated quality gates:
 - [ ] **Set up Neon PostgreSQL database**
   - **Implementation**: Developer
   - **Agent Review**: Fullstack Architect validates database architecture and connection patterns
-  - **Schema Design**: MCP Tools Specialist optimizes database queries and schemas
+  - **Schema Design**: API Integration Specialist optimizes database queries and schemas
 
 - [ ] **Implement authentication system**
   - **Implementation**: Developer
   - **Security Review**: Fullstack Architect validates JWT patterns, security best practices
-  - **Schema Validation**: MCP Tools Specialist ensures proper request/response schemas
+  - **Schema Validation**: API Integration Specialist ensures proper request/response schemas
 
 #### **Phase 2 Tasks with Agent Integration**
 
-- [ ] **Chat API with Anthropic Claude**
-  - **Schema Design**: MCP Tools Specialist creates request/response types and validation
+- [ ] **Chat API with Google Gemini**
+  - **Schema Design**: API Integration Specialist creates request/response types and validation
   - **Implementation**: Developer builds endpoint
   - **Architecture Review**: Fullstack Architect validates API patterns and error handling
   - **Quality Gate**: Fullstack Architect ensures enterprise standards before commit
 
 - [ ] **Voice integration with ElevenLabs**
-  - **API Pattern**: MCP Tools Specialist designs audio streaming and file handling
+  - **API Pattern**: API Integration Specialist designs audio streaming and file handling
   - **Implementation**: Developer builds voice endpoints
   - **Performance Review**: Fullstack Architect optimizes audio processing and delivery
   - **Final Review**: Fullstack Architect ensures scalable, clean implementation
@@ -490,14 +490,14 @@ As we add more team members:
 interface TaskExecution {
   workflow: {
     step1: 'Developer implements feature';
-    step2: 'MCP Tools Specialist handles schemas (if applicable)';
+    step2: 'API Integration Specialist handles schemas (if applicable)';
     step3: 'Fullstack Architect validates architecture and quality';
     step4: 'Clean, enterprise-ready commit';
   };
 
   qualityGates: {
     codeReview: 'Fullstack Architect (mandatory for all complex tasks)';
-    integration: 'MCP Tools Specialist (API and schema design)';
+    integration: 'API Integration Specialist (API and schema design)';
     architecture: 'Fullstack Architect (scalability and patterns)';
     security: 'Fullstack Architect (current), Future Security Specialist';
     performance: 'Fullstack Architect (current), Future Performance Specialist';
@@ -519,7 +519,7 @@ Our AI-enhanced development maintains:
 - **Zero TypeScript errors** (Fullstack Architect enforcement)
 - **Zero ESLint violations** (Automated fixing)
 - **100% type safety** (Compile-time validation)
-- **Consistent API patterns** (MCP Tools Specialist)
+- **Consistent API patterns** (API Integration Specialist)
 - **Enterprise architecture** (Fullstack Architect guidance)
 - **Clean commit history** (Quality-gated)
 - **Scalable solutions** (Architecture-first approach)
@@ -529,7 +529,7 @@ Our AI-enhanced development maintains:
 1. **Proactive Integration**: Use agents before issues arise
 2. **Clear Task Definition**: Provide specific, actionable instructions
 3. **Architecture First**: Always involve Fullstack Architect for complex features
-4. **Schema Validation**: Use MCP Tools Specialist for API design
+4. **Schema Validation**: Use API Integration Specialist for API design
 5. **Quality Gates**: Ensure all changes pass agent review before commits
 6. **Documentation**: Keep agent capabilities updated as team grows
 7. **Collaboration**: Leverage multi-agent workflows for complex tasks

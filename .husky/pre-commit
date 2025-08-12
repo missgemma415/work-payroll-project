@@ -1,5 +1,0 @@
-# Agent Guardrails Integration
-.claude/hooks/pre-commit
-
-# Standard linting
-npx lint-staged

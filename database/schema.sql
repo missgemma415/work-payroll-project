@@ -1,5 +1,5 @@
--- Scientia Capital HR Platform Database Schema
--- Cloudflare D1 (SQLite) Database
+-- Prophet Growth Analysis Database Schema
+-- Neon PostgreSQL Database
 
 -- Organizations table for multi-tenant support
 CREATE TABLE IF NOT EXISTS organizations (
