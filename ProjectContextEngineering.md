@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Prophet Growth Analysis** is an AI-powered financial intelligence platform that transforms workforce cost management through direct API integrations, predictive analytics, and intelligent automation. Built on a modern, scalable stack with Vercel + Neon + direct API approach for maximum simplicity and reliability.
+**Work Payroll Project** is a payroll cost management and analysis platform built with a clean, modern MVP stack. The focus is on simple, scalable infrastructure for processing payroll data and generating cost insights.
 
 ## Business Vision
 
@@ -11,19 +11,19 @@
 Organizations struggle with:
 
 - Manual, reactive employee cost tracking
-- Lack of predictive insights for workforce planning
-- Siloed financial data across departments
-- Time-consuming scenario planning
-- Delayed decision-making on hiring/termination impacts
+- Complex payroll data analysis across multiple sources
+- Time-consuming cost calculation and reporting
+- Lack of centralized payroll cost insights
+- Inefficient expense categorization and project allocation
 
 ### Solution
 
-A streamlined AI financial operations platform that:
+A streamlined payroll analysis platform that:
 
-- Provides instant cost analysis through Google Gemini AI
-- Predicts future costs with Prophet forecasting
-- Enables voice-powered interactions via ElevenLabs
-- Delivers executive-ready insights immediately
+- Imports payroll data from CSV/Excel files
+- Automatically calculates true employee costs including benefits and overhead
+- Provides project-based cost allocation
+- Generates executive-ready cost analysis reports
 - Scales effortlessly with serverless infrastructure
 
 ## Technical Architecture
@@ -33,10 +33,9 @@ A streamlined AI financial operations platform that:
 - **Frontend**: Next.js 15 with App Router, React 19, TypeScript
 - **Deployment**: Vercel (zero-config, global CDN)
 - **Database**: Neon PostgreSQL (serverless, auto-scaling)
-- **AI Chat**: Google Gemini API (direct integration)
-- **Voice**: ElevenLabs API (voice synthesis)
-- **CLI Tools**: GitHub CLI, Neon CLI, Vercel CLI
+- **File Processing**: CSV/Excel parsing and validation
 - **Type Safety**: Zod validation, TypeScript strict mode
+- **Testing**: Jest with React Testing Library
 
 ### Simplified Architecture Flow
 
@@ -47,8 +46,8 @@ A streamlined AI financial operations platform that:
 │  ┌─────────────────────────────────────────────────────┐    │
 │  │              React Components                        │    │
 │  │  ┌──────────────┐  ┌──────────────┐  ┌─────────────┐ │    │
-│  │  │ Analytics    │  │  AI Chat     │  │   Voice     │ │    │
-│  │  │ Dashboard    │  │ Interface    │  │ Interface   │ │    │
+│  │  │ Analytics    │  │ File Upload  │  │ Cost        │ │    │
+│  │  │ Dashboard    │  │ Interface    │  │ Analysis    │ │    │
 │  │  └──────────────┘  └──────────────┘  └─────────────┘ │    │
 │  └─────────────────┬───────────────────────────────────┘    │
 └────────────────────┼────────────────────────────────────────┘
@@ -56,12 +55,11 @@ A streamlined AI financial operations platform that:
 ┌────────────────────▼────────────────────────────────────────┐
 │                  API Routes Layer                           │
 │                                                             │
-│  /api/chat ──────► Google Gemini API                        │
-│  /api/voice ─────► ElevenLabs API                          │
-│  /api/analyze ───► Financial Analysis Logic                │
-│  /api/forecast ──► Prophet Forecasting                     │
-│  /api/employees ─► Employee Management                      │
-│  /api/auth ──────► Authentication Logic                    │
+│  /api/process-files ──► File Processing & Validation        │
+│  /api/scan-files ─────► File Format Detection              │
+│  /api/employee-costs ─► Cost Analysis Logic                │
+│  /api/export/excel ───► Data Export Functionality          │
+│  /api/health ─────────► System Health Checks               │
 │                                                             │
 └────────────────────┬────────────────────────────────────────┘
                      │ Database Queries
@@ -69,13 +67,13 @@ A streamlined AI financial operations platform that:
 │                Neon PostgreSQL                              │
 │                                                             │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐         │
-│  │   Users &   │  │  Employee   │  │   Cost      │         │
-│  │    Auth     │  │    Data     │  │  Analysis   │         │
+│  │Organizations│  │   Users &   │  │  Projects   │         │
+│  │    Data     │  │    Auth     │  │   Tracking  │         │
 │  └─────────────┘  └─────────────┘  └─────────────┘         │
 │                                                             │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐         │
-│  │ Conversation│  │ Forecasts & │  │ Audit Logs  │         │
-│  │   History   │  │ Predictions │  │ & Sessions  │         │
+│  │ Payroll     │  │ Employee    │  │ Imported    │         │
+│  │    Data     │  │   Costs     │  │   Files     │         │
 │  └─────────────┘  └─────────────┘  └─────────────┘         │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -84,158 +82,165 @@ A streamlined AI financial operations platform that:
 
 #### Core API Endpoints
 
-**1. Chat API (`/api/chat`)**
+**1. File Processing API (`/api/process-files`)**
 
-- **Purpose**: Direct integration with Google Gemini
-- **Input**: User message, conversation context
-- **Output**: AI-generated financial insights
-- **Features**: Context preservation, conversation memory
+- **Purpose**: Process uploaded payroll CSV/Excel files
+- **Input**: File data, processing parameters
+- **Output**: Parsed payroll records, validation results
+- **Features**: Automatic format detection, data validation
 
-**2. Voice API (`/api/voice`)**
+**2. File Scanning API (`/api/scan-files`)**
 
-- **Purpose**: Text-to-speech via ElevenLabs
-- **Input**: Text content, voice settings
-- **Output**: Audio file/stream
-- **Features**: Multiple voice options, SSML support
+- **Purpose**: Analyze file format and structure
+- **Input**: File metadata and sample data
+- **Output**: File type, column mapping, format validation
+- **Features**: Smart column detection, error reporting
 
-**3. Analysis API (`/api/analyze`)**
+**3. Employee Cost Analysis API (`/api/employee-costs`)**
 
-- **Purpose**: Financial cost analysis and recommendations
-- **Input**: Employee data, time period, parameters
-- **Output**: Detailed cost breakdown, insights, recommendations
-- **Features**: Real-time calculations, comparative analysis
+- **Purpose**: Calculate true employee costs including overhead
+- **Input**: Employee data, cost parameters, time period
+- **Output**: Detailed cost breakdown with burden calculations
+- **Features**: Project allocation, benefit calculations
 
-**4. Forecast API (`/api/forecast`)**
+**4. Excel Export API (`/api/export/excel`)**
 
-- **Purpose**: Time series prediction using Prophet
-- **Input**: Historical data, forecast parameters
-- **Output**: Predictions, confidence intervals, trends
-- **Features**: Seasonal analysis, anomaly detection
+- **Purpose**: Generate Excel reports from analysis data
+- **Input**: Report parameters, data filters
+- **Output**: Excel file with formatted reports
+- **Features**: Multi-sheet reports, charts, formatting
 
 ### Data Models
 
 #### Core Database Schema
 
+The database includes 8 main tables:
+
 ```sql
--- Users and Authentication
+-- Organizations
+CREATE TABLE organizations (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  name VARCHAR(255) NOT NULL,
+  slug VARCHAR(100) UNIQUE NOT NULL,
+  subscription_tier VARCHAR(50) DEFAULT 'starter',
+  settings JSONB DEFAULT '{}',
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Users
 CREATE TABLE users (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  email VARCHAR(255) UNIQUE NOT NULL,
-  password_hash VARCHAR(255) NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  role VARCHAR(50) DEFAULT 'user',
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Employees
-CREATE TABLE employees (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES users(id),
-  name VARCHAR(255) NOT NULL,
-  department VARCHAR(255),
-  position VARCHAR(255),
-  level VARCHAR(100),
-  location VARCHAR(255),
-  start_date DATE,
-  base_salary DECIMAL(12,2),
-  currency VARCHAR(3) DEFAULT 'USD',
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  email VARCHAR(255) NOT NULL UNIQUE,
+  first_name VARCHAR(100),
+  last_name VARCHAR(100),
+  organization_id UUID NOT NULL,
+  role VARCHAR(50) DEFAULT 'member',
   status VARCHAR(50) DEFAULT 'active',
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  FOREIGN KEY (organization_id) REFERENCES organizations(id)
 );
 
--- Cost Analysis
-CREATE TABLE cost_analyses (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES users(id),
-  employee_id UUID REFERENCES employees(id),
-  analysis_date DATE NOT NULL,
-  base_salary DECIMAL(12,2),
-  benefits_cost DECIMAL(12,2),
-  overhead_cost DECIMAL(12,2),
-  total_monthly_cost DECIMAL(12,2),
-  total_annual_cost DECIMAL(12,2),
-  utilization_rate DECIMAL(5,2),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- Projects
+CREATE TABLE projects (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  project_identifier VARCHAR(100) UNIQUE NOT NULL,
+  client_name VARCHAR(255),
+  description TEXT,
+  hourly_rate DECIMAL(10,2),
+  status VARCHAR(50) DEFAULT 'active',
+  created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
--- Conversation History
-CREATE TABLE conversations (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES users(id),
-  message TEXT NOT NULL,
-  response TEXT NOT NULL,
-  context JSONB,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- Payroll Data
+CREATE TABLE payroll_data (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  imported_file_id UUID NOT NULL,
+  employee_name VARCHAR(255) NOT NULL,
+  project_identifier VARCHAR(100),
+  work_date DATE,
+  hours_worked DECIMAL(8,2),
+  gross_pay DECIMAL(12,2),
+  total_taxes DECIMAL(12,2),
+  net_pay DECIMAL(12,2),
+  true_cost DECIMAL(12,2),
+  burden_rate DECIMAL(5,4),
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  FOREIGN KEY (imported_file_id) REFERENCES imported_files(id),
+  FOREIGN KEY (project_identifier) REFERENCES projects(project_identifier)
 );
 
--- Forecasts
-CREATE TABLE forecasts (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES users(id),
-  forecast_type VARCHAR(100),
-  time_period VARCHAR(50),
-  predictions JSONB NOT NULL,
-  confidence_score DECIMAL(5,2),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-- Employee Costs (Aggregated)
+CREATE TABLE employee_costs (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  employee_name VARCHAR(255) NOT NULL,
+  period_start DATE NOT NULL,
+  period_end DATE NOT NULL,
+  total_hours DECIMAL(10,2) DEFAULT 0,
+  gross_pay DECIMAL(12,2) DEFAULT 0,
+  total_taxes DECIMAL(12,2) DEFAULT 0,
+  total_benefits DECIMAL(12,2) DEFAULT 0,
+  total_true_cost DECIMAL(12,2) DEFAULT 0,
+  project_allocations JSONB DEFAULT '{}',
+  created_at TIMESTAMPTZ DEFAULT NOW()
 );
 ```
 
 #### TypeScript Types
 
 ```typescript
+interface Organization {
+  id: string;
+  name: string;
+  slug: string;
+  subscriptionTier: 'starter' | 'professional' | 'enterprise';
+  settings: Record<string, unknown>;
+}
+
 interface User {
   id: string;
   email: string;
-  name: string;
-  role: 'admin' | 'user';
-  createdAt: Date;
+  firstName?: string;
+  lastName?: string;
+  organizationId: string;
+  role: 'owner' | 'admin' | 'member';
+  status: 'active' | 'inactive' | 'pending';
 }
 
-interface Employee {
+interface Project {
   id: string;
-  userId: string;
-  name: string;
-  department: string;
-  position: string;
-  level: string;
-  location: string;
-  startDate: Date;
-  baseSalary: number;
-  currency: string;
-  status: 'active' | 'inactive';
+  projectIdentifier: string;
+  clientName?: string;
+  description?: string;
+  hourlyRate?: number;
+  status: 'active' | 'completed' | 'on_hold' | 'cancelled';
 }
 
-interface CostAnalysis {
+interface PayrollData {
   id: string;
-  employeeId: string;
-  employee: Employee;
-  analysisDate: Date;
-  baseSalary: number;
-  benefitsCost: number;
-  overheadCost: number;
-  totalMonthlyCost: number;
-  totalAnnualCost: number;
-  utilizationRate: number;
+  importedFileId: string;
+  employeeName: string;
+  projectIdentifier?: string;
+  workDate?: Date;
+  hoursWorked?: number;
+  grossPay?: number;
+  totalTaxes?: number;
+  netPay?: number;
+  trueCost?: number;
+  burdenRate?: number;
 }
 
-interface Conversation {
+interface EmployeeCost {
   id: string;
-  userId: string;
-  message: string;
-  response: string;
-  context?: Record<string, unknown>;
-  createdAt: Date;
-}
-
-interface Forecast {
-  id: string;
-  userId: string;
-  forecastType: string;
-  timePeriod: string;
-  predictions: TimeSeries[];
-  confidenceScore: number;
-  createdAt: Date;
+  employeeName: string;
+  periodStart: Date;
+  periodEnd: Date;
+  totalHours: number;
+  grossPay: number;
+  totalTaxes: number;
+  totalBenefits: number;
+  totalTrueCost: number;
+  projectAllocations: Record<string, number>;
 }
 ```
 
@@ -246,18 +251,17 @@ interface Forecast {
 ```bash
 # Clone repository
 git clone <repository-url>
-cd prophet-growth-analysis
+cd work-payroll-project
 
 # Install dependencies
 npm install
 
 # Set up environment variables
 cp .env.local.example .env.local
-# Fill in your API keys and database URL
+# Add your Neon database URL
 
-# Set up Neon database
-neon branches create --name development
-neon sql < migrations/001_initial.sql
+# Test database connection
+npm run db:test
 
 # Start development server
 npm run dev
@@ -269,28 +273,22 @@ npm run dev
 // /app/api/example/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { authenticateUser } from '@/lib/auth';
 import { db } from '@/lib/database';
 
 const requestSchema = z.object({
-  param: z.string(),
-  options: z.object({}).optional(),
+  employeeName: z.string().min(1),
+  baseSalary: z.number().positive(),
+  benefits: z.number().min(0).optional(),
 });
 
 export async function POST(request: NextRequest) {
   try {
-    // Authentication
-    const user = await authenticateUser(request);
-    if (!user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
-
     // Validation
     const body = await request.json();
-    const { param, options } = requestSchema.parse(body);
+    const validatedData = requestSchema.parse(body);
 
     // Business logic
-    const result = await processRequest(param, options, user.id);
+    const result = await processEmployeeCost(validatedData);
 
     // Response
     return NextResponse.json({
@@ -298,61 +296,18 @@ export async function POST(request: NextRequest) {
       data: result,
     });
   } catch (error) {
-    console.error('API Error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        { error: 'Validation failed', details: error.errors },
+        { status: 400 }
+      );
+    }
+    return NextResponse.json(
+      { error: 'Internal server error' },
+      { status: 500 }
+    );
   }
 }
-```
-
-### CLI Tools Integration
-
-#### GitHub CLI Workflow
-
-```bash
-# Create feature branch
-git checkout -b feature/voice-interface
-
-# Make changes...
-
-# Create pull request
-gh pr create --title "Add voice interface" --body "Implementation of ElevenLabs integration"
-
-# Review and merge
-gh pr view --web
-gh pr merge --squash
-```
-
-#### Neon Database Management
-
-```bash
-# Create database branch for feature
-neon branches create --name feature/voice-interface
-
-# Run migrations
-neon sql < migrations/002_add_voice_settings.sql
-
-# Test queries
-neon sql "SELECT * FROM users LIMIT 5"
-
-# Merge to main branch
-neon branches merge feature/voice-interface
-```
-
-#### Vercel Deployment
-
-```bash
-# Preview deployment
-vercel
-
-# Set environment variables
-vercel env add ANTHROPIC_API_KEY production
-vercel env add ELEVENLABS_API_KEY production
-
-# Deploy to production
-vercel --prod
-
-# Check deployment status
-vercel logs
 ```
 
 ## Security Architecture
@@ -360,18 +315,17 @@ vercel logs
 ### Authentication & Authorization
 
 - **JWT-based authentication** with secure token storage
-- **Role-based access control** (admin, user)
-- **API key management** via environment variables
-- **Rate limiting** on all public endpoints
+- **Role-based access control** (owner, admin, member)
 - **Input validation** using Zod schemas
+- **File upload security** with type and size validation
 
 ### Data Protection
 
 - **Encrypted connections** (HTTPS, TLS)
 - **Secure password hashing** with bcrypt
 - **SQL injection prevention** with prepared statements
-- **XSS protection** via Next.js built-in security
-- **CSRF protection** with proper headers
+- **File validation** for uploaded payroll data
+- **Environment variable protection** for secrets
 
 ## Performance Optimization
 
@@ -379,22 +333,40 @@ vercel logs
 
 - **Connection pooling** (handled by Neon)
 - **Query optimization** with proper indexing
-- **Database branching** for development/testing
 - **Automatic scaling** based on usage
+- **Efficient file processing** with streaming
 
 ### API Optimization
 
-- **Response caching** for expensive operations
-- **Request batching** for multiple operations
+- **Response caching** for expensive calculations
+- **File processing optimization** with chunked reading
 - **Error handling** with proper status codes
-- **Rate limiting** to prevent abuse
+- **Request validation** to prevent malformed data
 
 ### Frontend Optimization
 
 - **Server-side rendering** with Next.js
 - **Static generation** where possible
 - **Code splitting** for optimal bundle size
-- **Image optimization** via Next.js Image component
+- **Lazy loading** for large datasets
+
+## File Processing Architecture
+
+### Supported File Formats
+
+- **CSV Files**: Standard payroll exports
+- **Excel Files**: .xlsx format with multiple sheets
+- **Custom Formats**: Configurable column mapping
+
+### Processing Pipeline
+
+1. **File Upload**: Secure file upload with validation
+2. **Format Detection**: Automatic format and structure analysis
+3. **Data Parsing**: Extract payroll records with error handling
+4. **Validation**: Check data integrity and required fields
+5. **Cost Calculation**: Apply burden rates and benefit calculations
+6. **Storage**: Save processed data to PostgreSQL
+7. **Reporting**: Generate analysis and export capabilities
 
 ## Deployment Pipeline
 
@@ -402,27 +374,19 @@ vercel logs
 
 ```bash
 # Local development
-npm run dev          # Next.js dev server
-vercel dev           # Local with Vercel functions
-neon sql             # Database access
-```
-
-### Staging Environment
-
-```bash
-# Preview deployment
-vercel                # Automatic preview
-neon branches create  # Database branch
-npm run test         # Run all tests
+npm run dev          # Next.js dev server with hot reload
+npm run db:test      # Test database connection
+npm run lint         # Code quality checks
+npm run type-check   # TypeScript validation
 ```
 
 ### Production Environment
 
 ```bash
 # Production deployment
-vercel --prod        # Deploy to production
-vercel alias         # Set custom domain
-vercel logs          # Monitor deployment
+npm run build        # Build optimized production bundle
+npm run deploy       # Deploy to Vercel
+npm run validate     # Full validation suite
 ```
 
 ## Monitoring & Analytics
@@ -432,45 +396,14 @@ vercel logs          # Monitor deployment
 - **Vercel Analytics** for web vitals and performance
 - **Database metrics** via Neon dashboard
 - **API response times** and error rates
-- **User engagement** and feature usage
+- **File processing performance** tracking
 
 ### Error Tracking
 
 - **Vercel Error Reporting** for runtime errors
-- **Console logging** for debugging
+- **File processing errors** with detailed logging
 - **Database query monitoring** for performance issues
-- **API usage tracking** for cost management
-
-## Future Roadmap
-
-### Phase 1: Core Platform (Current)
-
-- ✅ Next.js 15 app structure
-- ✅ Vercel deployment
-- ✅ Neon database setup
-- 🔄 API routes implementation
-- 🔄 Authentication system
-
-### Phase 2: AI Integration
-
-- 📋 Google Gemini chat interface
-- 📋 ElevenLabs voice synthesis
-- 📋 Prophet forecasting integration
-- 📋 Real-time analysis features
-
-### Phase 3: Advanced Features
-
-- 📋 Advanced analytics dashboard
-- 📋 Export capabilities (PDF, Excel)
-- 📋 Collaborative features
-- 📋 Mobile-responsive design
-
-### Phase 4: Enterprise Features
-
-- 📋 Multi-tenant architecture
-- 📋 Advanced security features
-- 📋 Integration APIs
-- 📋 White-label solutions
+- **User activity logging** for audit trails
 
 ## Success Metrics
 
@@ -479,351 +412,20 @@ vercel logs          # Monitor deployment
 - **99.9% uptime** via Vercel's global infrastructure
 - **<200ms API response time** for most endpoints
 - **Zero TypeScript/ESLint errors** in codebase
-- **100% test coverage** for critical paths
+- **Efficient file processing** (1000+ records per second)
 
 ### Business KPIs
 
-- **30% reduction** in manual analysis time
-- **15% improvement** in cost prediction accuracy
-- **50% faster** scenario planning and decision-making
-- **25% cost savings** identified through AI insights
+- **Automated payroll processing** reducing manual work by 80%
+- **Accurate cost calculation** with benefits and overhead
+- **Project-based cost allocation** for better insights
+- **Export capabilities** for executive reporting
 
 ### User KPIs
 
-- **Intuitive user experience** with clear navigation
-- **Real-time responsiveness** for all interactions
-- **Accessible design** meeting WCAG guidelines
-- **Seamless voice integration** for enhanced UX
+- **Intuitive file upload** with drag-and-drop interface
+- **Real-time processing feedback** with progress indicators
+- **Clear error messages** for data validation issues
+- **Fast report generation** for immediate insights
 
-## Development Team Architecture
-
-### **AI-Enhanced Development Team**
-
-Our development process leverages specialized AI agents to maintain enterprise-grade standards and accelerate feature development. Each agent has specific expertise and integration points within our workflow:
-
-#### **Core Agent Team**
-
-**1. Fullstack Architect Agent** 🏗️
-
-```typescript
-interface AgentCapabilities {
-  role: 'Elite Fullstack Development Expert';
-  responsibilities: [
-    'Architecture decisions and technology recommendations',
-    'Code reviews across frontend and backend',
-    'Complex web application development',
-    'Scalability and performance optimization',
-    'Database design and API development',
-  ];
-  expertise: [
-    'Modern JavaScript/TypeScript frameworks',
-    'Backend technologies (Node.js, Python, Go, Rust)',
-    'Database design and optimization',
-    'Cloud platforms and deployment',
-    'Test-driven development',
-    'Security best practices',
-  ];
-  whenToUse: [
-    'Complex feature development',
-    'Architecture decisions',
-    'Performance optimization',
-    'Full-stack code reviews',
-    'Scalability planning',
-  ];
-}
-```
-
-**Key Specializations**:
-
-- **Frontend Excellence**: React, Vue, Angular, Svelte, state management
-- **Backend Mastery**: Node.js, Python, APIs (REST, GraphQL), databases
-- **DevOps & Infrastructure**: Cloud platforms, containerization, CI/CD
-- **Quality Assurance**: Testing frameworks, TDD, code coverage
-
-**2. API Integration Specialist Agent** 🔌
-
-```typescript
-interface AgentCapabilities {
-  role: 'Integration Architecture Expert';
-  responsibilities: [
-    'API integration patterns and optimization',
-    'Schema design with Zod validation',
-    'Direct API integration implementation',
-    'Integration troubleshooting and debugging',
-  ];
-  expertise: [
-    'API architecture patterns',
-    'Schema validation and type safety',
-    'Google Gemini API integration',
-    'ElevenLabs API integration',
-    'Integration pattern optimization',
-  ];
-  whenToUse: [
-    'Designing new API integrations',
-    'Creating validation schemas',
-    'API client implementation',
-    'Integration debugging',
-    'API pattern optimization',
-  ];
-}
-```
-
-**Key Specializations**:
-
-- **Schema Design**: Zod validation, type safety, input/output schemas
-- **API Patterns**: RESTful design, error handling, status codes
-- **Direct Integrations**: Google Gemini, ElevenLabs, Neon Database
-- **Integration Optimization**: Performance, reliability, maintainability
-
-### **Agent Integration Workflow**
-
-```mermaid
-sequenceDiagram
-    participant Dev as Developer
-    participant TSE as TypeScript ESLint Agent
-    participant API as API Integration Specialist
-    participant Repo as Repository
-
-    Dev->>Dev: Write/Modify Code
-    Dev->>TSE: Request Code Review
-    TSE->>TSE: Analyze & Fix Errors
-    TSE->>Dev: Return Clean Code
-
-    Dev->>API: Design Integration
-    API->>API: Create Schema & Client
-    API->>TSE: Validate Implementation
-    TSE->>Repo: Commit Clean Code
-```
-
-### **Quality Assurance Pipeline**
-
-1. **Development Phase**
-   - Write feature code
-   - Automatic agent code review
-   - Type safety enforcement
-   - Style consistency validation
-
-2. **Integration Phase**
-   - API schema validation
-   - Tool registration verification
-   - Integration pattern compliance
-   - Error handling validation
-
-3. **Commit Phase**
-   - Final TypeScript compilation check
-   - ESLint rule compliance
-   - Import organization
-   - Clean commit preparation
-
-### **Agent Collaboration Patterns**
-
-#### **Pattern 1: Feature Development**
-
-```typescript
-// Development workflow
-const featureDevelopment = {
-  step1: 'Developer writes initial code',
-  step2: 'TypeScript ESLint Agent reviews and fixes',
-  step3: 'API Integration Specialist optimizes integrations',
-  step4: 'TypeScript ESLint Agent final validation',
-  step5: 'Clean commit ready',
-};
-```
-
-#### **Pattern 2: Bug Fixes**
-
-```typescript
-// Bug fix workflow
-const bugFixWorkflow = {
-  step1: 'Identify and fix issue',
-  step2: 'TypeScript ESLint Agent ensures quality',
-  step3: 'Regression testing validation',
-  step4: 'Clean deployment',
-};
-```
-
-#### **Pattern 3: New Team Member Onboarding**
-
-```typescript
-// Onboarding workflow
-const onboardingProcess = {
-  step1: 'New agent defines capabilities',
-  step2: 'Integration with existing workflow',
-  step3: 'Documentation updates',
-  step4: 'Collaboration pattern establishment',
-};
-```
-
-### **Future Team Expansion**
-
-As we add specialized agents:
-
-**Frontend Specialist Agent** (Future)
-
-- React component optimization
-- UI/UX consistency enforcement
-- Accessibility compliance
-- Performance optimization
-
-**Database Specialist Agent** (Future)
-
-- Query optimization
-- Migration management
-- Schema validation
-- Performance monitoring
-
-**Security Specialist Agent** (Future)
-
-- Security vulnerability scanning
-- Authentication pattern validation
-- API security enforcement
-- Compliance verification
-
-### **Agent Coordination Protocol**
-
-```typescript
-interface AgentCoordination {
-  hierarchy: {
-    architect: 'Fullstack Architect'; // Architecture decisions
-    specialists: 'Domain-specific experts'; // Specialized tasks
-    validators: 'Security, Database, Deployment'; // Validation
-  };
-
-  handoffProtocol: {
-    planning_phase: 'Architect designs, specialists implement';
-    implementation_phase: 'Specialists execute, architect reviews';
-    validation_phase: 'Validators check health and security';
-    completion_phase: 'Docs curator updates, metrics saved';
-  };
-
-  communication: {
-    clear_instructions: 'Specific, actionable tasks';
-    context_sharing: 'Full problem context provided';
-    result_documentation: 'Comprehensive change reports';
-  };
-}
-```
-
-### **Agent-Specific Hook Workflows**
-
-#### **Pre-Task Context Loading**
-
-Each agent receives specialized context:
-
-```mermaid
-graph LR
-    A[Task Start] --> B[Universal Context]
-    B --> C{Agent Type?}
-    C -->|Database| D[Load Schema & Patterns]
-    C -->|Deployment| E[Load Configs & Env]
-    C -->|Security| F[Load Vulnerabilities]
-    C -->|API| G[Load Docs & Limits]
-    D --> H[Execute Task]
-    E --> H
-    F --> H
-    G --> H
-```
-
-#### **Post-Task Knowledge Updates**
-
-Specialized knowledge preservation:
-
-```mermaid
-graph LR
-    A[Task Complete] --> B[Universal Updates]
-    B --> C{Agent Type?}
-    C -->|Docs Curator| D[Update Documentation]
-    C -->|DB Architect| E[Save Query Patterns]
-    C -->|Security| F[Generate Audit Report]
-    C -->|Performance| G[Record Metrics]
-    D --> H[Knowledge Preserved]
-    E --> H
-    F --> H
-    G --> H
-```
-
-### **Hook System Integration**
-
-The hook system is integrated via `.claude/settings.local.json`:
-
-```json
-{
-  "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Task*",
-        "hooks": [
-          {
-            "command": "/path/to/pre-task-context.sh"
-          }
-        ]
-      },
-      {
-        "matcher": "*neon-database-architect*",
-        "hooks": [
-          {
-            "command": "/path/to/agents/neon-db-context.sh"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      // Post-task hooks configuration
-    ],
-    "Validation": [
-      // Validation hooks configuration
-    ]
-  }
-}
-```
-
-### **Knowledge Organization Structure**
-
-```
-.claude/
-├── hooks-config.json
-├── scripts/
-│   ├── agents/
-│   └── validation/
-├── knowledge/
-│   ├── agents/
-│   │   ├── neon-database-architect/
-│   │   │   ├── schemas/
-│   │   │   ├── optimizations/
-│   │   │   └── patterns/
-│   │   ├── vercel-deployment-specialist/
-│   │   │   ├── configs/
-│   │   │   └── deployments/
-│   │   └── [other agents]/
-│   └── shared/
-│       ├── architecture/
-│       └── patterns/
-├── metrics/
-│   ├── daily/
-│   └── reports/
-└── logs/
-    ├── changelogs/
-    └── knowledge-updates.log
-```
-
-### **Development Quality Metrics**
-
-Our AI-enhanced team maintains:
-
-- **Zero TypeScript errors** (Fullstack Architect enforcement)
-- **Zero ESLint violations** (automated fixing)
-- **100% type safety** (validated at compile time)
-- **Consistent API patterns** (API Integration Specialist)
-- **Security compliance** (Security Auditor validation)
-- **Performance targets** (Performance Optimizer tracking)
-- **Clean commit history** (quality-gated)
-
-### **Agent Specialization Benefits**
-
-1. **Focused Expertise**: Each agent masters their domain
-2. **Parallel Processing**: Multiple agents can work simultaneously
-3. **Knowledge Preservation**: Domain-specific learnings are captured
-4. **Quality Assurance**: Specialized validation for each area
-5. **Continuous Improvement**: Metrics and patterns drive optimization
-
-Remember: We're building a **simple, scalable, and intelligent financial platform** with **AI-enhanced development workflows** that leverage modern tools and direct API integrations for maximum reliability and performance.
+Remember: **We're building a clean, focused payroll analysis platform with modern tools and simple architecture for maximum reliability and maintainability.**

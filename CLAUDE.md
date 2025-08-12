@@ -12,7 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Prophet Growth Analysis** is a financial intelligence platform for workforce cost management and payroll analysis. Built with a modern, simplified stack focusing on scalable infrastructure.
+**Work Payroll Project** is a payroll cost management and analysis platform. Built with a clean MVP stack: Next.js 15 + Neon PostgreSQL + Vercel deployment.
 
 ## Architecture Overview
 
@@ -23,7 +23,7 @@ We use a simplified, scalable approach:
 - **Frontend**: Next.js 15 with App Router (React 19)
 - **Deployment**: Vercel (seamless Next.js integration) 
 - **Database**: Neon PostgreSQL (serverless, scalable)
-- **CLI Tools**: GitHub CLI, Neon CLI, Vercel CLI
+- **Testing**: Jest with React Testing Library
 
 ### Key Technologies
 
@@ -60,7 +60,9 @@ app/api/
 ├── export/excel/route.ts      # Excel export functionality  
 ├── process-files/route.ts     # File processing for payroll data
 ├── scan-files/route.ts        # File scanning and validation
-└── health/route.ts            # Health check and environment validation
+├── health/route.ts            # Health check and environment validation
+├── chat/route.ts              # Basic chat functionality
+└── voice/route.ts             # Voice interface (future)
 ```
 
 ### API Development Guidelines
@@ -112,71 +114,44 @@ export async function POST(request: NextRequest) {
 ## Environment Configuration
 
 ```bash
-# Database
-NEON_DATABASE_URL=postgresql://user:pass@host/db
-
-# CLI Tools
-GITHUB_TOKEN=your-github-token
-VERCEL_TOKEN=your-vercel-token
+# Database (Required)
+NEON_DATABASE_URL="postgresql://neondb_owner:npg_26KGepdyhVnU@ep-ancient-sea-aenslh7h-pooler.c-2.us-east-2.aws.neon.tech/neondb?sslmode=require"
 
 # App Configuration
-NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
+NEXT_PUBLIC_APP_URL=https://work-payroll-project.vercel.app
 NODE_ENV=production
 
 # Security
 JWT_SECRET=your-super-secret-jwt-key-minimum-32-chars
-JWT_EXPIRES_IN=7d
-REFRESH_TOKEN_EXPIRES_IN=30d
-BCRYPT_ROUNDS=10
+
+# Future APIs (not currently used in MVP)
+GOOGLE_GEMINI_API_KEY=your-google-gemini-api-key
+ELEVENLABS_API_KEY=your-elevenlabs-api-key
 ```
 
-## Deployment
+## Database Setup
 
-### Vercel Deployment
+### Neon PostgreSQL Database
 
-```bash
-# Install Vercel CLI
-npm i -g vercel
+The database is fully configured with the following tables:
 
-# Deploy to production
-npm run deploy
+- `organizations` - Company/organization data
+- `users` - User accounts and profiles  
+- `projects` - Project tracking with hourly rates
+- `imported_files` - File upload tracking
+- `payroll_data` - Core payroll and expense data
+- `employee_costs` - Aggregated cost analysis
+- `activity_logs` - Audit trail
+- `migrations` - Migration tracking
 
-# Preview deployment
-vercel
-
-# Environment variables
-vercel env add NEON_DATABASE_URL
-```
-
-### Database Management
+### Database Connection Test
 
 ```bash
-# Install Neon CLI
-npm i -g @neondatabase/cli
+# Test database connection
+npm run db:test
 
-# Connect to database
-neon sql "SELECT * FROM employees LIMIT 10"
-
-# Create database branch
-neon branches create --name feature-branch
-
-# Run migrations
-neon sql < migrations/001_initial.sql
-```
-
-## CLI Tools Integration
-
-### GitHub CLI
-
-```bash
-# Create pull request
-gh pr create --title "Feature: Add voice interface" --body "Implementation details..."
-
-# Manage issues
-gh issue create --title "Bug: API timeout" --body "Description..."
-
-# Repository management
-gh repo view --web
+# Run database setup (if needed)
+node setup-db-final.js
 ```
 
 ### Development Commands
@@ -184,22 +159,21 @@ gh repo view --web
 ```bash
 # Development
 npm run dev          # Start dev server (Next.js)
+npm run build        # Build for production
+npm run start        # Start production server
 npm run lint         # Check for ESLint errors
+npm run lint:fix     # Auto-fix ESLint issues
 npm run type-check   # Run TypeScript checks
 npm run validate     # Run all checks (lint + type + format)
+npm run format       # Format code with Prettier
+npm run test         # Run Jest tests
 
 # Database
-neon sql             # Connect to Neon database
-neon branches list   # List database branches
+npm run db:test      # Test database connection
+npm run migrate      # Run database migrations
 
 # Deployment
-vercel dev           # Local development with Vercel
-vercel --prod        # Deploy to production
-vercel logs          # View deployment logs
-
-# Git workflow
-gh pr create         # Create pull request
-gh pr merge          # Merge pull request
+npm run deploy       # Deploy to Vercel production
 ```
 
 ## Development Guidelines
@@ -222,11 +196,10 @@ gh pr merge          # Merge pull request
 
 ### Database
 
-- Use connection pooling (Neon handles this)
-- Create database branches for features
-- Write migrations for schema changes
+- Use connection pooling (Neon handles this automatically)
 - Use prepared statements to prevent SQL injection
 - Index frequently queried columns
+- Database is fully set up with all required tables
 
 ## Common Development Tasks
 
@@ -261,9 +234,10 @@ npm run test
 npm run test -- components/dashboard/Forecast.test.tsx
 
 # Test API endpoints
-curl -X POST http://localhost:3000/api/chat \
+curl -X GET http://localhost:3000/api/health
+curl -X POST http://localhost:3000/api/employee-costs \
   -H "Content-Type: application/json" \
-  -d '{"message": "Analyze employee costs"}'
+  -d '{"employee_id": "123", "base_salary": 75000}'
 ```
 
 ### Database Operations
@@ -272,18 +246,16 @@ curl -X POST http://localhost:3000/api/chat \
 # Test database connection
 npm run db:test
 
-# Run migrations
-npm run migrate
-npm run migrate:reset   # Reset database
-npm run migrate:status  # Check migration status
+# Database is fully set up - no migrations needed
+# All tables created: organizations, users, projects, payroll_data, etc.
 ```
 
 ## Monitoring
 
 - Use Vercel Analytics for performance monitoring
-- Monitor API usage and costs (Google Gemini, ElevenLabs)
 - Set up error tracking with Vercel's built-in error reporting
 - Track database performance with Neon metrics
+- Monitor API usage for future integrations
 
 ## Best Practices
 
@@ -309,10 +281,10 @@ npm run migrate:status  # Check migration status
 
 The system maintains context through:
 
-- **Database persistence**: User sessions, conversation history
-- **CLI tool integration**: GitHub for code management, Neon for data
+- **Database persistence**: User sessions, payroll data, cost analysis
 - **Environment-based configuration**: Per-deployment settings
 - **Simple state management**: React Query for client state
+- **File processing**: CSV/Excel payroll data import
 
 ## Key File Locations
 
@@ -328,4 +300,4 @@ The system maintains context through:
 - **TypeScript**: Strict mode enabled with all checks (see `tsconfig.json`)
 - **ESLint**: Configured with Next.js and TypeScript rules
 - **Jest**: Configured with Next.js SWC transformer
-- **Database**: Neon PostgreSQL with connection pooling
+- **Database**: Neon PostgreSQL with connection pooling (fully configured with 8 tables)
