@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CEO Payroll Analytics Platform
 
-## Getting Started
+A Fortune 500-level executive dashboard for comprehensive workforce cost analysis with real-time burden calculations.
 
-First, run the development server:
+## 🎯 Overview
 
+Professional executive dashboard providing strategic workforce cost intelligence for C-suite decision making. Features responsive design, real-time analytics, and board-ready reporting.
+
+## 🚀 Live Production
+
+**Dashboard**: https://work-payroll-project-lzjz0fori-gemmas-projects-a73d186f.vercel.app
+
+## 📊 Current Metrics
+
+- **24 Active Employees** with complete cost analysis
+- **$596,000 Total Monthly Cost** (all-inclusive)
+- **23.7% Average Burden Rate** (FICA, Medicare, FUTA, SUTA, benefits)
+- **4 Data Sources** processed (SpringAhead + Paychex)
+
+## 🏗️ Tech Stack
+
+- **Frontend**: Next.js 15.4.6, React 19.1.0, TypeScript
+- **Styling**: Tailwind CSS 3.4.17 with Fortune 500 executive theme
+- **Database**: Neon PostgreSQL Serverless
+- **Deployment**: Vercel
+- **UI Components**: Radix UI with shadcn/ui
+
+## 🛠️ Development
+
+### Quick Start
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Commands
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run lint         # Run ESLint
+npm run type-check   # TypeScript validation
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Database
+```bash
+# Test connection
+NEON_DATABASE_URL="your-url" npx tsx -e "import { testConnection } from './lib/database.js'; testConnection().then(ok => console.log('DB:', ok ? '✅' : '❌'))"
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Project Structure
 
-## Learn More
+```
+├── app/                    # Next.js app directory
+│   ├── api/               # API endpoints
+│   └── page.tsx           # Executive dashboard
+├── components/            # UI components
+├── lib/                   # Database & utilities
+├── payroll-files-only/    # CSV data files
+└── docs/                  # Documentation
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 📋 Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Executive Dashboard**: Dark slate theme with gold accents
+- **Responsive Design**: Mobile-first responsive layout
+- **Real-time Analytics**: Live workforce cost calculations
+- **Excel Export**: Board-ready reports with 4 worksheets
+- **File Processing**: SpringAhead + Paychex CSV integration
+- **Burden Analysis**: Complete employer cost calculations
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📖 Documentation
 
-## Deploy on Vercel
+- **[CLAUDE.md](./CLAUDE.md)** - AI assistant instructions
+- **[projectcontextengineering.md](./projectcontextengineering.md)** - Technical architecture
+- **[projecttasks.md](./projecttasks.md)** - Development history & roadmap
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔐 Environment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Required environment variables:
+```
+NEON_DATABASE_URL=postgresql://...
+```
+
+## 📈 Status
+
+✅ **Production Ready** - Fortune 500 executive dashboard operational
+
+---
+
+**Built for Fortune 500 C-suite executives** | **Deployed on Vercel** | **Powered by Next.js**
