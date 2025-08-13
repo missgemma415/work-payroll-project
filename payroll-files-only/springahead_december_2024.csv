@@ -1,0 +1,31 @@
+employee_name,employee_id,date,project_identifier,hours,hourly_rate,task_description
+Sarah Johnson,EMP001,2024-12-01,ACME-Website-Redesign,8.0,85.00,Final testing and deployment
+Sarah Johnson,EMP001,2024-12-02,MegaCorp-Dashboard,6.0,85.00,New project kickoff and planning
+Michael Chen,EMP002,2024-12-01,TechCorp-Mobile-App,8.0,95.00,App store submission and optimization
+Michael Chen,EMP002,2024-12-02,TechCorp-Mobile-App,4.0,95.00,Bug fixes and final testing
+Michael Chen,EMP002,2024-12-02,MegaCorp-Dashboard,4.0,95.00,Backend architecture planning
+Emily Rodriguez,EMP003,2024-12-01,GlobalRetail-ECommerce,8.0,75.00,Performance monitoring setup
+Emily Rodriguez,EMP003,2024-12-02,GlobalRetail-ECommerce,8.0,75.00,Final deployment and handoff
+David Kim,EMP004,2024-12-01,StartupXYZ-Platform,8.0,90.00,Production deployment
+David Kim,EMP004,2024-12-02,StartupXYZ-Platform,5.0,90.00,Post-launch monitoring
+David Kim,EMP004,2024-12-02,FinanceFlow-API,3.0,90.00,New client project assessment
+Jessica Wong,EMP005,2024-12-01,ACME-Website-Redesign,8.0,80.00,Final design assets and handoff
+Jessica Wong,EMP005,2024-12-02,MegaCorp-Dashboard,8.0,80.00,UI/UX research and wireframes
+Alex Thompson,EMP006,2024-12-01,TechCorp-Mobile-App,8.0,100.00,Code review and optimization
+Alex Thompson,EMP006,2024-12-02,TechCorp-Mobile-App,4.0,100.00,Documentation completion
+Alex Thompson,EMP006,2024-12-02,MegaCorp-Dashboard,4.0,100.00,Technical architecture review
+Rachel Martinez,EMP007,2024-12-01,GlobalRetail-ECommerce,8.0,70.00,Final QA testing
+Rachel Martinez,EMP007,2024-12-02,GlobalRetail-ECommerce,3.0,70.00,Support documentation
+Rachel Martinez,EMP007,2024-12-02,FinanceFlow-API,5.0,70.00,Frontend development start
+James Wilson,EMP008,2024-12-01,StartupXYZ-Platform,8.0,85.00,Feature completion and testing
+James Wilson,EMP008,2024-12-02,StartupXYZ-Platform,8.0,85.00,Performance optimization
+Lisa Brown,EMP009,2024-12-01,ACME-Website-Redesign,8.0,65.00,Testing and bug fixes
+Lisa Brown,EMP009,2024-12-02,MegaCorp-Dashboard,8.0,65.00,Component development
+Kevin Lee,EMP010,2024-12-01,GlobalRetail-ECommerce,8.0,92.00,Production deployment
+Kevin Lee,EMP010,2024-12-02,GlobalRetail-ECommerce,4.0,92.00,Monitoring setup
+Kevin Lee,EMP010,2024-12-02,FinanceFlow-API,4.0,92.00,Infrastructure planning
+Amanda Davis,EMP011,2024-12-01,StartupXYZ-Platform,8.0,78.00,Component finalization
+Amanda Davis,EMP011,2024-12-02,StartupXYZ-Platform,6.0,78.00,Documentation and handoff
+Amanda Davis,EMP011,2024-12-02,FinanceFlow-API,2.0,78.00,Initial research
+Robert Taylor,EMP012,2024-12-01,ACME-Website-Redesign,8.0,88.00,Final architecture review
+Robert Taylor,EMP012,2024-12-02,MegaCorp-Dashboard,8.0,88.00,Technical leadership and planning

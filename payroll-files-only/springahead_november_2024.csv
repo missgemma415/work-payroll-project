@@ -1,0 +1,27 @@
+employee_name,employee_id,date,project_identifier,hours,hourly_rate,task_description
+Sarah Johnson,EMP001,2024-11-01,ACME-Website-Redesign,8.0,85.00,Frontend development and React components
+Sarah Johnson,EMP001,2024-11-02,ACME-Website-Redesign,7.5,85.00,API integration and testing
+Michael Chen,EMP002,2024-11-01,TechCorp-Mobile-App,8.0,95.00,iOS app architecture and setup
+Michael Chen,EMP002,2024-11-02,TechCorp-Mobile-App,8.0,95.00,Backend API development
+Emily Rodriguez,EMP003,2024-11-01,GlobalRetail-ECommerce,6.5,75.00,Database design and optimization
+Emily Rodriguez,EMP003,2024-11-02,GlobalRetail-ECommerce,8.0,75.00,Payment gateway integration
+David Kim,EMP004,2024-11-01,StartupXYZ-Platform,8.0,90.00,DevOps pipeline setup
+David Kim,EMP004,2024-11-02,StartupXYZ-Platform,7.0,90.00,AWS infrastructure configuration
+Jessica Wong,EMP005,2024-11-01,ACME-Website-Redesign,8.0,80.00,UI/UX design and prototyping
+Jessica Wong,EMP005,2024-11-02,ACME-Website-Redesign,8.0,80.00,Design system implementation
+Alex Thompson,EMP006,2024-11-01,TechCorp-Mobile-App,8.0,100.00,Senior backend architecture
+Alex Thompson,EMP006,2024-11-02,TechCorp-Mobile-App,8.0,100.00,API security implementation
+Rachel Martinez,EMP007,2024-11-01,GlobalRetail-ECommerce,8.0,70.00,Frontend React development
+Rachel Martinez,EMP007,2024-11-02,GlobalRetail-ECommerce,6.0,70.00,Testing and quality assurance
+James Wilson,EMP008,2024-11-01,StartupXYZ-Platform,8.0,85.00,Full-stack development
+James Wilson,EMP008,2024-11-02,StartupXYZ-Platform,8.0,85.00,Feature implementation
+Lisa Brown,EMP009,2024-11-01,ACME-Website-Redesign,4.0,65.00,Junior developer support
+Lisa Brown,EMP009,2024-11-01,TechCorp-Mobile-App,4.0,65.00,Documentation and testing
+Lisa Brown,EMP009,2024-11-02,ACME-Website-Redesign,8.0,65.00,Bug fixes and code review
+Kevin Lee,EMP010,2024-11-01,GlobalRetail-ECommerce,8.0,92.00,DevOps and deployment
+Kevin Lee,EMP010,2024-11-02,GlobalRetail-ECommerce,7.5,92.00,Performance optimization
+Amanda Davis,EMP011,2024-11-01,StartupXYZ-Platform,8.0,78.00,Frontend development
+Amanda Davis,EMP011,2024-11-02,StartupXYZ-Platform,8.0,78.00,Component library creation
+Robert Taylor,EMP012,2024-11-01,ACME-Website-Redesign,6.0,88.00,Senior code review
+Robert Taylor,EMP012,2024-11-01,TechCorp-Mobile-App,2.0,88.00,Architecture consultation
+Robert Taylor,EMP012,2024-11-02,ACME-Website-Redesign,8.0,88.00,Performance optimization
