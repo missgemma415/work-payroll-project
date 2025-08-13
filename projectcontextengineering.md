@@ -57,25 +57,6 @@ Data Sources → Processing Engine → Database → Responsive Executive Dashboa
 - **Interactive Controls**: Process data, refresh analytics, export reports
 - **Professional Typography**: Poppins display font, Inter body text
 
-## Data Processing Logic
-
-### Burden Rate Calculation
-```typescript
-// Employer burden includes:
-- FICA: 6.2% of gross pay
-- Medicare: 1.45% of gross pay  
-- FUTA: 0.6% on first $7,000
-- SUTA: State-specific rate
-- Benefits: Direct costs
-- True Cost = Math.round(Gross Pay + Total Burden)
-```
-
-### Employee Cost Aggregation
-- Monthly summaries by employee with rounded currency display
-- Project allocation tracking for cost center analysis
-- Burden rate calculations with percentage display
-- True cost vs base salary comparison
-
 ## Current Production Metrics (December 2024)
 - **Employees**: 24 active with complete cost data
 - **Total Monthly Cost**: $596,000 (all-inclusive, rounded)
@@ -105,19 +86,13 @@ Data Sources → Processing Engine → Database → Responsive Executive Dashboa
 - **Monitoring**: Production error tracking and performance metrics
 - **Environment**: Secure environment variable management
 
-## Security & Performance
-- **Database**: Neon PostgreSQL Serverless with SSL encryption
-- **Data Protection**: Environment variable security for database access
-- **Performance**: Sub-2s load times with optimized queries
-- **Responsive Performance**: Fast rendering across all device sizes
-- **Global CDN**: Vercel edge network for worldwide accessibility
-
 ## Recent Technical Achievements
 - **Tailwind CSS Stability**: Migrated from v4 alpha to v3.4.17 stable
 - **Font System**: Fixed Poppins/Inter loading with proper CSS variables
 - **Responsive Design**: Implemented mobile-first executive dashboard
 - **Currency Formatting**: Added whole number rounding for clean presentation
 - **CSS Architecture**: Resolved conflicts between global styles and components
+- **Repository Cleanup**: Fixed GitHub errors by removing duplicate files
 
 ## Future Enhancements
 - Real-time data connectors (API integrations with SpringAhead/Paychex)

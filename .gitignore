@@ -12,30 +12,61 @@
 
 # testing
 /coverage
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
 
 # next.js
 /.next/
 /out/
+.next/
 
 # production
 /build
+/dist/
 
 # misc
 .DS_Store
 *.pem
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+debug.log
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+!.env.local.example
 
 # vercel
 .vercel
+.vercel.json
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# cache
+.cache/
+.parcel-cache/
+.eslintcache
+
+# temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
