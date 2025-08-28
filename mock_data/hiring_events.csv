@@ -1,0 +1,20 @@
+event_type,employee_id,employee_name,date,reason,replacing
+termination,EMP003,Jessica Rodriguez,2022-11-03,layoff,
+hiring,NEW018,New Hire 18,2023-03-21,,EMP003
+termination,EMP015,Nicole White,2023-05-16,layoff,
+termination,EMP006,Robert Wilson,2023-07-18,relocation,
+hiring,NEW017,New Hire 17,2023-07-24,,EMP015
+hiring,NEW014,New Hire 14,2023-12-04,,EMP006
+termination,EMP020,Brian Hall,2024-01-11,performance,
+termination,EMP010,James Anderson,2024-01-16,performance,
+termination,EMP005,Emily Davis,2024-02-01,relocation,
+termination,EMP023,Melissa King,2024-02-29,voluntary,
+hiring,NEW012,New Hire 12,2024-03-17,,EMP020
+hiring,NEW015,New Hire 15,2024-04-11,,EMP010
+termination,EMP018,Mark Robinson,2024-04-16,performance,
+hiring,NEW019,New Hire 19,2024-06-29,,EMP005
+hiring,NEW011,New Hire 11,2024-07-09,,EMP023
+termination,EMP009,Amanda Martinez,2024-07-20,voluntary,
+termination,EMP013,Michelle Lewis,2024-08-11,voluntary,
+hiring,NEW016,New Hire 16,2024-09-11,,EMP009
+hiring,NEW013,New Hire 13,2024-10-06,,EMP018

@@ -20,7 +20,8 @@ from pydantic import BaseModel, Field
 from quickbooks import QuickBooks
 from quickbooks.objects import Employee, CompanyInfo, Preferences
 from quickbooks.exceptions import QuickbooksException
-from intuit.oauth import AuthClient
+from intuitlib.client import AuthClient
+from intuitlib.enums import Scopes
 
 # Database and async handling
 from contextlib import asynccontextmanager
@@ -218,8 +219,8 @@ async def initialize_oauth(request: AuthRequest):
     try:
         # Generate authorization URL
         auth_url = qb_manager.auth_client.get_authorization_url([
-            'com.intuit.quickbooks.accounting'
-        ], state=request.state or "payroll-analytics")
+            Scopes.ACCOUNTING
+        ], state_token=request.state or "payroll-analytics")
         
         return AuthResponse(
             authorization_url=auth_url,

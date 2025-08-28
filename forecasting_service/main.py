@@ -45,7 +45,7 @@ app.add_middleware(
 )
 
 # Initialize AI clients
-nixtla_client = NixtlaClient()
+# nixtla_client = NixtlaClient()  # TODO: Uncomment when NIXTLA_API_KEY is available
 neural_prophet_models: Dict[str, NeuralProphet] = {}
 
 # Database connection
@@ -85,7 +85,7 @@ class ForecastRequest(BaseModel):
     """Request model for forecasting operations"""
     forecast_horizon_months: int = Field(default=6, ge=1, le=24)
     employees: Optional[List[str]] = None
-    model_preference: str = Field(default="ensemble", regex="^(neuralprophet|timegpt|ensemble)$")
+    model_preference: str = Field(default="neuralprophet", pattern="^(neuralprophet|timegpt|ensemble)$")
     include_seasonality: bool = True
     include_confidence_intervals: bool = True
 
@@ -103,7 +103,7 @@ async def health_check():
     return {
         "status": "healthy",
         "neural_prophet": "available",
-        "timegpt": "available" if nixtla_client else "unavailable",
+        "timegpt": "unavailable (API key required)",
         "database": "connected" if DATABASE_URL else "disconnected",
         "timestamp": datetime.utcnow().isoformat()
     }
@@ -119,7 +119,7 @@ async def get_available_models():
                 "best_for": "Complex workforce patterns with multiple seasonalities"
             },
             "timegpt": {
-                "status": "available" if nixtla_client else "unavailable",
+                "status": "unavailable (API key required)",
                 "description": "Zero-shot foundation model for time series forecasting",
                 "best_for": "Quick forecasts without historical training requirements"
             },
@@ -264,46 +264,52 @@ async def generate_timegpt_forecast(
     employee_name: str, 
     horizon_months: int
 ) -> List[EmployeeCostForecast]:
-    """Generate forecast using TimeGPT"""
-    try:
-        # Prepare data for TimeGPT
-        timegpt_data = data.copy()
-        timegpt_data['unique_id'] = employee_name
-        timegpt_data = timegpt_data[['unique_id', 'ds', 'y']]
-        
-        # Generate forecast
-        forecast = nixtla_client.forecast(
-            df=timegpt_data,
-            h=horizon_months,
-            time_col='ds',
-            target_col='y'
-        )
-        
-        # Convert to our format
-        forecast_results = []
-        for _, row in forecast.iterrows():
-            forecast_results.append(EmployeeCostForecast(
-                employee_name=employee_name,
-                forecast_period_start=row['ds'].strftime('%Y-%m-%d'),
-                forecast_period_end=(row['ds'] + timedelta(days=30)).strftime('%Y-%m-%d'),
-                predicted_total_hours=160.0,
-                predicted_gross_pay=float(row['TimeGPT'] * 0.7),
-                predicted_total_taxes=float(row['TimeGPT'] * 0.15),
-                predicted_total_benefits=float(row['TimeGPT'] * 0.08),
-                predicted_total_employer_burden=float(row['TimeGPT'] * 0.237),
-                predicted_total_true_cost=float(row['TimeGPT']),
-                predicted_average_hourly_rate=float(row['TimeGPT'] * 0.7 / 160),
-                predicted_burden_rate=23.7,
-                confidence_interval_lower=float(row.get('TimeGPT-lo-90', row['TimeGPT'] * 0.9)),
-                confidence_interval_upper=float(row.get('TimeGPT-hi-90', row['TimeGPT'] * 1.1)),
-                model_used="timegpt"
-            ))
-        
-        return forecast_results
-        
-    except Exception as e:
-        logger.error(f"TimeGPT forecasting error for {employee_name}: {str(e)}")
-        return []
+    """Generate forecast using TimeGPT - Currently unavailable (API key required)"""
+    # TODO: Uncomment when NIXTLA_API_KEY is available
+    raise HTTPException(
+        status_code=503, 
+        detail="TimeGPT forecasting unavailable - NIXTLA_API_KEY required. Please use 'neuralprophet' model instead."
+    )
+    
+    # try:
+    #     # Prepare data for TimeGPT
+    #     timegpt_data = data.copy()
+    #     timegpt_data['unique_id'] = employee_name
+    #     timegpt_data = timegpt_data[['unique_id', 'ds', 'y']]
+    #     
+    #     # Generate forecast
+    #     forecast = nixtla_client.forecast(
+    #         df=timegpt_data,
+    #         h=horizon_months,
+    #         time_col='ds',
+    #         target_col='y'
+    #     )
+    #     
+    #     # Convert to our format
+    #     forecast_results = []
+    #     for _, row in forecast.iterrows():
+    #         forecast_results.append(EmployeeCostForecast(
+    #             employee_name=employee_name,
+    #             forecast_period_start=row['ds'].strftime('%Y-%m-%d'),
+    #             forecast_period_end=(row['ds'] + timedelta(days=30)).strftime('%Y-%m-%d'),
+    #             predicted_total_hours=160.0,
+    #             predicted_gross_pay=float(row['TimeGPT'] * 0.7),
+    #             predicted_total_taxes=float(row['TimeGPT'] * 0.15),
+    #             predicted_total_benefits=float(row['TimeGPT'] * 0.08),
+    #             predicted_total_employer_burden=float(row['TimeGPT'] * 0.237),
+    #             predicted_total_true_cost=float(row['TimeGPT']),
+    #             predicted_average_hourly_rate=float(row['TimeGPT'] * 0.7 / 160),
+    #             predicted_burden_rate=23.7,
+    #             confidence_interval_lower=float(row.get('TimeGPT-lo-90', row['TimeGPT'] * 0.9)),
+    #             confidence_interval_upper=float(row.get('TimeGPT-hi-90', row['TimeGPT'] * 1.1)),
+    #             model_used="timegpt"
+    #         ))
+    #     
+    #     return forecast_results
+    #     
+    # except Exception as e:
+    #     logger.error(f"TimeGPT forecasting error for {employee_name}: {str(e)}")
+    #     return []
 
 @app.get("/api/forecast/visualization/{employee_name}")
 async def generate_forecast_visualization(employee_name: str, horizon_months: int = 6):

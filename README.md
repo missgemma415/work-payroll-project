@@ -1,10 +1,10 @@
 # CEO Payroll Analytics Platform
 
-A Fortune 500-level executive dashboard for comprehensive workforce cost analysis with real-time burden calculations and AI-powered natural language insights.
+A Fortune 500-level executive dashboard for comprehensive workforce cost analysis with real-time burden calculations, neural forecasting, QuickBooks integration, and AI-powered natural language insights.
 
 ## 🎯 Overview
 
-Professional executive dashboard providing strategic workforce cost intelligence for C-suite decision making. Features responsive design, real-time analytics, AI-powered natural language queries, and board-ready reporting.
+Professional executive dashboard providing strategic workforce cost intelligence for C-suite decision making. Features responsive design, real-time analytics, AI-powered natural language queries, neural time series forecasting, QuickBooks Online integration, and board-ready reporting.
 
 ## 🚀 Live Production
 
@@ -19,12 +19,22 @@ Professional executive dashboard providing strategic workforce cost intelligence
 
 ## 🏗️ Tech Stack
 
-- **Frontend**: Next.js 15.4.6, React 19.1.0, TypeScript
+### Frontend & Dashboard
+- **Next.js**: 15.4.6 with React 19.1.0 and TypeScript
 - **Styling**: Tailwind CSS 3.4.17 with Fortune 500 executive theme
-- **Database**: Neon PostgreSQL Serverless
-- **AI Integration**: Anthropic Claude API (claude-3-5-haiku-20241022)
+- **UI Components**: Radix UI with shadcn/ui design system
 - **Deployment**: Vercel
-- **UI Components**: Radix UI with shadcn/ui
+
+### Backend Services
+- **Database**: Neon PostgreSQL Serverless with 6 QuickBooks tables
+- **Neural Forecasting**: FastAPI + NeuralProphet (PyTorch-based) on port 8000
+- **QuickBooks Integration**: FastAPI + python-quickbooks SDK on port 8001
+- **AI Integration**: Anthropic Claude API (claude-3-5-haiku-20241022)
+
+### Data & Analytics
+- **Time Series Forecasting**: NeuralProphet for complex workforce patterns
+- **QuickBooks Online**: OAuth 2.0 integration with real-time sync
+- **Mock Data**: 3-year comprehensive test dataset (1,209 payroll records)
 
 ## 🛠️ Development
 
@@ -59,27 +69,43 @@ curl -X POST http://localhost:3000/api/chat \
 ## 📁 Project Structure
 
 ```
-├── app/                    # Next.js app directory
-│   ├── api/               # API endpoints
-│   │   └── chat/          # AI chat endpoint
-│   └── page.tsx           # Executive dashboard
-├── components/            # UI components
-├── lib/                   # Database & utilities
-│   └── ai/                # Claude API integration
-├── payroll-files-only/    # CSV data files
-├── .taskmaster/           # Task management (Taskmaster AI)
-└── docs/                  # Documentation
+├── app/                     # Next.js app directory
+│   ├── api/                # API endpoints
+│   │   ├── chat/           # AI chat endpoint
+│   │   └── forecasting/    # Neural forecasting proxy
+│   └── page.tsx            # Executive dashboard
+├── components/             # UI components
+├── lib/                    # Database & utilities
+│   └── ai/                 # Claude API integration
+├── forecasting_service/    # FastAPI neural forecasting service (port 8000)
+├── quickbooks_service/     # FastAPI QuickBooks integration (port 8001)
+├── scripts/                # Data generation & testing scripts
+├── mock_data/              # 3-year comprehensive test dataset
+├── payroll-files-only/     # CSV data files
+├── .taskmaster/            # Task management (Taskmaster AI)
+└── docs/                   # Documentation
 ```
 
 ## 📋 Features
 
-- **Executive Dashboard**: Dark slate theme with gold accents
-- **AI-Powered Chat**: Natural language payroll queries with Claude API
-- **Responsive Design**: Mobile-first responsive layout
+### Executive Dashboard
+- **Fortune 500 Design**: Dark slate theme with gold accents
+- **Responsive Layout**: Mobile-first design for all devices
 - **Real-time Analytics**: Live workforce cost calculations
-- **Excel Export**: Board-ready reports with 4 worksheets
-- **File Processing**: SpringAhead + Paychex CSV integration
-- **Burden Analysis**: Complete employer cost calculations
+- **AI-Powered Chat**: Natural language payroll queries with Claude API
+- **Excel Export**: Board-ready reports with 4 comprehensive worksheets
+
+### Advanced Analytics
+- **Neural Forecasting**: PyTorch-based workforce cost predictions
+- **Time Series Analysis**: Complex seasonal pattern recognition
+- **QuickBooks Integration**: Real-time synchronization with accounting data
+- **Comprehensive Testing**: 3-year mock dataset with 1,209 payroll records
+
+### Data Processing
+- **Multi-source Integration**: SpringAhead + Paychex + QuickBooks
+- **Burden Analysis**: Complete employer cost calculations (23.7% average)
+- **Edge Case Handling**: Hiring events, terminations, seasonal variations
+- **Audit Logging**: Complete sync operation tracking
 
 ## 📖 Documentation
 

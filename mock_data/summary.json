@@ -1,0 +1,15 @@
+{
+  "total_employees": 33,
+  "active_employees": 23,
+  "terminated_employees": 10,
+  "total_annual_payroll": 5026586.71,
+  "monthly_payroll": 418882.23,
+  "average_burden_rate": 22.48,
+  "payroll_records": 1209,
+  "time_tracking_records": 10819,
+  "hiring_events": 19,
+  "date_range": "2022-01-01 to 2024-12-31",
+  "baseline_target_monthly": 596000,
+  "baseline_target_employees": 24,
+  "baseline_target_burden": 23.7
+}

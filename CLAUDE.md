@@ -1,7 +1,7 @@
 # Claude AI Assistant Instructions
 
 ## Project Overview
-**CEO Payroll Analytics Platform** - A Fortune 500-level executive dashboard for comprehensive workforce cost analysis with real-time burden calculations and responsive design.
+**CEO Payroll Analytics Platform** - A Fortune 500-level executive dashboard for comprehensive workforce cost analysis with real-time burden calculations, neural time series forecasting, QuickBooks Online integration, and responsive design optimized for CEO/CFO/Controller decision-making.
 
 ## Key Commands & Operations
 
@@ -27,6 +27,20 @@
 - **Environment**: ANTHROPIC_API_KEY must be set in Vercel and .env.local
 - **Model**: claude-3-5-haiku-20241022 (fast, cost-effective for executive Q&A)
 - **Features**: Conversation history, SQL generation, executive-focused insights
+
+### Neural Forecasting Service (Port 8000)
+- **Health Check**: GET `http://localhost:8000/health` - Service status and model availability
+- **Models Available**: GET `http://localhost:8000/api/forecast/models` - Available forecasting models
+- **Employee Forecast**: POST `http://localhost:8000/api/forecast/employee-costs` - Generate workforce cost predictions
+- **Technology**: FastAPI + NeuralProphet (PyTorch-based) + AsyncPG for database access
+- **Note**: TimeGPT commented out until NIXTLA_API_KEY is available
+
+### QuickBooks Integration Service (Port 8001)
+- **Health Check**: GET `http://localhost:8001/health` - OAuth and database connectivity status
+- **OAuth Init**: POST `http://localhost:8001/api/auth/initialize` - Generate QuickBooks authorization URL
+- **Employee Data**: GET `http://localhost:8001/api/employees/{realm_id}` - Retrieve synchronized employee data
+- **Company Info**: GET `http://localhost:8001/api/companies/{realm_id}/info` - QuickBooks company details
+- **Technology**: FastAPI + python-quickbooks SDK + intuit-oauth + AsyncPG
 
 ### Deployment
 - **Vercel Deploy**: `vercel --prod`

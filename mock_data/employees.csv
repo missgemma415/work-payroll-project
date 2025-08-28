@@ -1,0 +1,34 @@
+employee_id,employee_name,title,hire_date,annual_salary,hourly_rate,is_hourly,department,active,termination_date
+EMP001,Sarah Johnson,Customer Success,2022-10-09,139371.64535613725,67.01745802855974,False,Operations,True,
+EMP002,Michael Chen,Senior Data Engineer,2022-04-15,323888.1687381935,155.72643825205148,False,Engineering,True,
+EMP003,Jessica Rodriguez,Customer Success,2023-07-13,162588.09139879802,78.1583418769772,False,Operations,False,2022-11-03
+EMP004,David Kim,VP Engineering,2022-02-02,412470.3937401516,198.29789507679897,False,Executive,True,
+EMP005,Emily Davis,CEO,2022-08-27,451901.32640421175,217.25953182543003,False,Executive,False,2024-02-01
+EMP006,Robert Wilson,Marketing Manager,2023-07-29,201766.497362294,96.99701081271179,False,Product,False,2023-07-18
+EMP007,Ashley Brown,Senior Data Engineer,2023-12-20,360247.95568160247,173.18786768334596,False,Engineering,True,
+EMP008,Christopher Lee,Marketing Manager,2023-04-05,192789.92080154162,92.69313736133638,False,Product,True,
+EMP009,Amanda Martinez,Sales Representative,2022-01-07,173541.54770679868,83.42136426894483,False,Sales & Marketing,False,2024-07-20
+EMP010,James Anderson,Administrative Assistant,2023-12-16,130488.99161087518,62.73817813976364,False,Operations,False,2024-01-16
+EMP011,Lauren Taylor,Software Engineer,2022-06-09,234149.2101138812,112.5647359254011,False,Engineering,True,
+EMP012,Daniel Garcia,Senior Data Engineer,2022-12-11,378043.3656927237,181.74642746093818,False,Engineering,True,
+EMP013,Michelle Lewis,VP Engineering,2022-04-10,375746.30235425563,180.63971714487022,False,Executive,False,2024-08-11
+EMP014,Ryan Murphy,Product Manager,2023-09-11,333057.9031394436,160.12868595374403,False,Product,True,
+EMP015,Nicole White,DevOps Engineer,2023-04-16,342376.453187861,164.60471434317446,False,Engineering,False,2023-05-16
+EMP016,Kevin Scott,Marketing Manager,2023-01-23,178294.77014006028,85.70856558881862,False,Product,True,
+EMP017,Jennifer Thompson,VP Engineering,2023-10-06,409633.3787352553,196.94524913493814,False,Executive,True,
+EMP018,Mark Robinson,Sales Representative,2023-01-06,203410.97051772068,97.784004815249,False,Sales & Marketing,False,2024-04-16
+EMP019,Samantha Clark,Sales Representative,2022-03-13,169316.2752814267,81.40469213744322,False,Sales & Marketing,True,
+EMP020,Brian Hall,CEO,2022-10-24,507735.40290821705,244.1157021620125,False,Executive,False,2024-01-11
+EMP021,Rachel Green,VP Engineering,2022-04-14,432009.3643703314,207.69263598208698,False,Executive,True,
+EMP022,Justin Adams,Software Engineer,2023-10-13,229554.37022363025,110.35131529326516,False,Engineering,True,
+EMP023,Melissa King,Contractor,2023-01-15,523630.9356165257,251.73970656159176,True,Operations,False,2024-02-29
+EMP024,Andrew Wright,Product Manager,2022-10-01,285986.7589180645,137.50260838079907,False,Product,True,
+NEW011,New Hire 11,Software Engineer,2024-07-09,111540.49461660108,50.137286589429195,False,Engineering,True,
+NEW012,New Hire 12,Software Engineer,2024-03-17,92946.40499494158,44.42251213020169,False,Engineering,True,
+NEW013,New Hire 13,Software Engineer,2024-10-06,101169.31869001871,51.63962228344603,False,Engineering,True,
+NEW014,New Hire 14,Software Engineer,2023-12-04,111934.68650807432,46.625968824140344,False,Engineering,True,
+NEW015,New Hire 15,Software Engineer,2024-04-11,114919.77333967484,42.86055401284889,False,Engineering,True,
+NEW016,New Hire 16,Software Engineer,2024-09-11,107673.46472601214,53.28513812019229,False,Engineering,True,
+NEW017,New Hire 17,Software Engineer,2023-07-24,103823.38125109271,52.28960621677353,False,Engineering,True,
+NEW018,New Hire 18,Software Engineer,2023-03-21,102892.27092195922,46.414913149151445,False,Engineering,True,
+NEW019,New Hire 19,Software Engineer,2024-06-29,100873.43035297412,54.87132275404257,False,Engineering,True,
