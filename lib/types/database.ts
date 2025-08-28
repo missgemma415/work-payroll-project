@@ -98,5 +98,41 @@ export interface SummaryStatsRow {
   total_projects: number;
 }
 
+// Core entity types for repository pattern
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  organization_id?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Organization {
+  id: string;
+  name: string;
+  domain?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Conversation {
+  id: string;
+  user_id: string;
+  title?: string;
+  messages?: unknown[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Employee {
+  id: string;
+  name: string;
+  employee_id?: string;
+  organization_id?: string;
+  created_at: string;
+  updated_at: string;
+}
+
 // Generic database result type
 export type DatabaseRow = Record<string, string | number | boolean | null>;

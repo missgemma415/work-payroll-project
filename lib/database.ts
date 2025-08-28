@@ -36,6 +36,86 @@ export async function query<T = unknown>(
 }
 
 /**
+ * Execute a database query and return the first result or null
+ */
+export async function queryOne<T = unknown>(
+  text: string, 
+  params: unknown[] = []
+): Promise<T | null> {
+  try {
+    const results = await query<T>(text, params);
+    return results.length > 0 ? results[0] : null;
+  } catch (error) {
+    console.error('Database queryOne error:', {
+      query: text,
+      params,
+      error: error instanceof Error ? error.message : String(error)
+    });
+    throw error;
+  }
+}
+
+/**
+ * Database utility functions
+ */
+export class DatabaseUtils {
+  /**
+   * Safely escape SQL identifiers (table names, column names, etc.)
+   */
+  static escapeIdentifier(identifier: string): string {
+    // Remove any potentially dangerous characters and wrap in quotes
+    const cleaned = identifier.replace(/[^a-zA-Z0-9_]/g, '');
+    return `"${cleaned}"`;
+  }
+
+  /**
+   * Generate a WHERE clause with parameterized values
+   */
+  static buildWhereClause(conditions: Record<string, unknown>): { clause: string; params: unknown[] } {
+    const keys = Object.keys(conditions);
+    if (keys.length === 0) {
+      return { clause: '', params: [] };
+    }
+
+    const whereParts = keys.map((key, index) => 
+      `${this.escapeIdentifier(key)} = $${index + 1}`
+    );
+    
+    return {
+      clause: `WHERE ${whereParts.join(' AND ')}`,
+      params: Object.values(conditions)
+    };
+  }
+
+  /**
+   * Generate a unique ID
+   */
+  static generateId(): string {
+    return crypto.randomUUID();
+  }
+
+  /**
+   * Format date for database storage
+   */
+  static formatDate(date: Date): string {
+    return date.toISOString();
+  }
+
+  /**
+   * Safely parse JSON with fallback
+   */
+  static parseJSON<T>(jsonString: string | null): T | null {
+    if (!jsonString) return null;
+    
+    try {
+      return JSON.parse(jsonString) as T;
+    } catch {
+      return null;
+    }
+  }
+}
+
+/**
  * Test database connection
  */
 export async function testConnection(): Promise<boolean> {
@@ -50,5 +130,5 @@ export async function testConnection(): Promise<boolean> {
 }
 
 // Default export for convenience
-const database = { sql, query, testConnection };
+const database = { sql, query, queryOne, testConnection, DatabaseUtils };
 export default database;

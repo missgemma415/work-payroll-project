@@ -104,7 +104,7 @@ class ClaudeClient {
           requires_data: analysis.requires_data || false,
           confidence: analysis.confidence || 0.5
         };
-      } catch (parseError) {
+      } catch {
         return {
           intent: 'general_chat',
           natural_response: responseText,

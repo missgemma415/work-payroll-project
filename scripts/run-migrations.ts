@@ -59,7 +59,7 @@ class MigrationRunner {
   private async getAppliedMigrations(): Promise<string[]> {
     try {
       const result = await this.sql`SELECT id FROM migrations ORDER BY applied_at`;
-      return result.map((row: any) => row.id);
+      return (result as Array<{id: string}>).map((row) => row.id);
     } catch (error) {
       console.warn('Could not fetch applied migrations, assuming none:', error);
       return [];
