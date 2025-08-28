@@ -1,0 +1,47 @@
+# QuickBooks Integration Service Dependencies
+# Fortune 500-grade integration for executive payroll analytics
+
+# FastAPI and Web Framework
+fastapi==0.116.1
+uvicorn[standard]==0.35.0
+starlette==0.47.3
+
+# QuickBooks SDK Stack (Research-recommended)
+python-quickbooks==0.9.12
+intuit-oauth==1.2.6
+requests-oauthlib==2.0.0
+
+# Database Connectivity (matching existing patterns)
+asyncpg>=0.29.0
+psycopg2-binary>=2.9.0
+
+# Security and Authentication
+PyJWT[crypto]>=2.10.0
+cryptography>=43.0.0
+oauthlib>=3.3.0
+
+# Data Validation and Processing
+pydantic>=2.11.0
+pydantic-core>=2.33.0
+python-dateutil>=2.9.0
+
+# HTTP and API
+httpx>=0.24.0
+requests>=2.31.0
+aiohttp>=3.8.0
+
+# Utilities and Performance
+orjson>=3.9.0
+python-dotenv>=1.0.0
+
+# Logging and Monitoring
+structlog>=23.1.0
+prometheus-client>=0.17.0
+
+# Production and Security
+gunicorn>=21.2.0
+python-multipart>=0.0.6
+
+# Development and Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
