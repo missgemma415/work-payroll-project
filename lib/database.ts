@@ -5,15 +5,22 @@
 
 import { neon } from '@neondatabase/serverless';
 
-// Get database URL from environment
-const databaseUrl = process.env['NEON_DATABASE_URL'];
+// Lazy connection - only create when actually needed
+let sql: ReturnType<typeof neon> | null = null;
 
-if (!databaseUrl) {
-  throw new Error('NEON_DATABASE_URL environment variable is required');
+function getSqlConnection() {
+  if (!sql) {
+    const databaseUrl = process.env['NEON_DATABASE_URL'];
+    if (!databaseUrl) {
+      throw new Error('NEON_DATABASE_URL environment variable is required');
+    }
+    sql = neon(databaseUrl);
+  }
+  return sql;
 }
 
-// Create connection using Neon serverless
-export const sql = neon(databaseUrl);
+// Export the lazy connection for backward compatibility
+export { getSqlConnection as sql };
 
 /**
  * Execute a database query
@@ -23,8 +30,9 @@ export async function query<T = unknown>(
   params: unknown[] = []
 ): Promise<T[]> {
   try {
+    const sqlConnection = getSqlConnection();
     // Always use sql.query() for both parameterized and non-parameterized queries
-    return await sql.query(text, params) as T[];
+    return await sqlConnection.query(text, params) as T[];
   } catch (error) {
     console.error('Database query error:', {
       query: text,
