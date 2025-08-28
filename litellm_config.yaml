@@ -1,0 +1,103 @@
+# LiteLLM Configuration for Executive Analytics Platform
+# Multi-Model AI Gateway: DeepSeek, Qwen, Ollama, Perplexity
+
+model_list:
+  # Local Ollama Models (Privacy-first for sensitive HR data)
+  - model_name: deepseek-local
+    litellm_params:
+      model: ollama/deepseek-r1:7b
+      api_base: http://localhost:11434
+      custom_model_max_tokens: 32768
+    
+  - model_name: qwen-local
+    litellm_params:
+      model: ollama/qwen2.5-coder:32b
+      api_base: http://localhost:11434
+      custom_model_max_tokens: 32768
+
+  # DeepSeek Cloud API (Advanced financial analysis)
+  - model_name: deepseek-cloud
+    litellm_params:
+      model: deepseek/deepseek-chat
+      api_key: os.environ/DEEPSEEK_API_KEY
+      max_tokens: 4000
+
+  # Qwen Cloud API (Natural language processing)  
+  - model_name: qwen-cloud
+    litellm_params:
+      model: qwen/qwen-turbo
+      api_key: os.environ/QWEN_API_KEY
+      max_tokens: 4000
+
+  # Perplexity (Research and insights)
+  - model_name: perplexity
+    litellm_params:
+      model: perplexity/llama-3.1-sonar-huge-128k-online
+      api_key: os.environ/PERPLEXITY_API_KEY
+      max_tokens: 4000
+
+  # HuggingFace Models (Specialized tasks)
+  - model_name: huggingface-finance
+    litellm_params:
+      model: huggingface/microsoft/DialoGPT-large
+      api_key: os.environ/HUGGINGFACE_API_KEY
+
+# Model routing configuration for analytics tasks
+litellm_settings:
+  success_callback: ["langfuse"]  # Track usage
+  failure_callback: ["langfuse"]  # Track failures
+  
+  # Model fallback strategy
+  fallbacks:
+    - ["deepseek-cloud", "deepseek-local"]  # Cloud to local fallback
+    - ["qwen-cloud", "qwen-local"]          # Cloud to local fallback
+    - ["perplexity", "deepseek-cloud"]      # Research fallback
+
+# General proxy settings
+general_settings:
+  master_key: sk-executive-analytics-2025    # Replace with secure key
+  default_model: deepseek-local              # Privacy-first default
+  
+  # Executive analytics model routing
+  model_list_mode: true
+  
+  # Cost tracking for executive reporting
+  spend_logs: true
+  max_budget: 1000.0  # Monthly budget in USD
+  
+  # Performance settings
+  max_parallel_requests: 10
+  request_timeout: 300
+  
+  # Logging for compliance
+  detailed_logging: true
+  
+# Authentication strategy
+auth_strategy: master_key
+
+# Database for usage tracking (optional)
+# database_url: "postgresql://user:password@localhost:5432/litellm"
+
+# Router settings for intelligent model selection
+router_settings:
+  routing_strategy: "cost-based"  # Optimize for cost efficiency
+  allowed_fails: 3                # Retry attempts
+  cooldown_time: 30               # Cooldown between retries
+  
+  # Model-specific routing rules
+  model_group_alias:
+    "analytics": ["deepseek-local", "deepseek-cloud"]
+    "insights": ["qwen-local", "qwen-cloud"] 
+    "research": ["perplexity"]
+    "privacy": ["deepseek-local", "qwen-local"]
+
+# Environment variable validation
+environment:
+  # API Keys (set these in your shell)
+  # export DEEPSEEK_API_KEY="your_deepseek_key"
+  # export QWEN_API_KEY="your_qwen_key"  
+  # export PERPLEXITY_API_KEY="your_perplexity_key"
+  # export HUGGINGFACE_API_KEY="your_huggingface_key"
+  
+  # LiteLLM Master Key
+  # export LITELLM_MASTER_KEY="sk-executive-analytics-2025"

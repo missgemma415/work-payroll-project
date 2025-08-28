@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChatInterface } from '@/components/ui/ChatInterface';
+import { FloatingChatButton } from '@/components/ui/FloatingChatButton';
 
 interface FileInfo {
   filename: string;
@@ -109,21 +109,21 @@ export default function HomePage(): React.JSX.Element {
               <div className="flex items-center gap-4">
                 <div className="w-3 h-12 bg-gradient-to-b from-amber-400 to-amber-600 rounded-full"></div>
                 <div>
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white tracking-tight leading-tight">
+                  <h1 className="text-[clamp(2rem,8vw,4rem)] font-display font-bold text-white tracking-tight leading-tight">
                     Executive Payroll
                   </h1>
-                  <h2 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-transparent bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text tracking-tight leading-tight">
+                  <h2 className="text-[clamp(2rem,8vw,4rem)] font-display font-bold text-transparent bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text tracking-tight leading-tight">
                     Analytics
                   </h2>
                 </div>
               </div>
-              <p className="text-lg md:text-xl text-slate-300 font-medium max-w-2xl">
+              <p className="text-[clamp(1rem,4vw,1.25rem)] text-slate-300 font-medium max-w-2xl leading-relaxed">
                 Comprehensive workforce cost intelligence with real-time burden analysis for strategic decision making
               </p>
             </div>
-            <div className="text-center lg:text-right bg-slate-800/50 backdrop-blur-sm rounded-xl p-4 md:p-6 border border-slate-700 min-w-fit">
+            <div className="text-center lg:text-right bg-slate-800/50 backdrop-blur-sm rounded-xl p-4 lg:p-6 border border-slate-700 min-w-fit transition-all duration-300 hover:bg-slate-800/70">
               <p className="text-sm text-slate-400 mb-2">Last Updated</p>
-              <p className="text-xl font-bold text-white">
+              <p className="text-[clamp(1.125rem,3vw,1.25rem)] font-bold text-white">
                 {new Date().toLocaleDateString('en-US', { 
                   month: 'long', 
                   day: 'numeric', 
@@ -136,24 +136,24 @@ export default function HomePage(): React.JSX.Element {
         </div>
 
         {/* Executive KPI Dashboard */}
-        <div className="mb-8 md:mb-16 grid gap-4 md:gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mb-8 md:mb-16 grid gap-4 lg:gap-8 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
           {/* Data Processing Status */}
-          <Card className="group bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border border-slate-700 hover:border-amber-500/50 transition-all duration-300 shadow-2xl hover:shadow-amber-500/20">
-            <CardContent className="p-4 md:p-6 lg:p-8">
-              <div className="flex items-center justify-between mb-6">
-                <div className="p-4 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl shadow-lg">
-                  <FileText className="h-8 w-8 text-white" />
+          <Card className="group bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border border-slate-700 hover:border-amber-500/50 transition-all duration-300 shadow-2xl hover:shadow-amber-500/20 cursor-pointer min-h-[180px] sm:min-h-[200px]">
+            <CardContent className="p-4 sm:p-6 lg:p-8 h-full flex flex-col justify-between">
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <div className="p-3 sm:p-4 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl shadow-lg touch-manipulation">
+                  <FileText className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                 </div>
-                <div className="px-4 py-2 bg-emerald-500/20 border border-emerald-500/30 rounded-full">
-                  <span className="text-sm font-bold text-emerald-400">OPERATIONAL</span>
+                <div className="px-3 py-1.5 sm:px-4 sm:py-2 bg-emerald-500/20 border border-emerald-500/30 rounded-full">
+                  <span className="text-xs sm:text-sm font-bold text-emerald-400">OPERATIONAL</span>
                 </div>
               </div>
               <div className="space-y-2">
-                <div className="text-4xl font-bold text-white mb-2">
+                <div className="text-[clamp(2rem,6vw,2.5rem)] font-bold text-white mb-2">
                   {summary?.completed_files ?? 0}
                 </div>
-                <p className="text-lg font-semibold text-slate-300">Data Sources</p>
-                <p className="text-sm text-slate-400">
+                <p className="text-[clamp(1rem,3vw,1.125rem)] font-semibold text-slate-300">Data Sources</p>
+                <p className="text-[clamp(0.875rem,2.5vw,0.875rem)] text-slate-400">
                   {summary?.failed_files ?? 0} failed • {files.length} total processed
                 </p>
               </div>
@@ -161,86 +161,69 @@ export default function HomePage(): React.JSX.Element {
           </Card>
 
           {/* Workforce Analytics */}
-          <Card className="group bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border border-slate-700 hover:border-amber-500/50 transition-all duration-300 shadow-2xl hover:shadow-amber-500/20">
-            <CardContent className="p-4 md:p-6 lg:p-8">
-              <div className="flex items-center justify-between mb-6">
-                <div className="p-4 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-lg">
-                  <Users className="h-8 w-8 text-white" />
+          <Card className="group bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border border-slate-700 hover:border-amber-500/50 transition-all duration-300 shadow-2xl hover:shadow-amber-500/20 cursor-pointer min-h-[180px] sm:min-h-[200px]">
+            <CardContent className="p-4 sm:p-6 lg:p-8 h-full flex flex-col justify-between">
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <div className="p-3 sm:p-4 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-lg touch-manipulation">
+                  <Users className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                 </div>
-                <div className="px-4 py-2 bg-blue-500/20 border border-blue-500/30 rounded-full">
-                  <span className="text-sm font-bold text-blue-400">WORKFORCE</span>
+                <div className="px-3 py-1.5 sm:px-4 sm:py-2 bg-blue-500/20 border border-blue-500/30 rounded-full">
+                  <span className="text-xs sm:text-sm font-bold text-blue-400">WORKFORCE</span>
                 </div>
               </div>
               <div className="space-y-2">
-                <div className="text-4xl font-bold text-white mb-2">
+                <div className="text-[clamp(2rem,6vw,2.5rem)] font-bold text-white mb-2">
                   {employeeCosts.length}
                 </div>
-                <p className="text-lg font-semibold text-slate-300">Active Employees</p>
-                <p className="text-sm text-slate-400">Full cost analysis available</p>
+                <p className="text-[clamp(1rem,3vw,1.125rem)] font-semibold text-slate-300">Active Employees</p>
+                <p className="text-[clamp(0.875rem,2.5vw,0.875rem)] text-slate-400">Full cost analysis available</p>
               </div>
             </CardContent>
           </Card>
 
           {/* Financial Impact */}
-          <Card className="group bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border border-slate-700 hover:border-amber-500/50 transition-all duration-300 shadow-2xl hover:shadow-amber-500/20">
-            <CardContent className="p-4 md:p-6 lg:p-8">
-              <div className="flex items-center justify-between mb-6">
-                <div className="p-4 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl shadow-lg">
-                  <DollarSign className="h-8 w-8 text-white" />
+          <Card className="group bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border border-slate-700 hover:border-amber-500/50 transition-all duration-300 shadow-2xl hover:shadow-amber-500/20 cursor-pointer min-h-[180px] sm:min-h-[200px]">
+            <CardContent className="p-4 sm:p-6 lg:p-8 h-full flex flex-col justify-between">
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <div className="p-3 sm:p-4 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl shadow-lg touch-manipulation">
+                  <DollarSign className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                 </div>
-                <div className="px-4 py-2 bg-amber-500/20 border border-amber-500/30 rounded-full">
-                  <span className="text-sm font-bold text-amber-400">MONTHLY</span>
+                <div className="px-3 py-1.5 sm:px-4 sm:py-2 bg-amber-500/20 border border-amber-500/30 rounded-full">
+                  <span className="text-xs sm:text-sm font-bold text-amber-400">MONTHLY</span>
                 </div>
               </div>
               <div className="space-y-2">
-                <div className="text-4xl font-bold text-white mb-2">
+                <div className="text-[clamp(1.5rem,5vw,2.5rem)] font-bold text-white mb-2 leading-tight">
                   ${totalMonthlyCost > 0 ? Math.round(totalMonthlyCost).toLocaleString('en-US') : '0'}
                 </div>
-                <p className="text-lg font-semibold text-slate-300">Total Investment</p>
-                <p className="text-sm text-slate-400">All-inclusive workforce cost</p>
+                <p className="text-[clamp(1rem,3vw,1.125rem)] font-semibold text-slate-300">Total Investment</p>
+                <p className="text-[clamp(0.875rem,2.5vw,0.875rem)] text-slate-400">All-inclusive workforce cost</p>
               </div>
             </CardContent>
           </Card>
 
           {/* Burden Analysis */}
-          <Card className="group bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border border-slate-700 hover:border-amber-500/50 transition-all duration-300 shadow-2xl hover:shadow-amber-500/20">
-            <CardContent className="p-4 md:p-6 lg:p-8">
-              <div className="flex items-center justify-between mb-6">
-                <div className="p-4 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl shadow-lg">
-                  <TrendingUp className="h-8 w-8 text-white" />
+          <Card className="group bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border border-slate-700 hover:border-amber-500/50 transition-all duration-300 shadow-2xl hover:shadow-amber-500/20 cursor-pointer min-h-[180px] sm:min-h-[200px]">
+            <CardContent className="p-4 sm:p-6 lg:p-8 h-full flex flex-col justify-between">
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <div className="p-3 sm:p-4 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl shadow-lg touch-manipulation">
+                  <TrendingUp className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                 </div>
-                <div className="px-4 py-2 bg-purple-500/20 border border-purple-500/30 rounded-full">
-                  <span className="text-sm font-bold text-purple-400">BURDEN</span>
+                <div className="px-3 py-1.5 sm:px-4 sm:py-2 bg-purple-500/20 border border-purple-500/30 rounded-full">
+                  <span className="text-xs sm:text-sm font-bold text-purple-400">BURDEN</span>
                 </div>
               </div>
               <div className="space-y-2">
-                <div className="text-4xl font-bold text-white mb-2">
+                <div className="text-[clamp(2rem,6vw,2.5rem)] font-bold text-white mb-2">
                   {averageBurdenRate > 0 ? (averageBurdenRate * 100).toFixed(1) : '0.0'}%
                 </div>
-                <p className="text-lg font-semibold text-slate-300">Burden Rate</p>
-                <p className="text-sm text-slate-400">Taxes + benefits overhead</p>
+                <p className="text-[clamp(1rem,3vw,1.125rem)] font-semibold text-slate-300">Burden Rate</p>
+                <p className="text-[clamp(0.875rem,2.5vw,0.875rem)] text-slate-400">Taxes + benefits overhead</p>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* AI Assistant Section */}
-        <div className="mb-8 md:mb-16">
-          <div className="mb-6">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-3 h-8 bg-gradient-to-b from-blue-400 to-blue-600 rounded-full"></div>
-              <div>
-                <h2 className="text-3xl md:text-4xl font-display font-bold text-white tracking-tight">
-                  AI Assistant
-                </h2>
-                <p className="text-lg text-slate-300 font-medium">
-                  Ask questions about your payroll data in natural language
-                </p>
-              </div>
-            </div>
-          </div>
-          <ChatInterface />
-        </div>
 
         {/* Executive Command Center */}
         <Card className="mb-16 bg-gradient-to-r from-slate-800/90 to-slate-900/90 backdrop-blur-xl border border-slate-700 shadow-2xl">
@@ -443,6 +426,9 @@ export default function HomePage(): React.JSX.Element {
           </CardContent>
         </Card>
       </div>
+      
+      {/* Floating Chat Button */}
+      <FloatingChatButton />
     </div>
   );
 }

@@ -1,0 +1,27 @@
+# FastAPI and ASGI server
+fastapi==0.104.0
+uvicorn[standard]==0.24.0
+
+# Visualization libraries
+plotly==5.17.0
+dash==2.15.0
+kaleido==0.2.1
+
+# API integrations
+python-quickbooks==0.8.0
+requests==2.31.0
+
+# Data processing
+pandas==2.1.0
+numpy==1.24.0
+
+# Database and caching
+redis==5.0.0
+psycopg2-binary==2.9.7
+
+# Environment and utilities
+python-dotenv==1.0.0
+pydantic==2.4.0
+
+# CORS and middleware
+python-multipart==0.0.6

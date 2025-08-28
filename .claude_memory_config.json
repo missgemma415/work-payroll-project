@@ -1,0 +1,126 @@
+{
+  "memory_management": {
+    "description": "4-Tier Memory Architecture for Executive Analytics Platform",
+    "version": "1.0.0",
+    "
+    
+    "enterprise_memory": {
+      "description": "Company-wide payroll policies and executive standards",
+      "scope": "organization",
+      "retention": "permanent",
+      "content_types": [
+        "compliance_rules",
+        "executive_kpis", 
+        "industry_benchmarks",
+        "regulatory_requirements",
+        "company_policies"
+      ],
+      "examples": [
+        "Fortune 500 burden rate benchmarks: 20-35% typical range",
+        "Executive reporting requires whole number currency formatting", 
+        "Dark slate professional theme with gold accents for C-suite",
+        "Mobile-first responsive design for executive accessibility",
+        "Sub-10 second insight requirement for executive calls"
+      ]
+    },
+
+    "project_memory": {
+      "description": "Analytics platform context and configurations",
+      "scope": "project",
+      "retention": "project_lifecycle",
+      "content_types": [
+        "api_configurations",
+        "data_schemas", 
+        "visualization_templates",
+        "integration_patterns",
+        "architecture_decisions"
+      ],
+      "examples": [
+        "Database: Neon PostgreSQL with 24 employees, $596K monthly cost",
+        "APIs: Paychex (OAuth 2.0), SpringAhead (time tracking), QuickBooks (finance)",
+        "Tech stack: Next.js 15.4.6, FastAPI, Plotly, Tailwind CSS 3.4.17",
+        "Deployment: Vercel production environment",
+        "MCP servers: 10 configured (Taskmaster, Serena, Memory, GitHub, etc.)"
+      ]
+    },
+
+    "user_memory": {
+      "description": "Gemma's preferences and executive communication patterns",
+      "scope": "user",
+      "retention": "user_session",
+      "content_types": [
+        "communication_style",
+        "frequent_questions",
+        "preferred_metrics", 
+        "reporting_preferences",
+        "insight_patterns"
+      ],
+      "examples": [
+        "Gemma is HR Generalist who needs rapid executive insights",
+        "Prefers financial analysis with burden rate breakdowns",
+        "Needs mobile-friendly interface for on-the-go access",
+        "Frequently asked: monthly costs, department breakdowns, burden analysis",
+        "Communication style: Professional, concise, data-driven"
+      ]
+    },
+
+    "local_memory": {
+      "description": "Session-specific calculations and temporary analysis",
+      "scope": "session", 
+      "retention": "session_only",
+      "content_types": [
+        "real_time_calculations",
+        "chat_context",
+        "temporary_insights",
+        "session_preferences",
+        "active_analysis"
+      ],
+      "examples": [
+        "Current session: LLM Gateway multi-model setup",
+        "Active models: DeepSeek (downloading), Qwen2.5-Coder (ready)",
+        "Recent calculations: 23.7% average burden rate analysis",
+        "Session focus: Advanced analytics platform implementation",
+        "Context: Phase 1 of 8-phase strategic plan"
+      ]
+    },
+
+    "memory_coordination": {
+      "description": "How different memory tiers interact and inform each other",
+      "patterns": {
+        "enterprise_to_project": "Compliance rules shape API configurations",
+        "project_to_user": "Available data informs Gemma's preferred metrics",  
+        "user_to_local": "Communication preferences guide session responses",
+        "local_to_user": "Session insights update user preference patterns",
+        "cross_tier_learning": "All tiers inform multi-model AI routing decisions"
+      },
+      
+      "ai_model_routing": {
+        "description": "Memory-informed model selection strategy",
+        "rules": {
+          "sensitive_hr_data": "Use local Ollama models (privacy-first)",
+          "financial_analysis": "Use DeepSeek (cloud or local)",
+          "natural_language": "Use Qwen models (cloud or local)",
+          "research_insights": "Use Perplexity API",
+          "executive_communication": "Use Claude (current session)",
+          "specialized_tasks": "Use HuggingFace models via LiteLLM"
+        }
+      },
+
+      "context_propagation": {
+        "description": "How context flows between memory tiers",
+        "upward_flow": "Local insights inform user preferences and project improvements",
+        "downward_flow": "Enterprise standards guide project implementation and user interactions",
+        "lateral_flow": "Cross-tier coordination for comprehensive analytics",
+        "learning_loops": "Continuous improvement based on usage patterns"
+      }
+    },
+
+    "implementation": {
+      "storage_backend": "Claude Code native memory system",
+      "encryption": "Enterprise-grade for sensitive HR data",
+      "access_control": "Role-based access with executive privileges",
+      "backup_strategy": "Automated backup with disaster recovery",
+      "performance_optimization": "Memory pre-loading for sub-10 second insights"
+    }
+  }
+}
