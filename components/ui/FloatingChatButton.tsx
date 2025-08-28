@@ -41,7 +41,14 @@ export function FloatingChatButton({ className = '' }: FloatingChatButtonProps) 
   }, []);
 
   const handleToggleChat = () => {
+    // If chat is minimized, expand it instead of closing
+    if (isOpen && isMinimized) {
+      setIsMinimized(false);
+      return;
+    }
+    
     setIsOpen(!isOpen);
+    setIsMinimized(false); // Reset minimize state when toggling
     if (!isOpen) {
       // Mark messages as read when opening chat
       localStorage.setItem('payroll-chat-last-read', new Date().toISOString());
@@ -51,6 +58,11 @@ export function FloatingChatButton({ className = '' }: FloatingChatButtonProps) 
 
   const handleMinimize = () => {
     setIsMinimized(!isMinimized);
+  };
+  
+  const handleClose = () => {
+    setIsOpen(false);
+    setIsMinimized(false);
   };
 
   return (
@@ -89,9 +101,10 @@ export function FloatingChatButton({ className = '' }: FloatingChatButtonProps) 
           {/* Chat Container */}
           <div className={`relative bg-slate-900 rounded-2xl shadow-2xl border border-slate-700 transition-all duration-300 transform ${
             isMinimized 
-              ? 'w-80 h-16' 
+              ? 'w-80 h-16 cursor-pointer' 
               : 'w-full max-w-2xl h-[70vh] md:h-[600px]'
-          }`}>
+          }`}
+          onClick={isMinimized ? () => setIsMinimized(false) : undefined}>
             
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-slate-700">
@@ -105,7 +118,10 @@ export function FloatingChatButton({ className = '' }: FloatingChatButtonProps) 
               
               <div className="flex items-center gap-2">
                 <Button
-                  onClick={handleMinimize}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleMinimize();
+                  }}
                   size="sm"
                   variant="ghost"
                   className="h-8 w-8 text-slate-400 hover:text-white"
@@ -115,7 +131,10 @@ export function FloatingChatButton({ className = '' }: FloatingChatButtonProps) 
                 </Button>
                 
                 <Button
-                  onClick={handleToggleChat}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleClose();
+                  }}
                   size="sm"
                   variant="ghost"
                   className="h-8 w-8 text-slate-400 hover:text-white"

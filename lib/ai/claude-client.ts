@@ -33,6 +33,13 @@ export interface QueryAnalysisResponse {
   confidence: number;
 }
 
+export interface CompanyMetrics {
+  employeeCount: number;
+  totalMonthlyCost: number;
+  totalWorkforceCost: number;
+  averageBurdenRate: number;
+}
+
 class ClaudeClient {
   private readonly model = 'claude-3-5-haiku-20241022';
   private readonly maxTokens = 4000;
@@ -40,7 +47,7 @@ class ClaudeClient {
   /**
    * Generate a chat response for payroll analytics queries
    */
-  async chat(message: string, conversationHistory: ChatMessage[] = []): Promise<ChatResponse> {
+  async chat(message: string, conversationHistory: ChatMessage[] = [], companyData?: CompanyMetrics): Promise<ChatResponse> {
     try {
       const messages: ChatMessage[] = [
         ...conversationHistory,
@@ -54,7 +61,7 @@ class ClaudeClient {
           role: msg.role,
           content: msg.content
         })),
-        system: this.getSystemPrompt()
+        system: this.getSystemPrompt(companyData)
       });
 
       const responseText = response.content[0]?.type === 'text' 
@@ -152,9 +159,23 @@ class ClaudeClient {
   }
 
   /**
-   * System prompt for general chat functionality
+   * System prompt for general chat functionality with dynamic data
    */
-  private getSystemPrompt(): string {
+  private getSystemPrompt(companyData?: CompanyMetrics): string {
+    const dataSection = companyData ? `
+Current company data:
+- ${companyData.employeeCount} employees with $${companyData.totalMonthlyCost.toLocaleString()} total monthly cost
+- Average burden rate of ${companyData.averageBurdenRate}% (taxes, benefits, overhead)
+- Total workforce cost: $${companyData.totalWorkforceCost.toLocaleString()}
+- Integration with SpringAhead (time tracking) and Paychex (payroll)
+- QuickBooks Online integration available
+- Neural forecasting with 6-month predictions` : `
+Current database includes:
+- Comprehensive payroll and workforce cost data
+- Integration with SpringAhead (time tracking) and Paychex (payroll)
+- QuickBooks Online integration available
+- Neural forecasting with 6-month predictions`;
+
     return `You are an AI assistant for a CEO Payroll Analytics Platform. You help Fortune 500 executives analyze workforce costs, payroll data, and make strategic decisions.
 
 Key capabilities:
@@ -162,11 +183,9 @@ Key capabilities:
 - Provide insights on hiring costs, department budgets, and forecasting
 - Answer questions about SpringAhead time tracking and Paychex payroll data
 - Generate executive summaries and board-ready insights
-
-Current data includes:
-- 24 employees with $596,000 total monthly cost
-- Average burden rate of 23.7% (taxes, benefits, overhead)
-- Integration with SpringAhead (time tracking) and Paychex (payroll)
+- Access to neural forecasting for 6-month predictions
+- QuickBooks integration for real-time financial data
+${dataSection}
 
 Respond professionally with executive-level insights. Keep responses concise but informative.`;
   }

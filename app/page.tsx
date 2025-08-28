@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FloatingChatButton } from '@/components/ui/FloatingChatButton';
+import { EnhancedChatInterface, ChatContext } from '@/components/ui/EnhancedChatInterface';
 
 interface FileInfo {
   filename: string;
@@ -38,6 +39,8 @@ export default function HomePage(): React.JSX.Element {
   const [summary, setSummary] = useState<ProcessingSummary | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [showEnhancedChat, setShowEnhancedChat] = useState(false);
+  const [chatContext, setChatContext] = useState<ChatContext>({});
 
   useEffect(() => {
     void loadData();
@@ -94,10 +97,26 @@ export default function HomePage(): React.JSX.Element {
     }
   };
 
-  const totalMonthlyCost = employeeCosts.reduce((sum, emp) => sum + Number(emp.total_true_cost), 0);
+  // Calculate proper metrics - fix the monthly vs all-time confusion
+  const totalAllTimeCost = employeeCosts.reduce((sum, emp) => sum + Number(emp.total_true_cost), 0);
   const averageBurdenRate = employeeCosts.length > 0 
     ? employeeCosts.reduce((sum, emp) => sum + Number(emp.burden_rate), 0) / employeeCosts.length 
     : 0;
+
+  // Calculate last month's costs (this is what executives actually want to see)
+  const [monthlyMetrics, setMonthlyMetrics] = useState({
+    lastMonth: 0,
+    thisMonth: 0,
+    growthRate: 0
+  });
+
+  const handleMetricClick = (metric: 'workforce' | 'investment' | 'burden' | 'data-sources') => {
+    setChatContext({
+      activeMetric: metric,
+      currentView: 'dashboard'
+    });
+    setShowEnhancedChat(true);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
@@ -138,7 +157,10 @@ export default function HomePage(): React.JSX.Element {
         {/* Executive KPI Dashboard */}
         <div className="mb-8 md:mb-16 grid gap-4 lg:gap-8 grid-cols-1 sm:grid-cols-2 xl:grid-cols-4">
           {/* Data Processing Status */}
-          <Card className="group bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border border-slate-700 hover:border-amber-500/50 transition-all duration-300 shadow-2xl hover:shadow-amber-500/20 cursor-pointer min-h-[180px] sm:min-h-[200px]">
+          <Card 
+            onClick={() => handleMetricClick('data-sources')}
+            className="group bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border border-slate-700 hover:border-amber-500/50 transition-all duration-300 shadow-2xl hover:shadow-amber-500/20 cursor-pointer min-h-[180px] sm:min-h-[200px] hover:scale-105 transform"
+          >
             <CardContent className="p-4 sm:p-6 lg:p-8 h-full flex flex-col justify-between">
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <div className="p-3 sm:p-4 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl shadow-lg touch-manipulation">
@@ -161,7 +183,10 @@ export default function HomePage(): React.JSX.Element {
           </Card>
 
           {/* Workforce Analytics */}
-          <Card className="group bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border border-slate-700 hover:border-amber-500/50 transition-all duration-300 shadow-2xl hover:shadow-amber-500/20 cursor-pointer min-h-[180px] sm:min-h-[200px]">
+          <Card 
+            onClick={() => handleMetricClick('workforce')}
+            className="group bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border border-slate-700 hover:border-amber-500/50 transition-all duration-300 shadow-2xl hover:shadow-amber-500/20 cursor-pointer min-h-[180px] sm:min-h-[200px] hover:scale-105 transform"
+          >
             <CardContent className="p-4 sm:p-6 lg:p-8 h-full flex flex-col justify-between">
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <div className="p-3 sm:p-4 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-lg touch-manipulation">
@@ -182,28 +207,36 @@ export default function HomePage(): React.JSX.Element {
           </Card>
 
           {/* Financial Impact */}
-          <Card className="group bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border border-slate-700 hover:border-amber-500/50 transition-all duration-300 shadow-2xl hover:shadow-amber-500/20 cursor-pointer min-h-[180px] sm:min-h-[200px]">
+          <Card 
+            onClick={() => handleMetricClick('investment')}
+            className="group bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border border-slate-700 hover:border-amber-500/50 transition-all duration-300 shadow-2xl hover:shadow-amber-500/20 cursor-pointer min-h-[180px] sm:min-h-[200px] hover:scale-105 transform"
+          >
             <CardContent className="p-4 sm:p-6 lg:p-8 h-full flex flex-col justify-between">
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <div className="p-3 sm:p-4 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl shadow-lg touch-manipulation">
                   <DollarSign className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                 </div>
                 <div className="px-3 py-1.5 sm:px-4 sm:py-2 bg-amber-500/20 border border-amber-500/30 rounded-full">
-                  <span className="text-xs sm:text-sm font-bold text-amber-400">MONTHLY</span>
+                  <span className="text-xs sm:text-sm font-bold text-amber-400">ALL-TIME</span>
                 </div>
               </div>
               <div className="space-y-2">
                 <div className="text-[clamp(1.5rem,5vw,2.5rem)] font-bold text-white mb-2 leading-tight">
-                  ${totalMonthlyCost > 0 ? Math.round(totalMonthlyCost).toLocaleString('en-US') : '0'}
+                  ${totalAllTimeCost > 0 ? Math.round(totalAllTimeCost).toLocaleString('en-US') : '0'}
                 </div>
                 <p className="text-[clamp(1rem,3vw,1.125rem)] font-semibold text-slate-300">Total Investment</p>
-                <p className="text-[clamp(0.875rem,2.5vw,0.875rem)] text-slate-400">All-inclusive workforce cost</p>
+                <p className="text-[clamp(0.875rem,2.5vw,0.875rem)] text-slate-400">
+                  Click to analyze monthly trends
+                </p>
               </div>
             </CardContent>
           </Card>
 
           {/* Burden Analysis */}
-          <Card className="group bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border border-slate-700 hover:border-amber-500/50 transition-all duration-300 shadow-2xl hover:shadow-amber-500/20 cursor-pointer min-h-[180px] sm:min-h-[200px]">
+          <Card 
+            onClick={() => handleMetricClick('burden')}
+            className="group bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border border-slate-700 hover:border-amber-500/50 transition-all duration-300 shadow-2xl hover:shadow-amber-500/20 cursor-pointer min-h-[180px] sm:min-h-[200px] hover:scale-105 transform"
+          >
             <CardContent className="p-4 sm:p-6 lg:p-8 h-full flex flex-col justify-between">
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <div className="p-3 sm:p-4 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl shadow-lg touch-manipulation">
@@ -218,7 +251,9 @@ export default function HomePage(): React.JSX.Element {
                   {averageBurdenRate > 0 ? (averageBurdenRate * 100).toFixed(1) : '0.0'}%
                 </div>
                 <p className="text-[clamp(1rem,3vw,1.125rem)] font-semibold text-slate-300">Burden Rate</p>
-                <p className="text-[clamp(0.875rem,2.5vw,0.875rem)] text-slate-400">Taxes + benefits overhead</p>
+                <p className="text-[clamp(0.875rem,2.5vw,0.875rem)] text-slate-400">
+                  Click to forecast burden trends
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -427,7 +462,34 @@ export default function HomePage(): React.JSX.Element {
         </Card>
       </div>
       
-      {/* Floating Chat Button */}
+      {/* Enhanced Chat Modal */}
+      {showEnhancedChat && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="w-full max-w-4xl h-[80vh] bg-slate-900 rounded-2xl border border-slate-700 shadow-2xl overflow-hidden">
+            <div className="flex items-center justify-between p-4 border-b border-slate-700">
+              <h2 className="text-xl font-semibold text-white">
+                Executive Analysis: {chatContext.activeMetric || 'Dashboard'}
+              </h2>
+              <Button
+                onClick={() => setShowEnhancedChat(false)}
+                variant="ghost"
+                size="sm"
+                className="text-slate-400 hover:text-white"
+              >
+                ✕ Close
+              </Button>
+            </div>
+            <EnhancedChatInterface 
+              className="h-full rounded-none border-none"
+              context={chatContext}
+              onRequestVisualization={(data) => console.log('Visualization requested:', data)}
+              onRequestForecast={(params) => console.log('Forecast requested:', params)}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Keep original floating chat for general use */}
       <FloatingChatButton />
     </div>
   );
