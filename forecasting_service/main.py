@@ -152,15 +152,33 @@ async def forecast_employee_costs(request: ForecastRequest, background_tasks: Ba
                     gross_pay
                 FROM employee_costs 
                 WHERE period_start >= $1
+                    AND total_true_cost IS NOT NULL
+                    AND total_true_cost > 0
                 ORDER BY employee_name, period_start
-            """, datetime.now() - timedelta(days=365))
+            """, datetime.now() - timedelta(days=365 * 2))  # Get 2 years of data for better forecasting
+        
+        logger.info(f"Retrieved {len(historical_data) if historical_data else 0} records from database")
+        if historical_data and len(historical_data) > 0:
+            logger.info(f"Sample record: {dict(historical_data[0])}")
 
         if not historical_data:
             raise HTTPException(status_code=404, detail="No historical data found for forecasting")
 
         # Convert to DataFrame for model processing
-        df = pd.DataFrame(historical_data)
-        df['ds'] = pd.to_datetime(df['ds'])
+        # Convert asyncpg Record objects to dicts and handle data types
+        data_list = []
+        for record in historical_data:
+            data_list.append({
+                'employee_name': record['employee_name'],
+                'ds': record['ds'],  # Already a date object from PostgreSQL
+                'y': float(record['y']),  # Convert Decimal to float
+                'total_hours': float(record['total_hours']) if record['total_hours'] else 0,
+                'burden_rate': float(record['burden_rate']) if record['burden_rate'] else 0,
+                'gross_pay': float(record['gross_pay']) if record['gross_pay'] else 0
+            })
+        
+        df = pd.DataFrame(data_list)
+        df['ds'] = pd.to_datetime(df['ds'])  # Convert date to datetime
         
         forecasts = []
         model_performance = {}

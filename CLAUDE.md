@@ -53,6 +53,8 @@
 - **Frontend**: Next.js 15.4.6, React 19.1.0, TypeScript
 - **Styling**: Tailwind CSS 3.4.17 (stable) with custom executive theme
 - **Database**: Neon PostgreSQL Serverless
+- **Neural Forecasting**: FastAPI + NeuralProphet (PyTorch-based) + TimeGPT
+- **QuickBooks Integration**: FastAPI + python-quickbooks SDK with OAuth 2.0
 - **AI Integration**: Anthropic Claude API (claude-3-5-haiku-20241022)
 - **UI Components**: Radix UI with shadcn/ui design system
 - **Fonts**: Poppins (display), Inter (sans-serif) via Google Fonts
@@ -62,10 +64,13 @@
 1. **Executive Dashboard**: Fortune 500-level dark slate theme with gold accents
 2. **Responsive Design**: Mobile-first with perfect scaling across all devices
 3. **Real-time Analytics**: Live workforce cost calculations with whole number rounding
-4. **Burden Analysis**: Comprehensive tax and benefits cost calculations
-5. **Excel Export**: Board-ready reports with 4 detailed worksheets
-6. **Multi-source Processing**: SpringAhead (time tracking) + Paychex (payroll) integration
-7. **AI-Powered Chat**: Natural language queries using Anthropic Claude API for instant payroll insights
+4. **Neural Forecasting**: 6-month predictions with 95% confidence intervals using NeuralProphet
+5. **QuickBooks Integration**: OAuth 2.0 sync with employee mapping and audit logging
+6. **Burden Analysis**: Comprehensive tax and benefits cost calculations
+7. **Excel Export**: Board-ready reports with 4 detailed worksheets
+8. **Multi-source Processing**: SpringAhead (time tracking) + Paychex (payroll) integration
+9. **AI-Powered Chat**: Natural language queries using Anthropic Claude API for instant payroll insights
+10. **Comprehensive Mock Data**: 3-year test dataset with 1,209 payroll records for validation
 
 ### Data Flow
 1. CSV files placed in `payroll-files-only/` folder
@@ -75,11 +80,14 @@
 5. Excel export generates executive reports
 
 ## Current Status (August 2025)
-- ✅ **Database**: 24 employees, $596,000 total monthly cost, 23.7% average burden rate
-- ✅ **Processing**: 4 files processed (SpringAhead + Paychex Nov/Dec 2024)
+- ✅ **Database**: 40 employees, $27.7M total workforce costs, 22.31% average burden rate
+- ✅ **Processing**: 1,209 payroll records (3 years) + 586 monthly aggregations
 - ✅ **Design**: Fortune 500 executive dashboard with premium responsive styling
 - ✅ **Export**: Working Excel export with comprehensive data
 - ✅ **AI Integration**: Claude API fully operational with natural language payroll queries
+- ✅ **Neural Forecasting**: NeuralProphet models generating 6-month predictions with confidence intervals
+- ✅ **QuickBooks Integration**: OAuth 2.0 sync with 100% employee mapping
+- ✅ **Mock Data**: Comprehensive 3-year test dataset for all use cases and edge cases
 - ✅ **Production**: Deployed and fully operational with AI features
 - ✅ **Responsive**: Perfect display on mobile, tablet, and desktop
 - ✅ **Currency**: Whole number rounding for clean executive presentation
