@@ -1,0 +1,100 @@
+# Fortune 500 Executive Analytics Platform Transformation
+## Product Requirements Document
+
+### Executive Summary
+Transform the existing payroll analytics platform from a modal-based interface to a full-page Fortune 500 executive platform that showcases advanced Python ML capabilities including NeuralProphet forecasting, TimeGPT predictions, and comprehensive business intelligence.
+
+### Current State Analysis
+- Homepage: Professional dark slate/gold executive styling ✅
+- Analytics components: Inconsistent warm cream/orange theme ❌ 
+- Interaction model: Modal-based limiting API access ❌
+- Python ML showcase: Underutilized NeuralProphet and forecasting APIs ❌
+- Professional credibility: Mixed design languages harm CEO/CFO confidence ❌
+
+### Strategic Vision
+Create a unified Fortune 500 executive platform that:
+1. **Projects professional confidence** through consistent design language
+2. **Showcases Python ML power** with NeuralProphet, TimeGPT, and statistical analysis
+3. **Enables deep analytics** through dedicated full-page experiences
+4. **Provides real-time insights** via direct API integration (no modal limitations)
+
+### Core Requirements
+
+#### 1. Unified Navigation Architecture
+- **Executive Layout Component**: Consistent header, navigation, breadcrumbs across all pages
+- **Dedicated Analytics Pages**: 
+  - `/workforce` - Employee cost analysis with NeuralProphet forecasting
+  - `/investment` - Financial trends with TimeGPT predictions  
+  - `/burden` - Tax optimization with ML insights
+  - `/data-sources` - Real-time QuickBooks/Paychex integration status
+- **Homepage Transformation**: Navigation hub with direct routing to analytics pages
+
+#### 2. Fortune 500 Design System Standardization
+- **Color Palette**: Dark slate backgrounds, amber/gold accents, professional typography
+- **Component Library**: Unified cards, buttons, charts with executive-grade styling
+- **Responsive Design**: Mobile-first Fortune 500 experience across all devices
+- **Visual Hierarchy**: Clear information architecture for C-suite decision making
+
+#### 3. Python ML Library Showcase
+- **NeuralProphet Integration**: Real workforce cost forecasting with 6-month predictions
+- **TimeGPT Implementation**: Advanced financial scenario modeling and predictions
+- **Statistical Analysis**: Pandas/NumPy/SciPy for burden rate optimization
+- **Interactive Visualizations**: Recharts with professional Fortune 500 styling
+
+#### 4. Advanced API Integration
+- **Direct FastAPI Calls**: Full page access to Python forecasting endpoints
+- **Real-time Data Streaming**: PostgreSQL integration with live updates
+- **QuickBooks OAuth**: Complete sync status and control interfaces
+- **Paychex Integration**: Audit logging and data validation workflows
+
+#### 5. Executive User Experience
+- **Professional Loading States**: Skeleton screens and progress indicators
+- **Error Boundaries**: Executive-appropriate error handling and messaging
+- **Export Capabilities**: PDF, Excel, PowerBI export on every analytics page
+- **Performance Optimization**: Sub-2 second load times for all pages
+
+### Technical Implementation Strategy
+
+#### Phase 1: Core Infrastructure
+1. **ExecutiveLayout Component**: Unified navigation and styling framework
+2. **Route Structure**: Create dedicated page files for all analytics areas
+3. **Design System**: Standardize CSS variables and component themes
+
+#### Phase 2: Analytics Pages Development
+1. **Workforce Analytics Page**: NeuralProphet forecasting with interactive charts
+2. **Investment Analysis Page**: TimeGPT predictions with scenario modeling
+3. **Burden Analytics Page**: Tax optimization with statistical analysis
+4. **Data Sources Page**: Integration status with real-time monitoring
+
+#### Phase 3: Python ML Enhancement
+1. **Forecasting API Enhancement**: Advanced NeuralProphet model training
+2. **Statistical Analysis**: Comprehensive pandas/numpy data processing
+3. **Visualization Framework**: Professional Recharts configurations
+4. **Performance Optimization**: Caching and streaming for large datasets
+
+#### Phase 4: Executive Polish
+1. **Mobile Responsiveness**: Fortune 500 mobile experience
+2. **Accessibility Compliance**: WCAG 2.1 AA standards
+3. **Performance Optimization**: Production-grade loading and error handling
+4. **Professional Testing**: C-suite user experience validation
+
+### Success Metrics
+- **Visual Consistency**: 100% Fortune 500 styling across all pages
+- **ML Showcase**: Python capabilities prominently featured with real predictions  
+- **Professional Image**: Executive confidence in platform credibility
+- **Performance**: Sub-2s load times, seamless navigation experience
+- **API Integration**: Full functionality on dedicated pages (no modal limitations)
+
+### Risk Mitigation
+- **Design Consistency**: Maintain existing homepage excellence while extending to all pages
+- **Performance**: Optimize Python API calls to maintain executive-grade responsiveness
+- **Professional Standards**: Regular C-suite UX validation throughout development
+- **Integration Stability**: Thorough testing of QuickBooks/Paychex connections
+
+### Delivery Timeline
+- **Week 1**: Core infrastructure and navigation framework
+- **Week 2**: Analytics pages with Python ML integration
+- **Week 3**: Professional polish and executive validation
+- **Week 4**: Production deployment and performance optimization
+
+This transformation will establish the platform as a truly professional Fortune 500 executive analytics solution worthy of CEO/CFO/COO confidence and daily use.

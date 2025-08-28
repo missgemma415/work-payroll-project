@@ -4,10 +4,18 @@
  */
 
 // Environment setup for testing
-process.env.NODE_ENV = 'test';
-process.env.NEON_DATABASE_URL = 'postgresql://test:test@localhost:5432/payroll_test';
-process.env.ANTHROPIC_API_KEY = 'test-key';
-process.env.ELEVENLABS_API_KEY = 'test-key';
+if (!process.env.NODE_ENV) {
+  (process.env as any).NODE_ENV = 'test';
+}
+if (!process.env.NEON_DATABASE_URL) {
+  process.env.NEON_DATABASE_URL = 'postgresql://test:test@localhost:5432/payroll_test';
+}
+if (!process.env.ANTHROPIC_API_KEY) {
+  process.env.ANTHROPIC_API_KEY = 'test-key';
+}
+if (!process.env.ELEVENLABS_API_KEY) {
+  process.env.ELEVENLABS_API_KEY = 'test-key';
+}
 
 // Extend Jest matchers
 expect.extend({
@@ -55,7 +63,7 @@ if (process.env.NODE_ENV === 'test') {
 }
 
 // Global test utilities
-global.testUtils = {
+(global as any).testUtils = {
   createMockEmployee: (id: string = '1') => ({
     employee_name: `Test Employee ${id}`,
     employee_id: id,

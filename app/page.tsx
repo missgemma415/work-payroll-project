@@ -6,7 +6,6 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { FloatingChatButton } from '@/components/ui/FloatingChatButton';
-import { EnhancedChatInterface, ChatContext } from '@/components/ui/EnhancedChatInterface';
 
 interface FileInfo {
   filename: string;
@@ -39,8 +38,6 @@ export default function HomePage(): React.JSX.Element {
   const [summary, setSummary] = useState<ProcessingSummary | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [showEnhancedChat, setShowEnhancedChat] = useState(false);
-  const [chatContext, setChatContext] = useState<ChatContext>({});
 
   useEffect(() => {
     void loadData();
@@ -111,11 +108,14 @@ export default function HomePage(): React.JSX.Element {
   });
 
   const handleMetricClick = (metric: 'workforce' | 'investment' | 'burden' | 'data-sources') => {
-    setChatContext({
-      activeMetric: metric,
-      currentView: 'dashboard'
-    });
-    setShowEnhancedChat(true);
+    // Navigate to dedicated analytics pages instead of modal
+    const routes = {
+      'workforce': '/workforce',
+      'investment': '/investment', 
+      'burden': '/burden',
+      'data-sources': '/data-sources'
+    };
+    window.location.href = routes[metric];
   };
 
   return (
@@ -226,7 +226,7 @@ export default function HomePage(): React.JSX.Element {
                 </div>
                 <p className="text-[clamp(1rem,3vw,1.125rem)] font-semibold text-slate-300">Total Investment</p>
                 <p className="text-[clamp(0.875rem,2.5vw,0.875rem)] text-slate-400">
-                  Click to analyze monthly trends
+                  View detailed investment analysis →
                 </p>
               </div>
             </CardContent>
@@ -252,7 +252,7 @@ export default function HomePage(): React.JSX.Element {
                 </div>
                 <p className="text-[clamp(1rem,3vw,1.125rem)] font-semibold text-slate-300">Burden Rate</p>
                 <p className="text-[clamp(0.875rem,2.5vw,0.875rem)] text-slate-400">
-                  Click to forecast burden trends
+                  View burden analytics dashboard →
                 </p>
               </div>
             </CardContent>
@@ -319,33 +319,33 @@ export default function HomePage(): React.JSX.Element {
 
         <div className="grid gap-8 lg:grid-cols-3">
           {/* Data Sources */}
-          <Card className="bg-white/90 backdrop-blur-sm shadow-xl border-0 ring-1 ring-slate-200">
+          <Card className="bg-slate-800/50 backdrop-blur-sm shadow-xl border border-slate-700">
             <CardHeader className="pb-3">
-              <CardTitle className="text-lg font-semibold text-slate-800 flex items-center gap-2">
-                <FileText className="h-5 w-5 text-blue-600" />
+              <CardTitle className="text-lg font-semibold text-white flex items-center gap-2">
+                <FileText className="h-5 w-5 text-blue-400" />
                 Data Sources
               </CardTitle>
-              <p className="text-sm text-slate-600">Processed payroll files</p>
+              <p className="text-sm text-slate-300">Processed payroll files</p>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 {files.length === 0 ? (
-                  <div className="text-center py-6 text-slate-500">
+                  <div className="text-center py-6 text-slate-400">
                     <FileText className="h-8 w-8 mx-auto mb-2 opacity-50" />
                     <p className="text-sm">No files found</p>
                     <p className="text-xs">Drop CSV files into payroll-files-only folder</p>
                   </div>
                 ) : (
                   files.map((file, index) => (
-                    <div key={index} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
+                    <div key={index} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg border border-slate-600">
                       <div className="flex-1">
-                        <div className="font-medium text-slate-800 text-sm">{file.filename}</div>
-                        <div className="text-xs text-slate-500 mt-1">
+                        <div className="font-medium text-white text-sm">{file.filename}</div>
+                        <div className="text-xs text-slate-400 mt-1">
                           {file.type} • {(file.size / 1024).toFixed(1)}KB
                         </div>
                       </div>
                       <div className={`text-xs px-3 py-1 rounded-full font-semibold ${
-                        file.processed ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'
+                        file.processed ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'
                       }`}>
                         {file.processed ? '✓ Processed' : '⏳ Pending'}
                       </div>
@@ -357,43 +357,43 @@ export default function HomePage(): React.JSX.Element {
           </Card>
 
           {/* Top Employee Costs */}
-          <Card className="lg:col-span-2 bg-white/90 backdrop-blur-sm shadow-xl border-0 ring-1 ring-slate-200">
+          <Card className="lg:col-span-2 bg-slate-800/50 backdrop-blur-sm shadow-xl border border-slate-700">
             <CardHeader className="pb-3">
-              <CardTitle className="text-lg font-semibold text-slate-800 flex items-center gap-2">
-                <Users className="h-5 w-5 text-emerald-600" />
+              <CardTitle className="text-lg font-semibold text-white flex items-center gap-2">
+                <Users className="h-5 w-5 text-emerald-400" />
                 Top Employee Costs
               </CardTitle>
-              <p className="text-sm text-slate-600">True cost including all burdens and benefits</p>
+              <p className="text-sm text-slate-300">True cost including all burdens and benefits</p>
             </CardHeader>
             <CardContent>
               <div className="space-y-3 max-h-96 overflow-y-auto">
                 {employeeCosts.length === 0 ? (
-                  <div className="text-center py-8 text-slate-500">
+                  <div className="text-center py-8 text-slate-400">
                     <Users className="h-10 w-10 mx-auto mb-3 opacity-50" />
                     <p className="text-sm font-medium">No employee cost data</p>
                     <p className="text-xs">Process payroll files to see employee costs</p>
                   </div>
                 ) : (
                   employeeCosts.slice(0, 10).map((emp, index) => (
-                    <div key={index} className="flex items-center justify-between p-4 bg-slate-50 rounded-lg border border-slate-200 hover:bg-slate-100 transition-colors">
+                    <div key={index} className="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg border border-slate-600 hover:bg-slate-700/50 transition-colors">
                       <div className="flex-1">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
                             {emp.employee_name.split(' ').map(n => n[0]).join('').slice(0, 2)}
                           </div>
                           <div>
-                            <div className="font-semibold text-slate-800">{emp.employee_name}</div>
-                            <div className="text-xs text-slate-500">
+                            <div className="font-semibold text-white">{emp.employee_name}</div>
+                            <div className="text-xs text-slate-400">
                               {Number(emp.total_hours).toLocaleString()}h • {(Number(emp.burden_rate) * 100).toFixed(1)}% burden
                             </div>
                           </div>
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="text-lg font-bold text-slate-800">
+                        <div className="text-lg font-bold text-white">
                           ${Math.round(Number(emp.total_true_cost)).toLocaleString('en-US')}
                         </div>
-                        <div className="text-xs text-slate-500">
+                        <div className="text-xs text-slate-400">
                           ${Math.round(Number(emp.gross_pay)).toLocaleString('en-US')} base
                         </div>
                       </div>
@@ -406,53 +406,53 @@ export default function HomePage(): React.JSX.Element {
         </div>
 
         {/* Executive Summary */}
-        <Card className="mt-10 bg-gradient-to-r from-blue-50 to-indigo-50 border-0 ring-1 ring-blue-200">
+        <Card className="mt-10 bg-gradient-to-r from-slate-800/50 to-slate-800/30 border border-slate-700">
           <CardHeader>
-            <CardTitle className="text-xl font-semibold text-blue-900 flex items-center gap-2">
+            <CardTitle className="text-xl font-semibold text-white flex items-center gap-2">
               💼 Executive Summary
             </CardTitle>
-            <p className="text-blue-700">Complete workforce cost analysis and reporting</p>
+            <p className="text-slate-300">Complete workforce cost analysis and reporting</p>
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <h4 className="font-semibold text-blue-900 mb-3">Cost Analysis Capabilities</h4>
-                <ul className="space-y-2 text-blue-800">
+                <h4 className="font-semibold text-white mb-3">Cost Analysis Capabilities</h4>
+                <ul className="space-y-2 text-slate-300">
                   <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-amber-400 rounded-full"></div>
                     True employee cost calculation including all burdens
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-amber-400 rounded-full"></div>
                     Employer tax burden analysis (FICA, Medicare, FUTA, SUTA)
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-amber-400 rounded-full"></div>
                     Benefits cost integration and reporting
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-amber-400 rounded-full"></div>
                     Project allocation and time tracking analysis
                   </li>
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold text-blue-900 mb-3">Data Sources & Export</h4>
-                <ul className="space-y-2 text-blue-800">
+                <h4 className="font-semibold text-white mb-3">Data Sources & Export</h4>
+                <ul className="space-y-2 text-slate-300">
                   <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
                     SpringAhead time tracking integration
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
                     Paychex payroll data processing
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
                     Executive Excel reports for board meetings
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
                     Real-time dashboard analytics
                   </li>
                 </ul>
@@ -462,32 +462,6 @@ export default function HomePage(): React.JSX.Element {
         </Card>
       </div>
       
-      {/* Enhanced Chat Modal */}
-      {showEnhancedChat && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="w-full max-w-4xl h-[80vh] bg-slate-900 rounded-2xl border border-slate-700 shadow-2xl overflow-hidden">
-            <div className="flex items-center justify-between p-4 border-b border-slate-700">
-              <h2 className="text-xl font-semibold text-white">
-                Executive Analysis: {chatContext.activeMetric || 'Dashboard'}
-              </h2>
-              <Button
-                onClick={() => setShowEnhancedChat(false)}
-                variant="ghost"
-                size="sm"
-                className="text-slate-400 hover:text-white"
-              >
-                ✕ Close
-              </Button>
-            </div>
-            <EnhancedChatInterface 
-              className="h-full rounded-none border-none"
-              context={chatContext}
-              onRequestVisualization={(data) => console.log('Visualization requested:', data)}
-              onRequestForecast={(params) => console.log('Forecast requested:', params)}
-            />
-          </div>
-        </div>
-      )}
 
       {/* Keep original floating chat for general use */}
       <FloatingChatButton />

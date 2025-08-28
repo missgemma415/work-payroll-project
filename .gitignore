@@ -89,8 +89,9 @@ node_modules/
 *.sw?
 # OS specific
 
+.env*.local
+.claude_mcp.json
+
 # Task files
 # tasks.json
 # tasks/ 
-.env*.local
-.claude_mcp.json

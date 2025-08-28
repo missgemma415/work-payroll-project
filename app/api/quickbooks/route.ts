@@ -11,22 +11,23 @@ const syncResponseSchema = z.object({
   success: z.boolean(),
   records_processed: z.number(),
   errors: z.array(z.string()).default([]),
-  summary: z.record(z.any()),
+  summary: z.record(z.string(), z.any()),
   sync_duration: z.number(),
   last_sync: z.string(),
 });
 
-const employeeSyncSchema = z.object({
-  quickbooks_id: z.string(),
-  employee_name: z.string(),
-  active: z.boolean(),
-  hire_date: z.string().nullable().optional(),
-  email: z.string().nullable().optional(),
-  phone: z.string().nullable().optional(),
-  hourly_rate: z.number().nullable().optional(),
-  salary: z.number().nullable().optional(),
-  last_sync: z.string(),
-});
+// Employee sync schema for future use
+// const employeeSyncSchema = z.object({
+//   quickbooks_id: z.string(),
+//   employee_name: z.string(),
+//   active: z.boolean(),
+//   hire_date: z.string().nullable().optional(),
+//   email: z.string().nullable().optional(),
+//   phone: z.string().nullable().optional(),
+//   hourly_rate: z.number().nullable().optional(),
+//   salary: z.number().nullable().optional(),
+//   last_sync: z.string(),
+// });
 
 // QuickBooks service configuration
 const QUICKBOOKS_SERVICE_URL = process.env.QUICKBOOKS_SERVICE_URL || 'http://localhost:8001';
@@ -41,7 +42,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     try {
       const healthCheck = await fetch(`${QUICKBOOKS_SERVICE_URL}/health`, {
         method: 'GET',
-        timeout: 5000,
       });
       
       if (!healthCheck.ok) {
@@ -54,7 +54,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           { status: 503 }
         );
       }
-    } catch (error) {
+    } catch {
       return NextResponse.json(
         {
           success: false,
@@ -78,7 +78,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         const employeesResponse = await fetch(`${QUICKBOOKS_SERVICE_URL}/api/employees/${realmId}`, {
           method: 'GET',
           headers: { 'X-Request-Source': 'next-js-dashboard' },
-          timeout: 10000,
         });
 
         if (!employeesResponse.ok) {
@@ -117,7 +116,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         const companyResponse = await fetch(`${QUICKBOOKS_SERVICE_URL}/api/companies/${realmId}/info`, {
           method: 'GET',
           headers: { 'X-Request-Source': 'next-js-dashboard' },
-          timeout: 10000,
         });
 
         if (!companyResponse.ok) {
@@ -192,7 +190,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             'X-Request-Source': 'next-js-dashboard',
           },
           body: JSON.stringify(validatedAuth),
-          timeout: 10000,
         });
 
         if (!authResponse.ok) {
@@ -225,7 +222,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             'Content-Type': 'application/json',
             'X-Request-Source': 'next-js-dashboard',
           },
-          timeout: 60000, // Extended timeout for sync operations
         });
 
         if (!syncResponse.ok) {
@@ -286,7 +282,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
             realm_id,
             state: state || 'payroll-analytics',
           }),
-          timeout: 15000,
         });
 
         if (!callbackResponse.ok) {

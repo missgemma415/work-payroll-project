@@ -32,8 +32,8 @@ const employeeCostForecastSchema = z.object({
 const forecastResponseSchema = z.object({
   success: z.boolean(),
   forecast_data: z.array(employeeCostForecastSchema),
-  summary: z.record(z.any()),
-  model_performance: z.record(z.number()),
+  summary: z.record(z.string(), z.any()),
+  model_performance: z.record(z.string(), z.number()),
   generated_at: z.string(),
 });
 
@@ -50,13 +50,12 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     try {
       const healthCheck = await fetch(`${FASTAPI_URL}/health`, {
         method: 'GET',
-        timeout: 5000,
       });
       
       if (!healthCheck.ok) {
         throw new Error('FastAPI forecasting service unavailable');
       }
-    } catch (error) {
+    } catch {
       return NextResponse.json(
         {
           success: false,
@@ -76,7 +75,6 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         'X-Request-Source': 'next-js-dashboard',
       },
       body: JSON.stringify(validatedRequest),
-      timeout: 30000, // 30-second timeout for neural processing
     });
 
     if (!forecastResponse.ok) {
@@ -171,12 +169,10 @@ export async function GET(): Promise<NextResponse> {
     // Check FastAPI service status
     const serviceStatus = await fetch(`${FASTAPI_URL}/health`, {
       method: 'GET',
-      timeout: 5000,
     }).catch(() => null);
 
     const modelsStatus = await fetch(`${FASTAPI_URL}/api/forecast/models`, {
       method: 'GET',
-      timeout: 5000,
     }).catch(() => null);
 
     return NextResponse.json({

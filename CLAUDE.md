@@ -169,3 +169,7 @@ Use these commands to test functionality:
 - Executive styling uses dark slate gradient theme with gold accents
 - All currency values are rounded to whole numbers for executive presentation
 - Typography scales responsively: `text-4xl md:text-5xl lg:text-6xl`
+
+## Task Master AI Instructions
+**Import Task Master's development workflow commands and guidelines, treat as if import is in the main CLAUDE.md file.**
+@./.taskmaster/CLAUDE.md
