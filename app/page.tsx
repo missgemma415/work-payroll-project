@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ChatInterface } from '@/components/ui/ChatInterface';
 
 interface FileInfo {
   filename: string;
@@ -221,6 +222,24 @@ export default function HomePage(): React.JSX.Element {
               </div>
             </CardContent>
           </Card>
+        </div>
+
+        {/* AI Assistant Section */}
+        <div className="mb-8 md:mb-16">
+          <div className="mb-6">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-3 h-8 bg-gradient-to-b from-blue-400 to-blue-600 rounded-full"></div>
+              <div>
+                <h2 className="text-3xl md:text-4xl font-display font-bold text-white tracking-tight">
+                  AI Assistant
+                </h2>
+                <p className="text-lg text-slate-300 font-medium">
+                  Ask questions about your payroll data in natural language
+                </p>
+              </div>
+            </div>
+          </div>
+          <ChatInterface />
         </div>
 
         {/* Executive Command Center */}

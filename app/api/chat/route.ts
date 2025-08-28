@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
+import { claudeClient } from '@/lib/ai/claude-client';
 
 import type { NextRequest } from 'next/server';
 
@@ -7,42 +8,45 @@ import type { NextRequest } from 'next/server';
 const chatRequestSchema = z.object({
   message: z.string().min(1, 'Message cannot be empty').max(5000, 'Message too long'),
   user_id: z.string().uuid('Invalid user ID format').optional(),
+  conversation_history: z.array(z.object({
+    role: z.enum(['user', 'assistant']),
+    content: z.string()
+  })).optional(),
 });
 
 const chatResponseSchema = z.object({
   response: z.string(),
   message_id: z.string().uuid(),
   created_at: z.string(),
+  usage: z.object({
+    input_tokens: z.number(),
+    output_tokens: z.number(),
+  }).optional(),
 });
 
-type ChatResponse = z.infer<typeof chatResponseSchema>;
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Parse and validate request body
     const body: unknown = await request.json();
-    const { message } = chatRequestSchema.parse(body);
+    const { message, conversation_history = [] } = chatRequestSchema.parse(body);
 
-    // Simple placeholder response for CEO dashboard
-    const placeholderResponse = `I understand you're asking about: "${message}". 
+    // Check if API key is configured
+    if (!process.env.ANTHROPIC_API_KEY) {
+      return NextResponse.json(
+        {
+          error: 'Claude API key not configured',
+          message: 'ANTHROPIC_API_KEY environment variable is required',
+        },
+        { status: 500 }
+      );
+    }
 
-The CEO dashboard is currently being built to provide insights on:
-- Project cost tracking by client identifier
-- Employee performance metrics
-- Payroll analysis and forecasting
-- Integration with SpringAhead, Paychex, and QuickBooks
-
-This feature will be available once we integrate your data sources.`;
-
-    // Prepare response
-    const response: ChatResponse = {
-      response: placeholderResponse,
-      message_id: crypto.randomUUID(),
-      created_at: new Date().toISOString(),
-    };
+    // Use Claude client to generate response
+    const claudeResponse = await claudeClient.chat(message, conversation_history);
 
     // Validate response
-    const validatedResponse = chatResponseSchema.parse(response);
+    const validatedResponse = chatResponseSchema.parse(claudeResponse);
 
     return NextResponse.json(validatedResponse);
   } catch (error) {
@@ -53,7 +57,7 @@ This feature will be available once we integrate your data sources.`;
       return NextResponse.json(
         {
           error: 'Validation failed',
-          details: error.errors.map((err) => ({
+          details: error.issues.map((err) => ({
             field: err.path.join('.'),
             message: err.message,
           })),
